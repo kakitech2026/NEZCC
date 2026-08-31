@@ -49,6 +49,7 @@ The deployable application is located in `apps/web`.
 - `tenders`: tender notices and documents
 - `tender-categories`: tender classification
 - `annual-reports`: report metadata, covers, and documents
+- `contact-submissions`: private inbox for messages submitted through the Contact page
 
 ### Globals
 
@@ -77,6 +78,15 @@ Payload-generated TypeScript definitions are stored in `apps/web/src/payload-typ
 - Other CMS-backed pages may be static or dynamic according to their current route configuration.
 - Any page expected to reflect editor changes immediately must use dynamic rendering, on-demand revalidation, or a documented cache interval.
 - Content changes must not require source-code edits.
+
+## 6.1 Contact Submissions
+
+- The Contact form submits through the same-origin `/api/contact` endpoint.
+- The server validates field lengths and email format before writing to MongoDB.
+- A hidden honeypot field and a limit of three submissions per network fingerprint every 15 minutes reduce automated spam.
+- Network addresses are stored only as a one-way salted hash for throttling.
+- Anonymous users cannot list, read, create, update, or delete `contact-submissions` through the Payload REST API.
+- Authenticated administrators can review submissions under **Inbox**, then set their status to `New`, `Reviewed`, or `Resolved`.
 
 ## 7. Environment Contract
 

@@ -1,6 +1,7 @@
 ﻿import { Metadata } from "next";
 
 import { getPayloadClient } from "@/lib/payload";
+import ContactForm from "@/components/contact/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Us | North East Zone Cultural Centre",
@@ -147,71 +148,7 @@ export default async function ContactPage() {
               <h2 className="font-serif font-medium text-headline-lg text-on-surface mb-6 border-b border-outline-variant pb-4">
                 Send us a Message
               </h2>
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col">
-                    <label className="font-label-md text-label-md text-on-surface mb-2" htmlFor="name">
-                      Full Name
-                    </label>
-                    <input
-                      className="w-full bg-surface border border-outline rounded p-3 text-body-md focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none transition-colors duration-200 ease-out"
-                      id="name"
-                      name="name"
-                      placeholder="Enter your full name"
-                      required
-                      type="text"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="font-label-md text-label-md text-on-surface mb-2" htmlFor="email">
-                      Email Address
-                    </label>
-                    <input
-                      className="w-full bg-surface border border-outline rounded p-3 text-body-md focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none transition-colors duration-200 ease-out"
-                      id="email"
-                      name="email"
-                      placeholder="Enter your email address"
-                      required
-                      type="email"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <label className="font-label-md text-label-md text-on-surface mb-2" htmlFor="subject">
-                    Subject
-                  </label>
-                  <input
-                    className="w-full bg-surface border border-outline rounded p-3 text-body-md focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none transition-colors duration-200 ease-out"
-                    id="subject"
-                    name="subject"
-                    placeholder="What is this regarding?"
-                    required
-                    type="text"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label className="font-label-md text-label-md text-on-surface mb-2" htmlFor="message">
-                    Message
-                  </label>
-                  <textarea
-                    className="w-full bg-surface border border-outline rounded p-3 text-body-md focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none transition-colors duration-200 ease-out resize-y"
-                    id="message"
-                    name="message"
-                    placeholder="Write your message here..."
-                    required
-                    rows={5}
-                  />
-                </div>
-                <button
-                  className="bg-primary-container text-on-primary font-label-md text-label-md px-6 py-3 rounded border-2 border-transparent hover:border-primary-container focus:border-primary-container focus:ring-2 focus:ring-primary-container focus:outline-none active:scale-[0.97] transition-all duration-150 ease-out min-h-[44px] flex items-center justify-center w-full md:w-auto"
-                  type="submit"
-                >
-                  <span className="material-symbols-outlined mr-2" aria-hidden="true">
-                    send
-                  </span>
-                  Send Message
-                </button>
-              </form>
+              <ContactForm />
             </div>
             
             {/* Interactive Map Section */}

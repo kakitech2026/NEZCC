@@ -77,6 +77,7 @@ export interface Config {
     events: Event;
     'tender-categories': TenderCategory;
     'annual-reports': AnnualReport;
+    'contact-submissions': ContactSubmission;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -94,6 +95,7 @@ export interface Config {
     events: EventsSelect<false> | EventsSelect<true>;
     'tender-categories': TenderCategoriesSelect<false> | TenderCategoriesSelect<true>;
     'annual-reports': AnnualReportsSelect<false> | AnnualReportsSelect<true>;
+    'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -461,6 +463,24 @@ export interface AnnualReport {
   createdAt: string;
 }
 /**
+ * Messages submitted through the public Contact page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-submissions".
+ */
+export interface ContactSubmission {
+  id: string;
+  status: 'new' | 'reviewed' | 'resolved';
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  submittedAt: string;
+  fingerprintHash: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -523,6 +543,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'annual-reports';
         value: string | AnnualReport;
+      } | null)
+    | ({
+        relationTo: 'contact-submissions';
+        value: string | ContactSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -776,6 +800,21 @@ export interface AnnualReportsSelect<T extends boolean = true> {
   description?: T;
   coverImage?: T;
   document?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-submissions_select".
+ */
+export interface ContactSubmissionsSelect<T extends boolean = true> {
+  status?: T;
+  name?: T;
+  email?: T;
+  subject?: T;
+  message?: T;
+  submittedAt?: T;
+  fingerprintHash?: T;
   updatedAt?: T;
   createdAt?: T;
 }
