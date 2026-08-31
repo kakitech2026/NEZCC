@@ -9,16 +9,30 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
+const defaultMapEmbedURL =
+  'https://www.google.com/maps?q=North%20East%20Zone%20Cultural%20Centre%2C%20Dimapur%2C%20Nagaland&output=embed';
+
+const getSafeMapEmbedURL = (value?: string | null) => {
+  if (!value) return defaultMapEmbedURL;
+
+  try {
+    const url = new URL(value);
+    const isGoogleHost = url.hostname === 'www.google.com' || url.hostname === 'maps.google.com';
+    return url.protocol === 'https:' && isGoogleHost && url.pathname.startsWith('/maps')
+      ? url.toString()
+      : defaultMapEmbedURL;
+  } catch {
+    return defaultMapEmbedURL;
+  }
+};
+
 export default async function ContactPage() {
   const payload = await getPayloadClient();
   const settings = await payload.findGlobal({
     slug: 'site-settings',
     depth: 1,
   });
-  const mapImage = typeof settings.mapImage === 'object' && settings.mapImage !== null
-    ? settings.mapImage
-    : null;
-  const mapImageURL = mapImage?.url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAGrRN2cGyF-JT44TFg3ImVXr4evzmLIA_eisckdqLWtSK_T-0OAbJWcX4GrjFUlzkUuFC9uHNgBNGAeipN3GyGzap1jAMJRSkCDypukxcY8T7ur_W84kX4P6Z9JL4zVQqbdrXAm3CP3JRJ5A-BL2ZGHffzdBmuKt_-IDQKXx1x0LScPlEhqgp44wWO1sQ61Kdy03pG7nFKUa3RWxbnYmqbafvCjx87g1wB_ghJrGlDVOL1qZk8cAwz9g';
+  const mapEmbedURL = getSafeMapEmbedURL(settings.googleMapsEmbedURL);
 
   return (
     <main className="flex-grow ">
@@ -202,11 +216,13 @@ export default async function ContactPage() {
             
             {/* Interactive Map Section */}
             <div className="bg-surface rounded-lg border border-outline-variant overflow-hidden shadow-sm h-96 relative active:scale-[0.99] transition-transform duration-200 ease-out">
-              {/* Map Image Placeholder */}
-              <img
+              <iframe
                 className="w-full h-full object-cover"
-                alt={settings.mapImageAlt || mapImage?.alt || 'NEZCC location map'}
-                src={mapImageURL}
+                src={mapEmbedURL}
+                title="NEZCC location map"
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
               />
               <div className="absolute bottom-4 left-4 right-4 md:right-auto md:w-80 bg-surface/90 backdrop-blur-sm border border-outline-variant p-4 rounded-lg shadow-lg">
                 <div className="flex items-start">
@@ -220,19 +236,6 @@ export default async function ContactPage() {
                     <p className="font-caption text-caption text-on-surface-variant mt-1">
                       {settings.mapAddress}
                     </p>
-                    {settings.mapLink && (
-                      <a
-                        href={settings.mapLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
-                      >
-                        Open map
-                        <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                          open_in_new
-                        </span>
-                      </a>
-                    )}
                   </div>
                 </div>
               </div>

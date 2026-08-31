@@ -56,7 +56,7 @@ The deployable application is located in `apps/web`.
 - `events-page`: events-page presentation settings
 - `tenders-page`: tenders-page presentation settings
 - `annual-reports-page`: annual-reports presentation settings
-- `site-settings`: shared contact details, office hours, map content, and social links
+- `site-settings`: shared contact details, office hours, Google Maps embed URL, and social links
 
 Payload-generated TypeScript definitions are stored in `apps/web/src/payload-types.ts`.
 

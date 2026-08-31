@@ -111,26 +111,20 @@ export const SiteSettings: GlobalConfig = {
           label: 'Location Map',
           fields: [
             {
-              name: 'mapImage',
-              type: 'upload',
-              relationTo: 'media',
-            },
-            {
-              name: 'mapImageAlt',
-              type: 'text',
-              defaultValue: 'NEZCC location map',
-            },
-            {
               name: 'mapAddress',
               type: 'textarea',
               required: true,
               defaultValue: 'Post Box No. 139, Dimapur - 797112, Nagaland, India',
             },
             {
-              name: 'mapLink',
+              name: 'googleMapsEmbedURL',
               type: 'text',
+              label: 'Google Maps Embed URL',
+              required: true,
+              defaultValue:
+                'https://www.google.com/maps?q=North%20East%20Zone%20Cultural%20Centre%2C%20Dimapur%2C%20Nagaland&output=embed',
               admin: {
-                description: 'Optional Google Maps or other external map URL.',
+                description: 'Paste only the URL from the iframe src attribute, not the complete iframe code.',
               },
             },
           ],

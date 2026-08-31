@@ -924,13 +924,11 @@ export interface SiteSetting {
   weekdayHours: string;
   closedDaysLabel: string;
   closedDaysStatus: string;
-  mapImage?: (string | null) | Media;
-  mapImageAlt?: string | null;
   mapAddress: string;
   /**
-   * Optional Google Maps or other external map URL.
+   * Paste only the URL from the iframe src attribute, not the complete iframe code.
    */
-  mapLink?: string | null;
+  googleMapsEmbedURL: string;
   facebookURL?: string | null;
   instagramURL?: string | null;
   xURL?: string | null;
@@ -1022,10 +1020,8 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   weekdayHours?: T;
   closedDaysLabel?: T;
   closedDaysStatus?: T;
-  mapImage?: T;
-  mapImageAlt?: T;
   mapAddress?: T;
-  mapLink?: T;
+  googleMapsEmbedURL?: T;
   facebookURL?: T;
   instagramURL?: T;
   xURL?: T;
