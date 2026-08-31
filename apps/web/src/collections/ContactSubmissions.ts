@@ -15,7 +15,7 @@ export const ContactSubmissions: CollectionConfig = {
     description: 'Messages submitted through the public Contact page.',
   },
   access: {
-    create: isAuthenticated,
+    create: () => false,
     read: isAuthenticated,
     update: isAuthenticated,
     delete: isAuthenticated,

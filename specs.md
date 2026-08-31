@@ -85,6 +85,7 @@ Payload-generated TypeScript definitions are stored in `apps/web/src/payload-typ
 - The server validates field lengths and email format before writing to MongoDB.
 - A hidden honeypot field and a limit of three submissions per network fingerprint every 15 minutes reduce automated spam.
 - Network addresses are stored only as a one-way salted hash for throttling.
+- Contact submissions can only be created through the protected `/api/contact` endpoint; manual creation is disabled in the admin UI.
 - Anonymous users cannot list, read, create, update, or delete `contact-submissions` through the Payload REST API.
 - Authenticated administrators can review submissions under **Inbox**, then set their status to `New`, `Reviewed`, or `Resolved`.
 
