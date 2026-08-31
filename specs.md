@@ -58,6 +58,8 @@ The deployable application is located in `apps/web`.
 - `annual-reports-page`: annual-reports presentation settings
 - `site-settings`: shared contact details, office hours, Google Maps embed URL, and social links
 
+Header and footer social icons read their URLs from `site-settings`. Configured external links open in a new tab; empty or invalid URLs remain disabled.
+
 Payload-generated TypeScript definitions are stored in `apps/web/src/payload-types.ts`.
 
 ## 5. Media Behavior

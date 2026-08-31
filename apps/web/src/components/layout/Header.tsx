@@ -2,8 +2,14 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
+import { getSafeExternalURL, useSiteSettings } from "./SiteSettingsProvider";
 
 export default function Header() {
+  const siteSettings = useSiteSettings();
+  const facebookURL = getSafeExternalURL(siteSettings.facebookURL);
+  const instagramURL = getSafeExternalURL(siteSettings.instagramURL);
+  const xURL = getSafeExternalURL(siteSettings.xURL);
+  const youtubeURL = getSafeExternalURL(siteSettings.youtubeURL);
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [scrollProgress, setScrollProgress] = React.useState(0);
@@ -123,7 +129,10 @@ export default function Header() {
             <div className="hidden sm:flex items-center gap-4">
 
               <a
-                href="#"
+                href={facebookURL}
+                target={facebookURL ? "_blank" : undefined}
+                rel={facebookURL ? "noopener noreferrer" : undefined}
+                aria-disabled={!facebookURL}
                 aria-label="Facebook"
                 className="text-slate-800 hover:text-[#df5f18] transition-colors"
               >
@@ -141,7 +150,10 @@ export default function Header() {
               </a>
 
               <a
-                href="#"
+                href={instagramURL}
+                target={instagramURL ? "_blank" : undefined}
+                rel={instagramURL ? "noopener noreferrer" : undefined}
+                aria-disabled={!instagramURL}
                 aria-label="Instagram"
                 className="text-slate-800 hover:text-[#df5f18] transition-colors"
               >
@@ -159,7 +171,10 @@ export default function Header() {
               </a>
 
               <a
-                href="#"
+                href={xURL}
+                target={xURL ? "_blank" : undefined}
+                rel={xURL ? "noopener noreferrer" : undefined}
+                aria-disabled={!xURL}
                 aria-label="X (Twitter)"
                 className="text-slate-800 hover:text-[#df5f18] transition-colors"
               >
@@ -173,7 +188,10 @@ export default function Header() {
               </a>
 
               <a
-                href="#"
+                href={youtubeURL}
+                target={youtubeURL ? "_blank" : undefined}
+                rel={youtubeURL ? "noopener noreferrer" : undefined}
+                aria-disabled={!youtubeURL}
                 aria-label="YouTube"
                 className="text-slate-800 hover:text-[#df5f18] transition-colors"
               >
