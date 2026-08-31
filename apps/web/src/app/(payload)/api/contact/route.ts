@@ -33,11 +33,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Invalid request.' }, { status: 400 })
   }
 
-  // Bots commonly fill fields hidden from people. Return success without storing them.
-  if (getText(body.website, 200)) {
-    return NextResponse.json({ message: 'Your message has been received.' }, { status: 201 })
-  }
-
   const name = getText(body.name, 120)
   const email = getText(body.email, 254).toLowerCase()
   const subject = getText(body.subject, 180)
@@ -91,5 +86,8 @@ export async function POST(request: NextRequest) {
     },
   })
 
-  return NextResponse.json({ message: 'Your message has been sent successfully.' }, { status: 201 })
+  return NextResponse.json(
+    { message: 'Your message has been saved for review by the NEZCC team.' },
+    { status: 201 },
+  )
 }

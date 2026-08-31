@@ -49,11 +49,6 @@ export default function ContactForm() {
 
   return (
     <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
-      <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
-        <label htmlFor="website">Website</label>
-        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex flex-col">
           <label className="font-label-md text-label-md text-on-surface mb-2" htmlFor="name">
