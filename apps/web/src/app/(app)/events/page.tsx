@@ -3,6 +3,8 @@ import { getPayload } from 'payload';
 import configPromise from '@payload-config';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Calendar of Events - NEZCC',
 };

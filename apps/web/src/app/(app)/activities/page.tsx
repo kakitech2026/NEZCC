@@ -2,6 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { getPayloadClient } from '@/lib/payload';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ActivitiesHighlightsPage() {
   const payload = await getPayloadClient();
   const activitiesResult = await payload.find({

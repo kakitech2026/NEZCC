@@ -2,6 +2,8 @@ import { getPayload } from 'payload';
 import configPromise from '@/payload.config';
 import NewsCard from '@/components/content/NewsCard';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'News & Announcements | NEZCC',
   description: 'Latest news, updates, and announcements from the North East Zone Cultural Centre.',
