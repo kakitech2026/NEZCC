@@ -108,12 +108,14 @@ export interface Config {
     'events-page': EventsPage;
     'tenders-page': TendersPage;
     'annual-reports-page': AnnualReportsPage;
+    'site-settings': SiteSetting;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     'events-page': EventsPageSelect<false> | EventsPageSelect<true>;
     'tenders-page': TendersPageSelect<false> | TendersPageSelect<true>;
     'annual-reports-page': AnnualReportsPageSelect<false> | AnnualReportsPageSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -903,6 +905,40 @@ export interface AnnualReportsPage {
   createdAt?: string | null;
 }
 /**
+ * Manage shared contact details, office hours, map content, and social links.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: string;
+  contactHeroTitle: string;
+  contactHeroDescription: string;
+  officeName: string;
+  officeAddress: string;
+  officePhone: string;
+  officeEmail: string;
+  directorPhone: string;
+  directorEmail: string;
+  weekdayLabel: string;
+  weekdayHours: string;
+  closedDaysLabel: string;
+  closedDaysStatus: string;
+  mapImage?: (string | null) | Media;
+  mapImageAlt?: string | null;
+  mapAddress: string;
+  /**
+   * Optional Google Maps or other external map URL.
+   */
+  mapLink?: string | null;
+  facebookURL?: string | null;
+  instagramURL?: string | null;
+  xURL?: string | null;
+  youtubeURL?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page_select".
  */
@@ -965,6 +1001,35 @@ export interface TendersPageSelect<T extends boolean = true> {
 export interface AnnualReportsPageSelect<T extends boolean = true> {
   heroTitle?: T;
   heroDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  contactHeroTitle?: T;
+  contactHeroDescription?: T;
+  officeName?: T;
+  officeAddress?: T;
+  officePhone?: T;
+  officeEmail?: T;
+  directorPhone?: T;
+  directorEmail?: T;
+  weekdayLabel?: T;
+  weekdayHours?: T;
+  closedDaysLabel?: T;
+  closedDaysStatus?: T;
+  mapImage?: T;
+  mapImageAlt?: T;
+  mapAddress?: T;
+  mapLink?: T;
+  facebookURL?: T;
+  instagramURL?: T;
+  xURL?: T;
+  youtubeURL?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

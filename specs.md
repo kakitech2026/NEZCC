@@ -56,6 +56,7 @@ The deployable application is located in `apps/web`.
 - `events-page`: events-page presentation settings
 - `tenders-page`: tenders-page presentation settings
 - `annual-reports-page`: annual-reports presentation settings
+- `site-settings`: shared contact details, office hours, map content, and social links
 
 Payload-generated TypeScript definitions are stored in `apps/web/src/payload-types.ts`.
 
@@ -70,7 +71,7 @@ Payload-generated TypeScript definitions are stored in `apps/web/src/payload-typ
 
 ## 6. Rendering and Content Freshness
 
-- The homepage is dynamic so campaign and hero changes appear after an editor saves them.
+- The homepage and Contact page are dynamic so campaign, hero, and contact changes appear after an editor saves them.
 - Other CMS-backed pages may be static or dynamic according to their current route configuration.
 - Any page expected to reflect editor changes immediately must use dynamic rendering, on-demand revalidation, or a documented cache interval.
 - Content changes must not require source-code edits.

@@ -20,6 +20,7 @@ import { HomePage } from './globals/HomePage'
 import { EventsPage } from './globals/EventsPage'
 import { TendersPage } from './globals/TendersPage'
 import { AnnualReportsPage } from './globals/AnnualReportsPage'
+import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -76,6 +77,7 @@ export default buildConfig({
     EventsPage,
     TendersPage,
     AnnualReportsPage,
+    SiteSettings,
   ],
   editor: lexicalEditor(),
   sharp,

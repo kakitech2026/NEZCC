@@ -1,11 +1,25 @@
 ﻿import { Metadata } from "next";
 
+import { getPayloadClient } from "@/lib/payload";
+
 export const metadata: Metadata = {
   title: "Contact Us | North East Zone Cultural Centre",
   description: "Get in touch with the North East Zone Cultural Centre. We are here to assist you with any inquiries.",
 };
 
-export default function ContactPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function ContactPage() {
+  const payload = await getPayloadClient();
+  const settings = await payload.findGlobal({
+    slug: 'site-settings',
+    depth: 1,
+  });
+  const mapImage = typeof settings.mapImage === 'object' && settings.mapImage !== null
+    ? settings.mapImage
+    : null;
+  const mapImageURL = mapImage?.url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAGrRN2cGyF-JT44TFg3ImVXr4evzmLIA_eisckdqLWtSK_T-0OAbJWcX4GrjFUlzkUuFC9uHNgBNGAeipN3GyGzap1jAMJRSkCDypukxcY8T7ur_W84kX4P6Z9JL4zVQqbdrXAm3CP3JRJ5A-BL2ZGHffzdBmuKt_-IDQKXx1x0LScPlEhqgp44wWO1sQ61Kdy03pG7nFKUa3RWxbnYmqbafvCjx87g1wB_ghJrGlDVOL1qZk8cAwz9g';
+
   return (
     <main className="flex-grow ">
       {/* Hero Section */}
@@ -17,11 +31,10 @@ export default function ContactPage() {
       >
         <div className="max-w-container-max-width mx-auto px-margin-mobile md:px-margin-desktop text-center">
           <h1 className="font-serif font-medium md:font-serif font-medium text-headline-xl-mobile md:text-headline-xl text-primary mb-4">
-            Contact Us
+            {settings.contactHeroTitle}
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
-            Get in touch with the North East Zone Cultural Centre. We are here to assist you
-            with any inquiries regarding our cultural programs, events, and initiatives.
+            {settings.contactHeroDescription}
           </p>
         </div>
       </section>
@@ -40,21 +53,24 @@ export default function ContactPage() {
               </div>
               <div className="space-y-3 font-body-md text-body-md text-on-surface">
                 <p>
-                  North East Zone Cultural Centre,<br />
-                  Post Box No. 139,<br />
-                  Dimapur - 797112, Nagaland.
+                  <span className="font-semibold">{settings.officeName}</span><br />
+                  <span className="whitespace-pre-line">{settings.officeAddress}</span>
                 </p>
                 <div className="flex items-center">
                   <span className="material-symbols-outlined mr-2 text-outline" aria-hidden="true">
                     call
                   </span>
-                  <span>+91 3862 243557</span>
+                  <a href={`tel:${settings.officePhone?.replace(/[^+\d]/g, '')}`} className="hover:text-primary">
+                    {settings.officePhone}
+                  </a>
                 </div>
                 <div className="flex items-center">
                   <span className="material-symbols-outlined mr-2 text-outline" aria-hidden="true">
                     mail
                   </span>
-                  <span>nezccdimapur@yahoo.com</span>
+                  <a href={`mailto:${settings.officeEmail}`} className="break-all hover:text-primary">
+                    {settings.officeEmail}
+                  </a>
                 </div>
               </div>
             </div>
@@ -74,13 +90,17 @@ export default function ContactPage() {
                   <span className="material-symbols-outlined mr-2 text-outline" aria-hidden="true">
                     call
                   </span>
-                  <span>+91 3862 243556 (Direct)</span>
+                  <a href={`tel:${settings.directorPhone?.replace(/[^+\d]/g, '')}`} className="hover:text-primary">
+                    {settings.directorPhone}
+                  </a>
                 </div>
                 <div className="flex items-center">
                   <span className="material-symbols-outlined mr-2 text-outline" aria-hidden="true">
                     mail
                   </span>
-                  <span>director@nezcc.gov.in</span>
+                  <a href={`mailto:${settings.directorEmail}`} className="break-all hover:text-primary">
+                    {settings.directorEmail}
+                  </a>
                 </div>
               </div>
             </div>
@@ -95,12 +115,12 @@ export default function ContactPage() {
               </div>
               <ul className="space-y-2 font-body-md text-body-md text-on-surface-variant">
                 <li className="flex justify-between border-b border-outline-variant pb-2">
-                  <span>Monday - Friday</span>
-                  <span className="font-semibold">9:30 AM - 5:30 PM</span>
+                  <span>{settings.weekdayLabel}</span>
+                  <span className="font-semibold">{settings.weekdayHours}</span>
                 </li>
                 <li className="flex justify-between pt-2">
-                  <span>Saturday, Sunday &amp; Public Holidays</span>
-                  <span className="font-semibold text-error">Closed</span>
+                  <span>{settings.closedDaysLabel}</span>
+                  <span className="font-semibold text-error">{settings.closedDaysStatus}</span>
                 </li>
               </ul>
             </div>
@@ -185,8 +205,8 @@ export default function ContactPage() {
               {/* Map Image Placeholder */}
               <img
                 className="w-full h-full object-cover"
-                alt="NEZCC Location Map"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGrRN2cGyF-JT44TFg3ImVXr4evzmLIA_eisckdqLWtSK_T-0OAbJWcX4GrjFUlzkUuFC9uHNgBNGAeipN3GyGzap1jAMJRSkCDypukxcY8T7ur_W84kX4P6Z9JL4zVQqbdrXAm3CP3JRJ5A-BL2ZGHffzdBmuKt_-IDQKXx1x0LScPlEhqgp44wWO1sQ61Kdy03pG7nFKUa3RWxbnYmqbafvCjx87g1wB_ghJrGlDVOL1qZk8cAwz9g"
+                alt={settings.mapImageAlt || mapImage?.alt || 'NEZCC location map'}
+                src={mapImageURL}
               />
               <div className="absolute bottom-4 left-4 right-4 md:right-auto md:w-80 bg-surface/90 backdrop-blur-sm border border-outline-variant p-4 rounded-lg shadow-lg">
                 <div className="flex items-start">
@@ -198,8 +218,21 @@ export default function ContactPage() {
                       NEZCC Location
                     </h3>
                     <p className="font-caption text-caption text-on-surface-variant mt-1">
-                      Post Box No. 139, Dimapur - 797112, Nagaland, India
+                      {settings.mapAddress}
                     </p>
+                    {settings.mapLink && (
+                      <a
+                        href={settings.mapLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+                      >
+                        Open map
+                        <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
+                          open_in_new
+                        </span>
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
