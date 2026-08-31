@@ -1,4 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NEZCC Website and Admin
+
+This Next.js application uses Payload CMS with MongoDB. Copy `.env.example` to a local `.env` file and provide a MongoDB Atlas connection string and a long, random Payload secret:
+
+```dotenv
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>/<database>?retryWrites=true&w=majority
+PAYLOAD_SECRET=<long-random-secret>
+BLOB_READ_WRITE_TOKEN=<vercel-blob-read-write-token>
+```
+
+Database credentials must remain server-only. Do not prefix `MONGODB_URI` or `PAYLOAD_SECRET` with `NEXT_PUBLIC_`.
+
+`BLOB_READ_WRITE_TOKEN` is optional locally. In production, connect a Vercel Blob store to the project so uploaded media remains available across deployments. Vercel supplies this variable when the store is connected.
 
 ## Getting Started
 

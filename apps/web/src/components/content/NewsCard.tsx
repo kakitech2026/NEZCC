@@ -7,6 +7,7 @@ interface NewsCardProps {
   imageSrc?: string;
   imageAlt?: string;
   isPlaceholder?: boolean;
+  href?: string;
 }
 
 export default function NewsCard({
@@ -16,6 +17,7 @@ export default function NewsCard({
   imageSrc,
   imageAlt,
   isPlaceholder = false,
+  href = '#',
 }: NewsCardProps) {
   return (
     <article className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow focus-within:ring-2 focus-within:ring-primary flex flex-col h-full group">
@@ -41,8 +43,8 @@ export default function NewsCard({
           </span>{' '}
           {date}
         </time>
-        <h3 className="text-headline-md font-headline-md text-on-surface mb-stack-sm line-clamp-2">
-          <a className="focus:outline-none" href="#">
+        <h3 className="text-headline-md font-serif font-medium text-on-surface mb-stack-sm line-clamp-2">
+          <a className="focus:outline-none hover:text-[#df5f18] transition-colors" href={href}>
             {title}
           </a>
         </h3>
@@ -52,14 +54,13 @@ export default function NewsCard({
         <div className="mt-auto pt-stack-sm border-t border-surface-variant">
           <a
             className="inline-flex items-center text-primary font-label-md text-label-md font-semibold hover:text-surface-tint focus:outline-none group/link"
-            href="#"
+            href={href}
           >
             Read Article{' '}
             <span
               aria-hidden="true"
-              className="material-symbols-outlined ml-1 text-[18px] group-hover/link:translate-x-1 transition-transform"
+              className="material-symbols-outlined ml-1 text-[18px] group-hover/link:translate-x-1 transition-transform text-[#df5f18]"
               data-icon="arrow_forward"
-              style={{ color: 'rgb(76, 183, 72)' }}
             >
               arrow_forward
             </span>

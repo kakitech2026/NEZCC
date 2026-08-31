@@ -1,0 +1,15 @@
+# Local agent tooling
+.agents/
+skills-lock.json
+apps/web/.agents/
+apps/web/skills-lock.json
+
+# Local scratch and migration artifacts
+diff.txt
+full_msg.txt
+old_header.tsx
+old_header.txt
+transcript_msg.json
+update_components.ps1
+update_fonts.ps1
+user_code.tsx
