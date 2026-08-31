@@ -57,6 +57,7 @@ The deployable application is located in `apps/web`.
 - `events-page`: events-page presentation settings
 - `tenders-page`: tenders-page presentation settings
 - `annual-reports-page`: annual-reports presentation settings
+- `rti-page`: RTI introduction, authorities, disclosure documents, filing guidance, portal link, and notice
 - `site-settings`: shared contact details, office hours, Google Maps embed URL, and social links
 
 Header and footer social icons read their URLs from `site-settings`. Configured external links open in a new tab; empty or invalid URLs remain disabled.
@@ -74,7 +75,7 @@ Payload-generated TypeScript definitions are stored in `apps/web/src/payload-typ
 
 ## 6. Rendering and Content Freshness
 
-- The homepage and Contact page are dynamic so campaign, hero, and contact changes appear after an editor saves them.
+- The homepage, Contact page, and RTI page are dynamic so editor changes appear after they are saved.
 - Other CMS-backed pages may be static or dynamic according to their current route configuration.
 - Any page expected to reflect editor changes immediately must use dynamic rendering, on-demand revalidation, or a documented cache interval.
 - Content changes must not require source-code edits.

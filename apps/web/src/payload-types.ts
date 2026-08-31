@@ -110,6 +110,7 @@ export interface Config {
     'events-page': EventsPage;
     'tenders-page': TendersPage;
     'annual-reports-page': AnnualReportsPage;
+    'rti-page': RtiPage;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
@@ -117,6 +118,7 @@ export interface Config {
     'events-page': EventsPageSelect<false> | EventsPageSelect<true>;
     'tenders-page': TendersPageSelect<false> | TendersPageSelect<true>;
     'annual-reports-page': AnnualReportsPageSelect<false> | AnnualReportsPageSelect<true>;
+    'rti-page': RtiPageSelect<false> | RtiPageSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -944,6 +946,73 @@ export interface AnnualReportsPage {
   createdAt?: string | null;
 }
 /**
+ * Manage the Right to Information page, officers, disclosures, and filing guidance.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rti-page".
+ */
+export interface RtiPage {
+  id: string;
+  pageTitle: string;
+  pageDescription: string;
+  authoritiesSectionTitle: string;
+  authorities?:
+    | {
+        title: string;
+        name: string;
+        designation?: string | null;
+        email?: string | null;
+        phone?: string | null;
+        icon?: ('person' | 'gavel' | 'account_balance') | null;
+        id?: string | null;
+      }[]
+    | null;
+  disclosuresSectionTitle: string;
+  disclosures?:
+    | {
+        title: string;
+        /**
+         * Upload the disclosure document here.
+         */
+        document?: (string | null) | Media;
+        /**
+         * Optional external document URL. Used when no uploaded document is selected.
+         */
+        externalURL?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  suoMotuTitle: string;
+  suoMotuDescription: string;
+  suoMotuLinkLabel?: string | null;
+  suoMotuDocument?: (string | null) | Media;
+  /**
+   * Optional external URL. Used when no uploaded document is selected.
+   */
+  suoMotuExternalURL?: string | null;
+  filingTitle: string;
+  filingSteps?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  paymentMethodsTitle?: string | null;
+  paymentMethods?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  portalTitle: string;
+  portalSubtitle?: string | null;
+  portalURL: string;
+  noticeTitle: string;
+  noticeText: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Manage shared contact details, office hours, map content, and social links.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1038,6 +1107,62 @@ export interface TendersPageSelect<T extends boolean = true> {
 export interface AnnualReportsPageSelect<T extends boolean = true> {
   heroTitle?: T;
   heroDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rti-page_select".
+ */
+export interface RtiPageSelect<T extends boolean = true> {
+  pageTitle?: T;
+  pageDescription?: T;
+  authoritiesSectionTitle?: T;
+  authorities?:
+    | T
+    | {
+        title?: T;
+        name?: T;
+        designation?: T;
+        email?: T;
+        phone?: T;
+        icon?: T;
+        id?: T;
+      };
+  disclosuresSectionTitle?: T;
+  disclosures?:
+    | T
+    | {
+        title?: T;
+        document?: T;
+        externalURL?: T;
+        id?: T;
+      };
+  suoMotuTitle?: T;
+  suoMotuDescription?: T;
+  suoMotuLinkLabel?: T;
+  suoMotuDocument?: T;
+  suoMotuExternalURL?: T;
+  filingTitle?: T;
+  filingSteps?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  paymentMethodsTitle?: T;
+  paymentMethods?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  portalTitle?: T;
+  portalSubtitle?: T;
+  portalURL?: T;
+  noticeTitle?: T;
+  noticeText?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
