@@ -33,6 +33,7 @@ const contentSections = [
     description: 'News, activities, events, and campaigns for the public site.',
     links: [
       { label: 'News', href: '/admin/collections/news' },
+      { label: 'Newsletter Editions', href: '/admin/collections/newsletter-editions' },
       { label: 'Events', href: '/admin/collections/events' },
       { label: 'Activities', href: '/admin/collections/activities' },
       { label: 'Campaigns', href: '/admin/collections/campaigns' },
@@ -59,6 +60,14 @@ const contentSections = [
     ],
   },
   {
+    title: 'Inbox',
+    description: 'Visitor messages and newsletter subscriber requests.',
+    links: [
+      { label: 'Contact Submissions', href: '/admin/collections/contact-submissions' },
+      { label: 'Newsletter Subscribers', href: '/admin/collections/newsletter-subscribers' },
+    ],
+  },
+  {
     title: 'Site Pages',
     description: 'Edit homepage and listing-page content shown to visitors.',
     links: [
@@ -69,13 +78,14 @@ const contentSections = [
       { label: 'RTI Page', href: '/admin/globals/rti-page' },
       { label: 'Leadership & Team Page', href: '/admin/globals/leadership-page' },
       { label: 'Library Page', href: '/admin/globals/library-page' },
+      { label: 'Newsletter Page', href: '/admin/globals/newsletter-page' },
     ],
   },
 ]
 
 const overview = [
-  { value: '13', label: 'collections', detail: 'structured content areas' },
-  { value: '7', label: 'site pages', detail: 'editable page settings' },
+  { value: '15', label: 'collections', detail: 'structured content areas' },
+  { value: '8', label: 'site pages', detail: 'editable page settings' },
   { value: '3', label: 'workflows', detail: 'publish, media, documents' },
 ]
 

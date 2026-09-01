@@ -53,6 +53,8 @@ The deployable application is located in `apps/web`.
 - `member-states`: all eight Member State pages, including descriptions, images, cultural highlights, and links
 - `library-categories`: Library categories for publications, documents, and downloadable resources
 - `library-resources`: Library publications, documents, books, journals, research papers, digital archives, files, cover images, and external links
+- `newsletter-editions`: Newsletter editions, issue metadata, summaries, cover images, PDFs, online links, and featured state
+- `newsletter-subscribers`: private inbox for subscriber requests submitted through the public Newsletter page
 
 ### Globals
 
@@ -63,6 +65,7 @@ The deployable application is located in `apps/web`.
 - `rti-page`: RTI introduction, authorities, disclosure documents, filing guidance, portal link, and notice
 - `leadership-page`: leadership introduction, officials, staff members, portraits, and contact details
 - `library-page`: Library hero, about section, feature bullets, collection heading, and catalogue-search text
+- `newsletter-page`: Newsletter hero, subscription panel, privacy note, latest issue heading, archive heading, and empty-state message
 - `site-settings`: shared contact details, office hours, Google Maps embed URL, and social links
 
 Header and footer social icons read their URLs from `site-settings`. Configured external links open in a new tab; empty or invalid URLs remain disabled.
@@ -80,7 +83,7 @@ Payload-generated TypeScript definitions are stored in `apps/web/src/payload-typ
 
 ## 6. Rendering and Content Freshness
 
-- The homepage, Contact page, RTI page, Leadership & Team page, Member State pages, and Library page are dynamic so editor changes appear after they are saved.
+- The homepage, Contact page, RTI page, Leadership & Team page, Member State pages, Library page, and Newsletter page are dynamic so editor changes appear after they are saved.
 - Other CMS-backed pages may be static or dynamic according to their current route configuration.
 - Any page expected to reflect editor changes immediately must use dynamic rendering, on-demand revalidation, or a documented cache interval.
 - Content changes must not require source-code edits.
@@ -94,6 +97,16 @@ Payload-generated TypeScript definitions are stored in `apps/web/src/payload-typ
 - Contact submissions can only be created through the protected `/api/contact` endpoint; manual creation is disabled in the admin UI.
 - Anonymous users cannot list, read, create, update, or delete `contact-submissions` through the Payload REST API.
 - Authenticated administrators can review submissions under **Inbox**, then set their status to `New`, `Reviewed`, or `Resolved`.
+
+## 6.2 Newsletter Subscriptions
+
+- The Newsletter form submits through the same-origin `/api/newsletter` endpoint.
+- The server validates email format before writing to MongoDB.
+- A limit of five subscription attempts per network fingerprint every 15 minutes reduces automated spam.
+- Existing subscriber emails are reactivated instead of duplicated.
+- Newsletter subscribers can only be created through the protected `/api/newsletter` endpoint; manual creation is disabled in the admin UI.
+- Anonymous users cannot list, read, create, update, or delete `newsletter-subscribers` through the Payload REST API.
+- Authenticated administrators can review subscribers under **Inbox**, then set their status to `Subscribed`, `Unsubscribed`, or `Bounced`.
 
 ## 7. Environment Contract
 

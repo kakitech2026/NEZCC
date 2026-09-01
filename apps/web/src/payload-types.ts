@@ -81,6 +81,8 @@ export interface Config {
     'member-states': MemberState;
     'library-categories': LibraryCategory;
     'library-resources': LibraryResource;
+    'newsletter-editions': NewsletterEdition;
+    'newsletter-subscribers': NewsletterSubscriber;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -102,6 +104,8 @@ export interface Config {
     'member-states': MemberStatesSelect<false> | MemberStatesSelect<true>;
     'library-categories': LibraryCategoriesSelect<false> | LibraryCategoriesSelect<true>;
     'library-resources': LibraryResourcesSelect<false> | LibraryResourcesSelect<true>;
+    'newsletter-editions': NewsletterEditionsSelect<false> | NewsletterEditionsSelect<true>;
+    'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -119,6 +123,7 @@ export interface Config {
     'rti-page': RtiPage;
     'leadership-page': LeadershipPage;
     'library-page': LibraryPage;
+    'newsletter-page': NewsletterPage;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
@@ -129,6 +134,7 @@ export interface Config {
     'rti-page': RtiPageSelect<false> | RtiPageSelect<true>;
     'leadership-page': LeadershipPageSelect<false> | LeadershipPageSelect<true>;
     'library-page': LibraryPageSelect<false> | LibraryPageSelect<true>;
+    'newsletter-page': NewsletterPageSelect<false> | NewsletterPageSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -637,6 +643,51 @@ export interface LibraryResource {
   createdAt: string;
 }
 /**
+ * Manage newsletter editions, cover images, PDFs, and online links.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-editions".
+ */
+export interface NewsletterEdition {
+  id: string;
+  title: string;
+  volume?: string | null;
+  issue?: string | null;
+  period?: string | null;
+  publishedDate: string;
+  summary: string;
+  coverImage?: (string | null) | Media;
+  document?: (string | null) | Media;
+  /**
+   * Optional external URL. Used when no uploaded PDF is selected or for online reading.
+   */
+  onlineURL?: string | null;
+  /**
+   * Optional display text, e.g. 2.4 MB.
+   */
+  fileSize?: string | null;
+  isFeatured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Subscriber requests submitted through the public Newsletter page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-subscribers".
+ */
+export interface NewsletterSubscriber {
+  id: string;
+  status: 'subscribed' | 'unsubscribed' | 'bounced';
+  email: string;
+  name?: string | null;
+  source?: string | null;
+  subscribedAt: string;
+  fingerprintHash: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -715,6 +766,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'library-resources';
         value: string | LibraryResource;
+      } | null)
+    | ({
+        relationTo: 'newsletter-editions';
+        value: string | NewsletterEdition;
+      } | null)
+    | ({
+        relationTo: 'newsletter-subscribers';
+        value: string | NewsletterSubscriber;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1083,6 +1142,39 @@ export interface LibraryResourcesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-editions_select".
+ */
+export interface NewsletterEditionsSelect<T extends boolean = true> {
+  title?: T;
+  volume?: T;
+  issue?: T;
+  period?: T;
+  publishedDate?: T;
+  summary?: T;
+  coverImage?: T;
+  document?: T;
+  onlineURL?: T;
+  fileSize?: T;
+  isFeatured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-subscribers_select".
+ */
+export interface NewsletterSubscribersSelect<T extends boolean = true> {
+  status?: T;
+  email?: T;
+  name?: T;
+  source?: T;
+  subscribedAt?: T;
+  fingerprintHash?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -1367,6 +1459,25 @@ export interface LibraryPage {
   createdAt?: string | null;
 }
 /**
+ * Manage Newsletter page hero, subscribe panel, and archive section headings.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-page".
+ */
+export interface NewsletterPage {
+  id: string;
+  heroTitle?: string | null;
+  heroDescription?: string | null;
+  subscribeTitle?: string | null;
+  subscribeDescription?: string | null;
+  privacyNote?: string | null;
+  latestIssueTitle?: string | null;
+  archiveTitle?: string | null;
+  emptyArchiveMessage?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Manage shared contact details, office hours, map content, and social links.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1594,6 +1705,23 @@ export interface LibraryPageSelect<T extends boolean = true> {
   collectionsDescription?: T;
   catalogueTitle?: T;
   catalogueDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-page_select".
+ */
+export interface NewsletterPageSelect<T extends boolean = true> {
+  heroTitle?: T;
+  heroDescription?: T;
+  subscribeTitle?: T;
+  subscribeDescription?: T;
+  privacyNote?: T;
+  latestIssueTitle?: T;
+  archiveTitle?: T;
+  emptyArchiveMessage?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
