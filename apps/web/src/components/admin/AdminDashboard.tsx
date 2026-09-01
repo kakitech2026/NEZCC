@@ -65,6 +65,7 @@ const contentSections = [
     links: [
       { label: 'Contact Submissions', href: '/admin/collections/contact-submissions' },
       { label: 'Newsletter Subscribers', href: '/admin/collections/newsletter-subscribers' },
+      { label: 'Feedback Submissions', href: '/admin/collections/feedback-submissions' },
     ],
   },
   {
@@ -84,7 +85,7 @@ const contentSections = [
 ]
 
 const overview = [
-  { value: '15', label: 'collections', detail: 'structured content areas' },
+  { value: '16', label: 'collections', detail: 'structured content areas' },
   { value: '8', label: 'site pages', detail: 'editable page settings' },
   { value: '3', label: 'workflows', detail: 'publish, media, documents' },
 ]

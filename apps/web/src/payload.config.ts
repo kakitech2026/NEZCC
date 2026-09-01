@@ -21,6 +21,7 @@ import { LibraryCategories } from './collections/LibraryCategories'
 import { LibraryResources } from './collections/LibraryResources'
 import { NewsletterEditions } from './collections/NewsletterEditions'
 import { NewsletterSubscribers } from './collections/NewsletterSubscribers'
+import { FeedbackSubmissions } from './collections/FeedbackSubmissions'
 
 import { HomePage } from './globals/HomePage'
 import { EventsPage } from './globals/EventsPage'
@@ -87,6 +88,7 @@ export default buildConfig({
     LibraryResources,
     NewsletterEditions,
     NewsletterSubscribers,
+    FeedbackSubmissions,
   ],
   globals: [
     HomePage,

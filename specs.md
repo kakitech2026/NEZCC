@@ -55,6 +55,7 @@ The deployable application is located in `apps/web`.
 - `library-resources`: Library publications, documents, books, journals, research papers, digital archives, files, cover images, and external links
 - `newsletter-editions`: Newsletter editions, issue metadata, summaries, cover images, PDFs, online links, and featured state
 - `newsletter-subscribers`: private inbox for subscriber requests submitted through the public Newsletter page
+- `feedback-submissions`: private inbox for visitor feedback, suggestions, and grievances submitted through the public Feedback page
 
 ### Globals
 
@@ -107,6 +108,16 @@ Payload-generated TypeScript definitions are stored in `apps/web/src/payload-typ
 - Newsletter subscribers can only be created through the protected `/api/newsletter` endpoint; manual creation is disabled in the admin UI.
 - Anonymous users cannot list, read, create, update, or delete `newsletter-subscribers` through the Payload REST API.
 - Authenticated administrators can review subscribers under **Inbox**, then set their status to `Subscribed`, `Unsubscribed`, or `Bounced`.
+
+## 6.3 Feedback Submissions
+
+- The Feedback form submits through the same-origin `/api/feedback` endpoint.
+- The server validates field lengths, email format, feedback type, subject, and message before writing to MongoDB.
+- A limit of three feedback submissions per network fingerprint every 15 minutes reduces automated spam.
+- Network addresses are stored only as a one-way salted hash for throttling.
+- Feedback submissions can only be created through the protected `/api/feedback` endpoint; manual creation is disabled in the admin UI.
+- Anonymous users cannot list, read, create, update, or delete `feedback-submissions` through the Payload REST API.
+- Authenticated administrators can review feedback under **Inbox**, then set its status to `New`, `Reviewed`, or `Resolved`.
 
 ## 7. Environment Contract
 

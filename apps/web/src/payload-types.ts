@@ -83,6 +83,7 @@ export interface Config {
     'library-resources': LibraryResource;
     'newsletter-editions': NewsletterEdition;
     'newsletter-subscribers': NewsletterSubscriber;
+    'feedback-submissions': FeedbackSubmission;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -106,6 +107,7 @@ export interface Config {
     'library-resources': LibraryResourcesSelect<false> | LibraryResourcesSelect<true>;
     'newsletter-editions': NewsletterEditionsSelect<false> | NewsletterEditionsSelect<true>;
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
+    'feedback-submissions': FeedbackSubmissionsSelect<false> | FeedbackSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -688,6 +690,26 @@ export interface NewsletterSubscriber {
   createdAt: string;
 }
 /**
+ * Visitor feedback, suggestions, and grievances submitted through the public Feedback page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feedback-submissions".
+ */
+export interface FeedbackSubmission {
+  id: string;
+  status: 'new' | 'reviewed' | 'resolved';
+  name: string;
+  email: string;
+  phone?: string | null;
+  feedbackType: 'general' | 'grievance' | 'website' | 'program' | 'other';
+  subject: string;
+  message: string;
+  submittedAt: string;
+  fingerprintHash: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -774,6 +796,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'newsletter-subscribers';
         value: string | NewsletterSubscriber;
+      } | null)
+    | ({
+        relationTo: 'feedback-submissions';
+        value: string | FeedbackSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1169,6 +1195,23 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
   name?: T;
   source?: T;
   subscribedAt?: T;
+  fingerprintHash?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "feedback-submissions_select".
+ */
+export interface FeedbackSubmissionsSelect<T extends boolean = true> {
+  status?: T;
+  name?: T;
+  email?: T;
+  phone?: T;
+  feedbackType?: T;
+  subject?: T;
+  message?: T;
+  submittedAt?: T;
   fingerprintHash?: T;
   updatedAt?: T;
   createdAt?: T;
