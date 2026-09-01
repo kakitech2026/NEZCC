@@ -36,6 +36,7 @@ const contentSections = [
       { label: 'Events', href: '/admin/collections/events' },
       { label: 'Activities', href: '/admin/collections/activities' },
       { label: 'Campaigns', href: '/admin/collections/campaigns' },
+      { label: 'Member States', href: '/admin/collections/member-states' },
     ],
   },
   {
@@ -70,7 +71,7 @@ const contentSections = [
 ]
 
 const overview = [
-  { value: '10', label: 'collections', detail: 'structured content areas' },
+  { value: '11', label: 'collections', detail: 'structured content areas' },
   { value: '6', label: 'site pages', detail: 'editable page settings' },
   { value: '3', label: 'workflows', detail: 'publish, media, documents' },
 ]

@@ -78,6 +78,7 @@ export interface Config {
     'tender-categories': TenderCategory;
     'annual-reports': AnnualReport;
     'contact-submissions': ContactSubmission;
+    'member-states': MemberState;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +97,7 @@ export interface Config {
     'tender-categories': TenderCategoriesSelect<false> | TenderCategoriesSelect<true>;
     'annual-reports': AnnualReportsSelect<false> | AnnualReportsSelect<true>;
     'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
+    'member-states': MemberStatesSelect<false> | MemberStatesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -485,6 +487,105 @@ export interface ContactSubmission {
   createdAt: string;
 }
 /**
+ * Controls the eight Member State pages, including descriptions, images, highlights, and links.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "member-states".
+ */
+export interface MemberState {
+  id: string;
+  name: string;
+  /**
+   * URL slug, e.g. assam or arunachal-pradesh.
+   */
+  slug: string;
+  tagline: string;
+  summary: string;
+  /**
+   * Main page hero image.
+   */
+  heroImage?: (string | null) | Media;
+  /**
+   * Optional existing hero image URL. A Media Library image takes priority.
+   */
+  heroImageURL?: string | null;
+  heroImageAlt?: string | null;
+  /**
+   * Optional primary call-to-action link shown in the hero.
+   */
+  primaryLink?: {
+    label?: string | null;
+    url?: string | null;
+  };
+  /**
+   * Optional secondary call-to-action link shown in the hero.
+   */
+  secondaryLink?: {
+    label?: string | null;
+    url?: string | null;
+  };
+  /**
+   * Introductory content blocks for geography, people, heritage, traditions, and related topics.
+   */
+  overview?:
+    | {
+        eyebrow?: string | null;
+        title: string;
+        description: string;
+        /**
+         * Material Symbols icon name, e.g. public or account_balance.
+         */
+        icon?: string | null;
+        /**
+         * Select or upload an image from the Media Library.
+         */
+        image?: (string | null) | Media;
+        /**
+         * Optional existing image URL. A Media Library image takes priority.
+         */
+        imageURL?: string | null;
+        imageAlt?: string | null;
+        link?: {
+          label?: string | null;
+          url?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  highlightsHeading?: string | null;
+  highlightsDescription?: string | null;
+  /**
+   * Cultural highlights, festivals, crafts, heritage sites, and related links.
+   */
+  highlights?:
+    | {
+        category?: string | null;
+        title: string;
+        description: string;
+        /**
+         * Material Symbols icon name.
+         */
+        icon?: string | null;
+        /**
+         * Select or upload an image from the Media Library.
+         */
+        image?: (string | null) | Media;
+        /**
+         * Optional existing image URL. A Media Library image takes priority.
+         */
+        imageURL?: string | null;
+        imageAlt?: string | null;
+        link?: {
+          label?: string | null;
+          url?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -551,6 +652,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'contact-submissions';
         value: string | ContactSubmission;
+      } | null)
+    | ({
+        relationTo: 'member-states';
+        value: string | MemberState;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -819,6 +924,71 @@ export interface ContactSubmissionsSelect<T extends boolean = true> {
   message?: T;
   submittedAt?: T;
   fingerprintHash?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "member-states_select".
+ */
+export interface MemberStatesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  tagline?: T;
+  summary?: T;
+  heroImage?: T;
+  heroImageURL?: T;
+  heroImageAlt?: T;
+  primaryLink?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  secondaryLink?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  overview?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+        icon?: T;
+        image?: T;
+        imageURL?: T;
+        imageAlt?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+        id?: T;
+      };
+  highlightsHeading?: T;
+  highlightsDescription?: T;
+  highlights?:
+    | T
+    | {
+        category?: T;
+        title?: T;
+        description?: T;
+        icon?: T;
+        image?: T;
+        imageURL?: T;
+        imageAlt?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+            };
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

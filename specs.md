@@ -50,6 +50,7 @@ The deployable application is located in `apps/web`.
 - `tender-categories`: tender classification
 - `annual-reports`: report metadata, covers, and documents
 - `contact-submissions`: private inbox for messages submitted through the Contact page
+- `member-states`: all eight Member State pages, including descriptions, images, cultural highlights, and links
 
 ### Globals
 
@@ -76,7 +77,7 @@ Payload-generated TypeScript definitions are stored in `apps/web/src/payload-typ
 
 ## 6. Rendering and Content Freshness
 
-- The homepage, Contact page, RTI page, and Leadership & Team page are dynamic so editor changes appear after they are saved.
+- The homepage, Contact page, RTI page, Leadership & Team page, and Member State pages are dynamic so editor changes appear after they are saved.
 - Other CMS-backed pages may be static or dynamic according to their current route configuration.
 - Any page expected to reflect editor changes immediately must use dynamic rendering, on-demand revalidation, or a documented cache interval.
 - Content changes must not require source-code edits.

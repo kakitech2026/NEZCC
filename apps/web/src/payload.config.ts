@@ -16,6 +16,7 @@ import { Events } from './collections/Events'
 import { TenderCategories } from './collections/TenderCategories'
 import { AnnualReports } from './collections/AnnualReports'
 import { ContactSubmissions } from './collections/ContactSubmissions'
+import { MemberStates } from './collections/MemberStates'
 
 import { HomePage } from './globals/HomePage'
 import { EventsPage } from './globals/EventsPage'
@@ -75,6 +76,7 @@ export default buildConfig({
     TenderCategories,
     AnnualReports,
     ContactSubmissions,
+    MemberStates,
   ],
   globals: [
     HomePage,
