@@ -17,6 +17,8 @@ import { TenderCategories } from './collections/TenderCategories'
 import { AnnualReports } from './collections/AnnualReports'
 import { ContactSubmissions } from './collections/ContactSubmissions'
 import { MemberStates } from './collections/MemberStates'
+import { LibraryCategories } from './collections/LibraryCategories'
+import { LibraryResources } from './collections/LibraryResources'
 
 import { HomePage } from './globals/HomePage'
 import { EventsPage } from './globals/EventsPage'
@@ -24,6 +26,7 @@ import { TendersPage } from './globals/TendersPage'
 import { AnnualReportsPage } from './globals/AnnualReportsPage'
 import { RTIPage } from './globals/RTIPage'
 import { LeadershipPage } from './globals/LeadershipPage'
+import { LibraryPage } from './globals/LibraryPage'
 import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -77,6 +80,8 @@ export default buildConfig({
     AnnualReports,
     ContactSubmissions,
     MemberStates,
+    LibraryCategories,
+    LibraryResources,
   ],
   globals: [
     HomePage,
@@ -85,6 +90,7 @@ export default buildConfig({
     AnnualReportsPage,
     RTIPage,
     LeadershipPage,
+    LibraryPage,
     SiteSettings,
   ],
   editor: lexicalEditor(),

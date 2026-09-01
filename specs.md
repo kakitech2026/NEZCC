@@ -51,6 +51,8 @@ The deployable application is located in `apps/web`.
 - `annual-reports`: report metadata, covers, and documents
 - `contact-submissions`: private inbox for messages submitted through the Contact page
 - `member-states`: all eight Member State pages, including descriptions, images, cultural highlights, and links
+- `library-categories`: Library categories for publications, documents, and downloadable resources
+- `library-resources`: Library publications, documents, books, journals, research papers, digital archives, files, cover images, and external links
 
 ### Globals
 
@@ -60,6 +62,7 @@ The deployable application is located in `apps/web`.
 - `annual-reports-page`: annual-reports presentation settings
 - `rti-page`: RTI introduction, authorities, disclosure documents, filing guidance, portal link, and notice
 - `leadership-page`: leadership introduction, officials, staff members, portraits, and contact details
+- `library-page`: Library hero, about section, feature bullets, collection heading, and catalogue-search text
 - `site-settings`: shared contact details, office hours, Google Maps embed URL, and social links
 
 Header and footer social icons read their URLs from `site-settings`. Configured external links open in a new tab; empty or invalid URLs remain disabled.
@@ -77,7 +80,7 @@ Payload-generated TypeScript definitions are stored in `apps/web/src/payload-typ
 
 ## 6. Rendering and Content Freshness
 
-- The homepage, Contact page, RTI page, Leadership & Team page, and Member State pages are dynamic so editor changes appear after they are saved.
+- The homepage, Contact page, RTI page, Leadership & Team page, Member State pages, and Library page are dynamic so editor changes appear after they are saved.
 - Other CMS-backed pages may be static or dynamic according to their current route configuration.
 - Any page expected to reflect editor changes immediately must use dynamic rendering, on-demand revalidation, or a documented cache interval.
 - Content changes must not require source-code edits.

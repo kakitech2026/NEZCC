@@ -54,6 +54,8 @@ const contentSections = [
     links: [
       { label: 'Media Library', href: '/admin/collections/media' },
       { label: 'Galleries', href: '/admin/collections/gallery' },
+      { label: 'Library Resources', href: '/admin/collections/library-resources' },
+      { label: 'Library Categories', href: '/admin/collections/library-categories' },
     ],
   },
   {
@@ -66,13 +68,14 @@ const contentSections = [
       { label: 'Annual Reports Page', href: '/admin/globals/annual-reports-page' },
       { label: 'RTI Page', href: '/admin/globals/rti-page' },
       { label: 'Leadership & Team Page', href: '/admin/globals/leadership-page' },
+      { label: 'Library Page', href: '/admin/globals/library-page' },
     ],
   },
 ]
 
 const overview = [
-  { value: '11', label: 'collections', detail: 'structured content areas' },
-  { value: '6', label: 'site pages', detail: 'editable page settings' },
+  { value: '13', label: 'collections', detail: 'structured content areas' },
+  { value: '7', label: 'site pages', detail: 'editable page settings' },
   { value: '3', label: 'workflows', detail: 'publish, media, documents' },
 ]
 

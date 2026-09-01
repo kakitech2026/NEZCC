@@ -79,6 +79,8 @@ export interface Config {
     'annual-reports': AnnualReport;
     'contact-submissions': ContactSubmission;
     'member-states': MemberState;
+    'library-categories': LibraryCategory;
+    'library-resources': LibraryResource;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -98,6 +100,8 @@ export interface Config {
     'annual-reports': AnnualReportsSelect<false> | AnnualReportsSelect<true>;
     'contact-submissions': ContactSubmissionsSelect<false> | ContactSubmissionsSelect<true>;
     'member-states': MemberStatesSelect<false> | MemberStatesSelect<true>;
+    'library-categories': LibraryCategoriesSelect<false> | LibraryCategoriesSelect<true>;
+    'library-resources': LibraryResourcesSelect<false> | LibraryResourcesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -114,6 +118,7 @@ export interface Config {
     'annual-reports-page': AnnualReportsPage;
     'rti-page': RtiPage;
     'leadership-page': LeadershipPage;
+    'library-page': LibraryPage;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
@@ -123,6 +128,7 @@ export interface Config {
     'annual-reports-page': AnnualReportsPageSelect<false> | AnnualReportsPageSelect<true>;
     'rti-page': RtiPageSelect<false> | RtiPageSelect<true>;
     'leadership-page': LeadershipPageSelect<false> | LeadershipPageSelect<true>;
+    'library-page': LibraryPageSelect<false> | LibraryPageSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -586,6 +592,51 @@ export interface MemberState {
   createdAt: string;
 }
 /**
+ * Manage Library categories for publications, documents, and downloadable resources.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "library-categories".
+ */
+export interface LibraryCategory {
+  id: string;
+  title: string;
+  /**
+   * URL-friendly category value, e.g. rare-manuscripts.
+   */
+  slug: string;
+  description?: string | null;
+  /**
+   * Material Symbols icon name, e.g. history_edu, diversity_3, school.
+   */
+  icon?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage Library publications, documents, and downloadable resources.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "library-resources".
+ */
+export interface LibraryResource {
+  id: string;
+  title: string;
+  category: string | LibraryCategory;
+  resourceType: 'publication' | 'document' | 'book' | 'journal' | 'research-paper' | 'digital-archive';
+  author?: string | null;
+  publishedDate?: string | null;
+  description: string;
+  coverImage?: (string | null) | Media;
+  document?: (string | null) | Media;
+  /**
+   * Optional external resource URL. Used when no uploaded file is selected.
+   */
+  externalURL?: string | null;
+  isFeatured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -656,6 +707,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'member-states';
         value: string | MemberState;
+      } | null)
+    | ({
+        relationTo: 'library-categories';
+        value: string | LibraryCategory;
+      } | null)
+    | ({
+        relationTo: 'library-resources';
+        value: string | LibraryResource;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -994,6 +1053,36 @@ export interface MemberStatesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "library-categories_select".
+ */
+export interface LibraryCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "library-resources_select".
+ */
+export interface LibraryResourcesSelect<T extends boolean = true> {
+  title?: T;
+  category?: T;
+  resourceType?: T;
+  author?: T;
+  publishedDate?: T;
+  description?: T;
+  coverImage?: T;
+  document?: T;
+  externalURL?: T;
+  isFeatured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -1244,6 +1333,40 @@ export interface LeadershipPage {
   createdAt?: string | null;
 }
 /**
+ * Manage the Library page hero, intro content, collection section, and search labels.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "library-page".
+ */
+export interface LibraryPage {
+  id: string;
+  heroEyebrow?: string | null;
+  heroTitle?: string | null;
+  heroDescription?: string | null;
+  heroImage?: (string | null) | Media;
+  heroImageURL?: string | null;
+  heroImageAlt?: string | null;
+  aboutEyebrow?: string | null;
+  aboutTitle?: string | null;
+  aboutDescription?: string | null;
+  aboutDetails?: string | null;
+  features?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  aboutImage?: (string | null) | Media;
+  aboutImageURL?: string | null;
+  aboutImageAlt?: string | null;
+  collectionsTitle?: string | null;
+  collectionsDescription?: string | null;
+  catalogueTitle?: string | null;
+  catalogueDescription?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Manage shared contact details, office hours, map content, and social links.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1439,6 +1562,38 @@ export interface LeadershipPageSelect<T extends boolean = true> {
         phone?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "library-page_select".
+ */
+export interface LibraryPageSelect<T extends boolean = true> {
+  heroEyebrow?: T;
+  heroTitle?: T;
+  heroDescription?: T;
+  heroImage?: T;
+  heroImageURL?: T;
+  heroImageAlt?: T;
+  aboutEyebrow?: T;
+  aboutTitle?: T;
+  aboutDescription?: T;
+  aboutDetails?: T;
+  features?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  aboutImage?: T;
+  aboutImageURL?: T;
+  aboutImageAlt?: T;
+  collectionsTitle?: T;
+  collectionsDescription?: T;
+  catalogueTitle?: T;
+  catalogueDescription?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
