@@ -111,6 +111,7 @@ export interface Config {
     'tenders-page': TendersPage;
     'annual-reports-page': AnnualReportsPage;
     'rti-page': RtiPage;
+    'leadership-page': LeadershipPage;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
@@ -119,6 +120,7 @@ export interface Config {
     'tenders-page': TendersPageSelect<false> | TendersPageSelect<true>;
     'annual-reports-page': AnnualReportsPageSelect<false> | AnnualReportsPageSelect<true>;
     'rti-page': RtiPageSelect<false> | RtiPageSelect<true>;
+    'leadership-page': LeadershipPageSelect<false> | LeadershipPageSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -1013,6 +1015,65 @@ export interface RtiPage {
   createdAt?: string | null;
 }
 /**
+ * Manage the Leadership & Team page, officials, roles, portraits, and contact details.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leadership-page".
+ */
+export interface LeadershipPage {
+  id: string;
+  pageTitle: string;
+  pageDescription: string;
+  leadershipSectionTitle: string;
+  leaders?:
+    | {
+        name: string;
+        designation: string;
+        /**
+         * Select or upload the official portrait.
+         */
+        photo?: (string | null) | Media;
+        /**
+         * Optional existing image URL. A Media Library photo takes priority.
+         */
+        photoURL?: string | null;
+        emails?:
+          | {
+              email: string;
+              id?: string | null;
+            }[]
+          | null;
+        phone?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  staffSectionTitle: string;
+  staff?:
+    | {
+        name: string;
+        designation: string;
+        /**
+         * Select or upload the official portrait.
+         */
+        photo?: (string | null) | Media;
+        /**
+         * Optional existing image URL. A Media Library photo takes priority.
+         */
+        photoURL?: string | null;
+        emails?:
+          | {
+              email: string;
+              id?: string | null;
+            }[]
+          | null;
+        phone?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Manage shared contact details, office hours, map content, and social links.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1163,6 +1224,51 @@ export interface RtiPageSelect<T extends boolean = true> {
   portalURL?: T;
   noticeTitle?: T;
   noticeText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leadership-page_select".
+ */
+export interface LeadershipPageSelect<T extends boolean = true> {
+  pageTitle?: T;
+  pageDescription?: T;
+  leadershipSectionTitle?: T;
+  leaders?:
+    | T
+    | {
+        name?: T;
+        designation?: T;
+        photo?: T;
+        photoURL?: T;
+        emails?:
+          | T
+          | {
+              email?: T;
+              id?: T;
+            };
+        phone?: T;
+        id?: T;
+      };
+  staffSectionTitle?: T;
+  staff?:
+    | T
+    | {
+        name?: T;
+        designation?: T;
+        photo?: T;
+        photoURL?: T;
+        emails?:
+          | T
+          | {
+              email?: T;
+              id?: T;
+            };
+        phone?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

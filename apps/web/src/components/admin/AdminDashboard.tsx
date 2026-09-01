@@ -64,13 +64,14 @@ const contentSections = [
       { label: 'Tenders Page', href: '/admin/globals/tenders-page' },
       { label: 'Annual Reports Page', href: '/admin/globals/annual-reports-page' },
       { label: 'RTI Page', href: '/admin/globals/rti-page' },
+      { label: 'Leadership & Team Page', href: '/admin/globals/leadership-page' },
     ],
   },
 ]
 
 const overview = [
   { value: '10', label: 'collections', detail: 'structured content areas' },
-  { value: '5', label: 'site pages', detail: 'editable page settings' },
+  { value: '6', label: 'site pages', detail: 'editable page settings' },
   { value: '3', label: 'workflows', detail: 'publish, media, documents' },
 ]
 
