@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "generate:types": "payload generate:types",
-    "generate:importmap": "payload generate:importmap"
+    "generate:importmap": "payload generate:importmap",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "3.88.0",
@@ -25,6 +26,7 @@
     "sharp": "^0.35.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
