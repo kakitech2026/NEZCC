@@ -174,3 +174,17 @@ Behavior:
 - The service uses the Mongo adapter's underlying collection with atomic `$inc`.
 - `booking-requests` runs reference generation in a `beforeValidate` create hook so the required field is populated before validation.
 - `booking-requests` preserves the original reference in a `beforeChange` update hook.
+
+## Ticket 4 Validation Decisions
+
+- Booking validation is implemented in `apps/web/src/lib/bookings/bookingValidationService.ts`.
+- The service accepts untrusted `BookingValidationInput` and returns sanitized `ValidatedBookingInput`.
+- `bookingType` must be `artist` or `venue`.
+- Artist bookings require exactly one `artist`, no `venue`, and a required `eventLocation`.
+- Venue bookings require exactly one `venue`, no `artist`, and ignore submitted `eventLocation` in favor of the selected venue.
+- Resource bookability is verified server-side with `isPublished = true`, `isActive = true`, and `bookingEnabled = true`.
+- `exact` and `flexible` bookings require `endDateTime > startDateTime`.
+- `full-day` bookings may use the same IST calendar date and are normalized to the full Asia/Kolkata day.
+- Required requester/event fields are sanitized and length-limited.
+- Optional numeric fields must be non-negative.
+- Terms and privacy consent must be accepted.

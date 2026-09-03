@@ -119,3 +119,29 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 4: booking validation service.
+
+### 2026-09-03: Ticket 4 Booking Validation Service
+
+Decision:
+
+- Add `bookingValidationService` as the canonical place for public booking input validation and normalization.
+- Return a sanitized `ValidatedBookingInput` rather than trusting raw form/API payloads.
+- Verify selected artist/venue bookability inside the service using trusted server-side Payload access.
+- Normalize full-day bookings to Asia/Kolkata day boundaries.
+
+Reason:
+
+- The plan requires one controlled validation path before later API and form work.
+
+Impact:
+
+- Ticket 9 can call this service from the booking API.
+- Ticket 13 can shape public form data around the same validation contract.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 5: quote and status services.

@@ -45,6 +45,8 @@ Cover:
 - Zero-duration exact booking.
 - Full-day same-date booking.
 - Flexible booking valid range.
+- Artist booking requires event location.
+- Venue booking ignores submitted event location and uses selected venue.
 - Malicious HTML/script payloads.
 - Anonymous booking record access denied.
 - Safe public response shape.
