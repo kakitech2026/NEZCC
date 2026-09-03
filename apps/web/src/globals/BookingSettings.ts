@@ -1,5 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
+const isAuthenticated = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
+
 export const BookingSettings: GlobalConfig = {
   slug: 'booking-settings',
   label: 'Booking Settings',
@@ -9,6 +11,7 @@ export const BookingSettings: GlobalConfig = {
   },
   access: {
     read: () => true,
+    update: isAuthenticated,
   },
   fields: [
     {
@@ -24,7 +27,7 @@ export const BookingSettings: GlobalConfig = {
               defaultValue:
                 'Bookings are subject to NEZCC approval and are confirmed only after approval and payment verification.',
             },
-            { name: 'adminNotificationEmail', type: 'email' },
+            { name: 'adminNotificationEmail', type: 'email', access: { read: isAuthenticated } },
             { name: 'bookingSupportEmail', type: 'email' },
             { name: 'bookingSupportPhone', type: 'text' },
             { name: 'defaultCurrency', type: 'text', required: true, defaultValue: 'INR' },

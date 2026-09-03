@@ -49,6 +49,17 @@ Future roles may split this into Super Admin, Content Editor, Booking Manager, a
 
 Public booking creation is performed only through trusted custom server code. The service validates the operation first and uses Payload `overrideAccess` only where required after business validation succeeds.
 
+## Implemented Ticket 2 Access Rules
+
+- `artist-categories` and `venue-categories` allow anonymous reads only when `isActive = true`.
+- `artists` and `venues` allow anonymous reads only when `isPublished = true` and `isActive = true`.
+- `bookingEnabled = false` does not hide an otherwise published/active artist or venue.
+- `booking-requests` deny anonymous direct Payload create/read/update/delete.
+- `availability-blocks` require an authenticated admin for create/read/update/delete.
+- `booking-settings` allows anonymous reads, but `adminNotificationEmail` is authenticated-only.
+- Private artist/venue contact fields use field-level read access and require authentication.
+- Artists and venues with booking history are protected by delete guards; admins should mark them inactive instead.
+
 ## Private Fields
 
 Private artist/venue fields must be protected at API/access level, not only hidden in React UI.

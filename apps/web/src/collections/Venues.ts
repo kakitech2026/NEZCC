@@ -1,5 +1,9 @@
 import type { CollectionConfig } from 'payload'
 
+const isAuthenticated = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
+
+const readPrivateField = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
+
 export const Venues: CollectionConfig = {
   slug: 'venues',
   labels: {
@@ -13,7 +17,41 @@ export const Venues: CollectionConfig = {
     description: 'Admin-managed NEZCC venue profiles.',
   },
   access: {
-    read: () => true,
+    create: isAuthenticated,
+    read: ({ req }) => {
+      if (req.user) return true
+
+      return {
+        isPublished: {
+          equals: true,
+        },
+        isActive: {
+          equals: true,
+        },
+      }
+    },
+    update: isAuthenticated,
+    delete: isAuthenticated,
+  },
+  hooks: {
+    beforeDelete: [
+      async ({ id, req }) => {
+        const bookings = await req.payload.find({
+          collection: 'booking-requests',
+          depth: 0,
+          limit: 1,
+          where: {
+            venue: {
+              equals: id,
+            },
+          },
+        })
+
+        if (bookings.totalDocs > 0) {
+          throw new Error('Venues with booking history cannot be deleted. Mark the venue inactive instead.')
+        }
+      },
+    ],
   },
   fields: [
     {
@@ -103,10 +141,10 @@ export const Venues: CollectionConfig = {
         {
           label: 'Internal',
           fields: [
-            { name: 'internalContactPerson', type: 'text' },
-            { name: 'internalPhone', type: 'text' },
-            { name: 'internalEmail', type: 'email' },
-            { name: 'internalNotes', type: 'textarea' },
+            { name: 'internalContactPerson', type: 'text', access: { read: readPrivateField } },
+            { name: 'internalPhone', type: 'text', access: { read: readPrivateField } },
+            { name: 'internalEmail', type: 'email', access: { read: readPrivateField } },
+            { name: 'internalNotes', type: 'textarea', access: { read: readPrivateField } },
           ],
         },
       ],

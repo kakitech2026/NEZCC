@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+const isAuthenticated = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
+
 export const VenueCategories: CollectionConfig = {
   slug: 'venue-categories',
   labels: {
@@ -13,7 +15,18 @@ export const VenueCategories: CollectionConfig = {
     description: 'Reusable categories for NEZCC venue types.',
   },
   access: {
-    read: () => true,
+    create: isAuthenticated,
+    read: ({ req }) => {
+      if (req.user) return true
+
+      return {
+        isActive: {
+          equals: true,
+        },
+      }
+    },
+    update: isAuthenticated,
+    delete: isAuthenticated,
   },
   fields: [
     {

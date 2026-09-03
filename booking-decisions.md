@@ -65,3 +65,31 @@ Plan deviation:
 Follow-up:
 
 - Continue Ticket 1 verification, then begin Ticket 2 access-control refinement.
+
+### 2026-09-03: Ticket 2 Access-Control Foundation Choices
+
+Decision:
+
+- Public catalogue reads are filtered at Payload access level for active categories and published/active artists and venues.
+- Private artist and venue contact/admin-note fields use field-level read access.
+- Booking requests remain closed to anonymous direct Payload access.
+- Availability blocks are admin-only.
+- `booking-settings.adminNotificationEmail` is hidden from anonymous reads.
+- Delete guards prevent normal deletion of artists or venues with booking history.
+
+Reason:
+
+- These choices implement the documented public/admin boundary before public UI or API work begins.
+
+Impact:
+
+- Later public pages can query Payload without receiving unpublished/inactive records or private fields.
+- Later booking API work must still enforce bookability and server-controlled fields; Ticket 2 does not implement the booking API.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 3: booking reference service.

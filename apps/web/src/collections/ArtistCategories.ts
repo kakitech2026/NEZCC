@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+const isAuthenticated = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
+
 export const ArtistCategories: CollectionConfig = {
   slug: 'artist-categories',
   labels: {
@@ -13,7 +15,18 @@ export const ArtistCategories: CollectionConfig = {
     description: 'Reusable art-form categories for cultural artists.',
   },
   access: {
-    read: () => true,
+    create: isAuthenticated,
+    read: ({ req }) => {
+      if (req.user) return true
+
+      return {
+        isActive: {
+          equals: true,
+        },
+      }
+    },
+    update: isAuthenticated,
+    delete: isAuthenticated,
   },
   fields: [
     {
