@@ -22,6 +22,12 @@ import { LibraryResources } from './collections/LibraryResources'
 import { NewsletterEditions } from './collections/NewsletterEditions'
 import { NewsletterSubscribers } from './collections/NewsletterSubscribers'
 import { FeedbackSubmissions } from './collections/FeedbackSubmissions'
+import { ArtistCategories } from './collections/ArtistCategories'
+import { Artists } from './collections/Artists'
+import { VenueCategories } from './collections/VenueCategories'
+import { Venues } from './collections/Venues'
+import { BookingRequests } from './collections/BookingRequests'
+import { AvailabilityBlocks } from './collections/AvailabilityBlocks'
 
 import { HomePage } from './globals/HomePage'
 import { EventsPage } from './globals/EventsPage'
@@ -32,6 +38,7 @@ import { LeadershipPage } from './globals/LeadershipPage'
 import { LibraryPage } from './globals/LibraryPage'
 import { NewsletterPage } from './globals/NewsletterPage'
 import { SiteSettings } from './globals/SiteSettings'
+import { BookingSettings } from './globals/BookingSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -89,6 +96,12 @@ export default buildConfig({
     NewsletterEditions,
     NewsletterSubscribers,
     FeedbackSubmissions,
+    ArtistCategories,
+    Artists,
+    VenueCategories,
+    Venues,
+    BookingRequests,
+    AvailabilityBlocks,
   ],
   globals: [
     HomePage,
@@ -100,6 +113,7 @@ export default buildConfig({
     LibraryPage,
     NewsletterPage,
     SiteSettings,
+    BookingSettings,
   ],
   editor: lexicalEditor(),
   sharp,

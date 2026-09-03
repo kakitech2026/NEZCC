@@ -2,7 +2,7 @@
 
 Source of truth: `booking-implementation-plan.md`.
 
-This document will track the exact Payload schema implemented for the artist/venue booking feature. Update this file when Ticket 1 defines concrete field names, enums, defaults, relationships, hooks, admin UI grouping, and indexes.
+This document tracks the exact Payload schema implemented for the artist/venue booking feature.
 
 ## Collections
 
@@ -10,7 +10,7 @@ This document will track the exact Payload schema implemented for the artist/ven
 
 Purpose: reusable art-form/category taxonomy for artists.
 
-Initial fields:
+Implemented fields:
 
 - `name`
 - `slug`
@@ -22,20 +22,20 @@ Initial fields:
 
 Purpose: admin-managed public cultural artist profiles.
 
-Initial field groups:
+Implemented field groups:
 
-- Publishing: slug, published status, active status, featured status, booking enabled.
-- Profile: name, individual/group, categories, state/region, district/city, bios, highlights.
-- Media: gallery images, video links.
-- Performance: awards, experience, languages, duration, team size, travel availability.
-- Public links/pricing: social links, website, indicative/base fee text.
-- Private admin fields: internal contact person, phone, email, notes.
+- Publishing: `slug`, `isPublished`, `isActive`, `isFeatured`, `bookingEnabled`.
+- Profile: `name`, `artistType`, `categories`, `stateRegion`, `districtCity`, `shortBiography`, `detailedProfile`, `culturalHighlights`.
+- Media: `photoGallery`, `videoLinks`.
+- Performance: `awardsRecognition`, `yearsOfExperience`, `languagesSpoken`, `performanceDuration`, `teamSize`, `travelAvailability`.
+- Public links/pricing: `facebookURL`, `instagramURL`, `youtubeURL`, `websiteURL`, `indicativeFeeText`.
+- Private admin fields: `internalContactPerson`, `internalPhone`, `internalEmail`, `internalNotes`.
 
 ### `venue-categories`
 
 Purpose: reusable taxonomy for NEZCC venue types.
 
-Initial fields:
+Implemented fields:
 
 - `name`
 - `slug`
@@ -47,48 +47,65 @@ Initial fields:
 
 Purpose: admin-managed public NEZCC venue profiles.
 
-Initial field groups:
+Implemented field groups:
 
-- Publishing: slug, published status, active status, featured status, booking enabled.
-- Profile: name, category, address, city/state, map embed URL.
-- Facilities: capacity, indoor/outdoor, stage, seating, parking, sound, lighting, green room, projector/screen, accessibility.
-- Media/policies: gallery, available timings, rules/terms text or document, indicative/base rent text.
-- Private admin fields: internal contact person, phone, email, notes.
+- Publishing: `slug`, `isPublished`, `isActive`, `isFeatured`, `bookingEnabled`.
+- Profile: `name`, `category`, `address`, `cityState`, `googleMapsEmbedURL`, `description`.
+- Facilities: `capacity`, `indoorOutdoor`, `stageAvailability`, `seatingType`, `parkingAvailability`, `soundSystemAvailability`, `lightingAvailability`, `greenRoomAvailability`, `projectorScreenAvailability`, `accessibilityFacilities`.
+- Media/policies: `availableTimings`, `photoGallery`, `rulesTermsText`, `rulesTermsDocument`, `indicativeRentText`.
+- Private admin fields: `internalContactPerson`, `internalPhone`, `internalEmail`, `internalNotes`.
 
 ### `booking-requests`
 
 Purpose: unified admin inbox for artist and venue booking requests.
 
-Initial field groups:
+Implemented field groups:
 
-- Identity: booking reference number, booking type, related artist OR venue.
-- Requester: full name, optional organization, email, phone.
-- Event: event name/type, artist event location OR venue location notes, start/end date-time, time type, audience size, budget amount/notes, requirements, message.
-- Consent: terms/privacy booleans, timestamps, accepted policy version/date, policy snapshot or immutable policy reference.
-- Workflow: booking status, payment status, quote fields, payment-ready fields, warnings, override fields, admin notes.
-- Integrity: idempotency token, source page, operational rate-limit metadata, audit history.
+- Identity: `bookingReference`, `bookingType`, `artist`, `venue`.
+- Requester: `requesterName`, `organizationName`, `email`, `phone`.
+- Event: `eventName`, `eventType`, `eventLocation`, `eventLocationNotes`, `startDateTime`, `endDateTime`, `timeType`, `expectedAudienceSize`, `budgetAmount`, `budgetNotes`, `specialRequirements`, `message`.
+- Consent: `termsAccepted`, `termsAcceptedAt`, `privacyAccepted`, `privacyAcceptedAt`, `acceptedPolicyVersion`, `acceptedPolicyDate`, `acceptedTermsSnapshot`, `acceptedPrivacySnapshot`.
+- Workflow: `bookingStatus`, `paymentStatus`, `adminNotes`.
+- Quote/payment: `baseQuoteAmount`, `additionalCharges`, `discount`, `taxAmount`, `finalPayableAmount`, `quoteNotes`, `quoteValidUntil`, `quoteCreatedAt`, `quotedBy`, `paymentGateway`, `paymentLinkReference`, `paymentAmountReceived`, `paymentReceivedAt`, `manualPaymentConfirmationNote`.
+- Warnings: `hasConflict`, `conflictType`, `conflictingBookings`, `capacityWarning`, `availabilityBlockWarning`, `availabilityBlocks`, `warningNotes`, `warningOverride`, `warningOverrideReason`, `warningOverriddenBy`, `warningOverriddenAt`.
+- Integrity: `sourcePage`, `idempotencyToken`, `rateLimitKey`, `auditHistory`.
 
-Initial booking status:
+Implemented booking status values:
 
-- `New`
+- `new`
+- `under-review`
+- `need-more-information`
+- `approved`
+- `pending-payment`
+- `confirmed`
+- `completed`
+- `rejected`
+- `cancelled`
 
-Initial payment status:
+Implemented payment status values:
 
-- `Not Required`
+- `not-required`
+- `pending`
+- `link-sent`
+- `paid`
+- `failed`
+- `refunded`
+- `cancelled`
 
 ### `availability-blocks`
 
 Purpose: admin-only blocks for artist/venue unavailability outside booking requests.
 
-Initial fields:
+Implemented fields:
 
-- Applies to artist or venue.
-- Related artist OR venue.
-- Start date/time.
-- End date/time.
-- Reason.
-- Notes.
-- Active status.
+- `resourceType`
+- `artist`
+- `venue`
+- `startDateTime`
+- `endDateTime`
+- `reason`
+- `notes`
+- `isActive`
 
 Validation:
 
@@ -103,29 +120,28 @@ Validation:
 
 Purpose: CMS-editable booking business settings and public policy text.
 
-Initial fields:
+Implemented fields:
 
-- Booking enabled.
-- Public booking notice.
-- Admin notification email.
-- Booking support email.
-- Booking support phone.
-- Default currency, INR.
-- Terms and conditions.
-- Privacy notice.
-- Cancellation policy.
-- Payment/refund policy.
-- Approval disclaimer.
-- Policy version/date.
+- `bookingEnabled`
+- `publicBookingNotice`
+- `adminNotificationEmail`
+- `bookingSupportEmail`
+- `bookingSupportPhone`
+- `defaultCurrency`
+- `termsAndConditions`
+- `privacyNotice`
+- `cancellationPolicy`
+- `paymentRefundPolicy`
+- `approvalDisclaimer`
+- `policyVersion`
+- `policyDate`
 
 Public reads must expose only fields needed by public pages/forms.
 
-## Schema Notes To Resolve During Ticket 1
+## Ticket 1 Schema Decisions
 
-- Exact Payload field names.
-- Exact enum values and labels.
-- Whether policy snapshots are stored as text fields on bookings or via immutable policy-version records.
-- Whether audit history stays embedded in `booking-requests`.
-- Whether booking reference counters use a small dedicated collection.
-- Admin group labels/sidebar organization.
-- Indexes for slug, booking reference, idempotency token, booking type/resource/date queries.
+- Policy context is stored as embedded snapshots on `booking-requests` with `acceptedTermsSnapshot` and `acceptedPrivacySnapshot`.
+- Audit history starts as an embedded `auditHistory` array on `booking-requests`.
+- Booking reference counter implementation is deferred to Ticket 3.
+- Booking-related collections/globals use the Payload admin group `Bookings`.
+- Initial indexes are set on slugs, booking reference, booking type/status fields, payment status, date-time fields, idempotency token, and rate-limit key.

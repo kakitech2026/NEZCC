@@ -84,6 +84,12 @@ export interface Config {
     'newsletter-editions': NewsletterEdition;
     'newsletter-subscribers': NewsletterSubscriber;
     'feedback-submissions': FeedbackSubmission;
+    'artist-categories': ArtistCategory;
+    artists: Artist;
+    'venue-categories': VenueCategory;
+    venues: Venue;
+    'booking-requests': BookingRequest;
+    'availability-blocks': AvailabilityBlock;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -108,6 +114,12 @@ export interface Config {
     'newsletter-editions': NewsletterEditionsSelect<false> | NewsletterEditionsSelect<true>;
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     'feedback-submissions': FeedbackSubmissionsSelect<false> | FeedbackSubmissionsSelect<true>;
+    'artist-categories': ArtistCategoriesSelect<false> | ArtistCategoriesSelect<true>;
+    artists: ArtistsSelect<false> | ArtistsSelect<true>;
+    'venue-categories': VenueCategoriesSelect<false> | VenueCategoriesSelect<true>;
+    venues: VenuesSelect<false> | VenuesSelect<true>;
+    'booking-requests': BookingRequestsSelect<false> | BookingRequestsSelect<true>;
+    'availability-blocks': AvailabilityBlocksSelect<false> | AvailabilityBlocksSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -127,6 +139,7 @@ export interface Config {
     'library-page': LibraryPage;
     'newsletter-page': NewsletterPage;
     'site-settings': SiteSetting;
+    'booking-settings': BookingSetting;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
@@ -138,6 +151,7 @@ export interface Config {
     'library-page': LibraryPageSelect<false> | LibraryPageSelect<true>;
     'newsletter-page': NewsletterPageSelect<false> | NewsletterPageSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'booking-settings': BookingSettingsSelect<false> | BookingSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -710,6 +724,279 @@ export interface FeedbackSubmission {
   createdAt: string;
 }
 /**
+ * Reusable art-form categories for cultural artists.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artist-categories".
+ */
+export interface ArtistCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  sortOrder?: number | null;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Admin-managed cultural artist profiles under or associated with NEZCC.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artists".
+ */
+export interface Artist {
+  id: string;
+  name: string;
+  /**
+   * Public URL slug for the artist profile.
+   */
+  slug: string;
+  artistType: 'individual' | 'group';
+  categories?: (string | ArtistCategory)[] | null;
+  stateRegion: string;
+  districtCity?: string | null;
+  shortBiography: string;
+  detailedProfile?: string | null;
+  culturalHighlights?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  photoGallery?:
+    | {
+        image: string | Media;
+        alt: string;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  videoLinks?:
+    | {
+        title?: string | null;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  awardsRecognition?: string | null;
+  yearsOfExperience?: number | null;
+  languagesSpoken?: string | null;
+  performanceDuration?: string | null;
+  teamSize?: number | null;
+  travelAvailability?: ('available' | 'local-only' | 'subject-to-confirmation' | 'not-available') | null;
+  facebookURL?: string | null;
+  instagramURL?: string | null;
+  youtubeURL?: string | null;
+  websiteURL?: string | null;
+  /**
+   * Optional public indicative/base fee text. Final pricing is set by NEZCC admin per booking.
+   */
+  indicativeFeeText?: string | null;
+  internalContactPerson?: string | null;
+  internalPhone?: string | null;
+  internalEmail?: string | null;
+  internalNotes?: string | null;
+  isPublished?: boolean | null;
+  isActive?: boolean | null;
+  bookingEnabled?: boolean | null;
+  isFeatured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Reusable categories for NEZCC venue types.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venue-categories".
+ */
+export interface VenueCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  sortOrder?: number | null;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Admin-managed NEZCC venue profiles.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venues".
+ */
+export interface Venue {
+  id: string;
+  name: string;
+  slug: string;
+  category?: (string | null) | VenueCategory;
+  address: string;
+  cityState: string;
+  /**
+   * Paste only the URL from the iframe src attribute.
+   */
+  googleMapsEmbedURL?: string | null;
+  description: string;
+  capacity: number;
+  indoorOutdoor?: ('indoor' | 'outdoor' | 'indoor-outdoor') | null;
+  stageAvailability?: boolean | null;
+  seatingType?: string | null;
+  parkingAvailability?: boolean | null;
+  soundSystemAvailability?: boolean | null;
+  lightingAvailability?: boolean | null;
+  greenRoomAvailability?: boolean | null;
+  projectorScreenAvailability?: boolean | null;
+  accessibilityFacilities?: string | null;
+  availableTimings?: string | null;
+  photoGallery?:
+    | {
+        image: string | Media;
+        alt: string;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  rulesTermsText?: string | null;
+  rulesTermsDocument?: (string | null) | Media;
+  /**
+   * Optional public indicative/base rent text. Final pricing is set by NEZCC admin per booking.
+   */
+  indicativeRentText?: string | null;
+  internalContactPerson?: string | null;
+  internalPhone?: string | null;
+  internalEmail?: string | null;
+  internalNotes?: string | null;
+  isPublished?: boolean | null;
+  isActive?: boolean | null;
+  bookingEnabled?: boolean | null;
+  isFeatured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Unified admin inbox for artist and venue booking requests.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-requests".
+ */
+export interface BookingRequest {
+  id: string;
+  /**
+   * Generated server-side by the booking reference service.
+   */
+  bookingReference: string;
+  bookingType: 'artist' | 'venue';
+  artist?: (string | null) | Artist;
+  venue?: (string | null) | Venue;
+  requesterName: string;
+  organizationName?: string | null;
+  email: string;
+  phone: string;
+  eventName: string;
+  eventType: string;
+  /**
+   * Required for artist bookings. Venue bookings use the selected venue as the event location.
+   */
+  eventLocation?: string | null;
+  /**
+   * Optional notes for venue bookings.
+   */
+  eventLocationNotes?: string | null;
+  startDateTime: string;
+  endDateTime: string;
+  timeType: 'exact' | 'flexible' | 'full-day';
+  expectedAudienceSize?: number | null;
+  budgetAmount?: number | null;
+  budgetNotes?: string | null;
+  specialRequirements?: string | null;
+  message?: string | null;
+  termsAccepted?: boolean | null;
+  termsAcceptedAt?: string | null;
+  privacyAccepted?: boolean | null;
+  privacyAcceptedAt?: string | null;
+  acceptedPolicyVersion?: string | null;
+  acceptedPolicyDate?: string | null;
+  acceptedTermsSnapshot?: string | null;
+  acceptedPrivacySnapshot?: string | null;
+  bookingStatus:
+    | 'new'
+    | 'under-review'
+    | 'need-more-information'
+    | 'approved'
+    | 'pending-payment'
+    | 'confirmed'
+    | 'completed'
+    | 'rejected'
+    | 'cancelled';
+  paymentStatus: 'not-required' | 'pending' | 'link-sent' | 'paid' | 'failed' | 'refunded' | 'cancelled';
+  adminNotes?: string | null;
+  baseQuoteAmount?: number | null;
+  additionalCharges?: number | null;
+  discount?: number | null;
+  taxAmount?: number | null;
+  /**
+   * Calculated server-side in the quote service.
+   */
+  finalPayableAmount?: number | null;
+  quoteNotes?: string | null;
+  quoteValidUntil?: string | null;
+  quoteCreatedAt?: string | null;
+  quotedBy?: (string | null) | User;
+  paymentGateway?: string | null;
+  paymentLinkReference?: string | null;
+  paymentAmountReceived?: number | null;
+  paymentReceivedAt?: string | null;
+  manualPaymentConfirmationNote?: string | null;
+  hasConflict?: boolean | null;
+  conflictType?: string | null;
+  conflictingBookings?: (string | BookingRequest)[] | null;
+  capacityWarning?: boolean | null;
+  availabilityBlockWarning?: boolean | null;
+  availabilityBlocks?: (string | AvailabilityBlock)[] | null;
+  warningNotes?: string | null;
+  warningOverride?: boolean | null;
+  warningOverrideReason?: string | null;
+  warningOverriddenBy?: (string | null) | User;
+  warningOverriddenAt?: string | null;
+  sourcePage?: string | null;
+  idempotencyToken?: string | null;
+  rateLimitKey?: string | null;
+  auditHistory?:
+    | {
+        eventType: string;
+        previousValue?: string | null;
+        newValue?: string | null;
+        note?: string | null;
+        changedBy?: (string | null) | User;
+        changedAt: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Admin-only artist or venue unavailability blocks for closures, travel, maintenance, or internal reservations.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "availability-blocks".
+ */
+export interface AvailabilityBlock {
+  id: string;
+  resourceType: 'artist' | 'venue';
+  artist?: (string | null) | Artist;
+  venue?: (string | null) | Venue;
+  startDateTime: string;
+  endDateTime: string;
+  reason: string;
+  notes?: string | null;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -800,6 +1087,30 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'feedback-submissions';
         value: string | FeedbackSubmission;
+      } | null)
+    | ({
+        relationTo: 'artist-categories';
+        value: string | ArtistCategory;
+      } | null)
+    | ({
+        relationTo: 'artists';
+        value: string | Artist;
+      } | null)
+    | ({
+        relationTo: 'venue-categories';
+        value: string | VenueCategory;
+      } | null)
+    | ({
+        relationTo: 'venues';
+        value: string | Venue;
+      } | null)
+    | ({
+        relationTo: 'booking-requests';
+        value: string | BookingRequest;
+      } | null)
+    | ({
+        relationTo: 'availability-blocks';
+        value: string | AvailabilityBlock;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1218,6 +1529,228 @@ export interface FeedbackSubmissionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artist-categories_select".
+ */
+export interface ArtistCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  sortOrder?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "artists_select".
+ */
+export interface ArtistsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  artistType?: T;
+  categories?: T;
+  stateRegion?: T;
+  districtCity?: T;
+  shortBiography?: T;
+  detailedProfile?: T;
+  culturalHighlights?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  photoGallery?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        caption?: T;
+        id?: T;
+      };
+  videoLinks?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        id?: T;
+      };
+  awardsRecognition?: T;
+  yearsOfExperience?: T;
+  languagesSpoken?: T;
+  performanceDuration?: T;
+  teamSize?: T;
+  travelAvailability?: T;
+  facebookURL?: T;
+  instagramURL?: T;
+  youtubeURL?: T;
+  websiteURL?: T;
+  indicativeFeeText?: T;
+  internalContactPerson?: T;
+  internalPhone?: T;
+  internalEmail?: T;
+  internalNotes?: T;
+  isPublished?: T;
+  isActive?: T;
+  bookingEnabled?: T;
+  isFeatured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venue-categories_select".
+ */
+export interface VenueCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  sortOrder?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "venues_select".
+ */
+export interface VenuesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  category?: T;
+  address?: T;
+  cityState?: T;
+  googleMapsEmbedURL?: T;
+  description?: T;
+  capacity?: T;
+  indoorOutdoor?: T;
+  stageAvailability?: T;
+  seatingType?: T;
+  parkingAvailability?: T;
+  soundSystemAvailability?: T;
+  lightingAvailability?: T;
+  greenRoomAvailability?: T;
+  projectorScreenAvailability?: T;
+  accessibilityFacilities?: T;
+  availableTimings?: T;
+  photoGallery?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        caption?: T;
+        id?: T;
+      };
+  rulesTermsText?: T;
+  rulesTermsDocument?: T;
+  indicativeRentText?: T;
+  internalContactPerson?: T;
+  internalPhone?: T;
+  internalEmail?: T;
+  internalNotes?: T;
+  isPublished?: T;
+  isActive?: T;
+  bookingEnabled?: T;
+  isFeatured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-requests_select".
+ */
+export interface BookingRequestsSelect<T extends boolean = true> {
+  bookingReference?: T;
+  bookingType?: T;
+  artist?: T;
+  venue?: T;
+  requesterName?: T;
+  organizationName?: T;
+  email?: T;
+  phone?: T;
+  eventName?: T;
+  eventType?: T;
+  eventLocation?: T;
+  eventLocationNotes?: T;
+  startDateTime?: T;
+  endDateTime?: T;
+  timeType?: T;
+  expectedAudienceSize?: T;
+  budgetAmount?: T;
+  budgetNotes?: T;
+  specialRequirements?: T;
+  message?: T;
+  termsAccepted?: T;
+  termsAcceptedAt?: T;
+  privacyAccepted?: T;
+  privacyAcceptedAt?: T;
+  acceptedPolicyVersion?: T;
+  acceptedPolicyDate?: T;
+  acceptedTermsSnapshot?: T;
+  acceptedPrivacySnapshot?: T;
+  bookingStatus?: T;
+  paymentStatus?: T;
+  adminNotes?: T;
+  baseQuoteAmount?: T;
+  additionalCharges?: T;
+  discount?: T;
+  taxAmount?: T;
+  finalPayableAmount?: T;
+  quoteNotes?: T;
+  quoteValidUntil?: T;
+  quoteCreatedAt?: T;
+  quotedBy?: T;
+  paymentGateway?: T;
+  paymentLinkReference?: T;
+  paymentAmountReceived?: T;
+  paymentReceivedAt?: T;
+  manualPaymentConfirmationNote?: T;
+  hasConflict?: T;
+  conflictType?: T;
+  conflictingBookings?: T;
+  capacityWarning?: T;
+  availabilityBlockWarning?: T;
+  availabilityBlocks?: T;
+  warningNotes?: T;
+  warningOverride?: T;
+  warningOverrideReason?: T;
+  warningOverriddenBy?: T;
+  warningOverriddenAt?: T;
+  sourcePage?: T;
+  idempotencyToken?: T;
+  rateLimitKey?: T;
+  auditHistory?:
+    | T
+    | {
+        eventType?: T;
+        previousValue?: T;
+        newValue?: T;
+        note?: T;
+        changedBy?: T;
+        changedAt?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "availability-blocks_select".
+ */
+export interface AvailabilityBlocksSelect<T extends boolean = true> {
+  resourceType?: T;
+  artist?: T;
+  venue?: T;
+  startDateTime?: T;
+  endDateTime?: T;
+  reason?: T;
+  notes?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -1553,6 +2086,30 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
+ * Manage public booking notices, support contacts, and booking policy text.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-settings".
+ */
+export interface BookingSetting {
+  id: string;
+  bookingEnabled: boolean;
+  publicBookingNotice?: string | null;
+  adminNotificationEmail?: string | null;
+  bookingSupportEmail?: string | null;
+  bookingSupportPhone?: string | null;
+  defaultCurrency: string;
+  termsAndConditions: string;
+  privacyNotice: string;
+  cancellationPolicy?: string | null;
+  paymentRefundPolicy?: string | null;
+  approvalDisclaimer?: string | null;
+  policyVersion: string;
+  policyDate: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page_select".
  */
@@ -1792,6 +2349,28 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   instagramURL?: T;
   xURL?: T;
   youtubeURL?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-settings_select".
+ */
+export interface BookingSettingsSelect<T extends boolean = true> {
+  bookingEnabled?: T;
+  publicBookingNotice?: T;
+  adminNotificationEmail?: T;
+  bookingSupportEmail?: T;
+  bookingSupportPhone?: T;
+  defaultCurrency?: T;
+  termsAndConditions?: T;
+  privacyNotice?: T;
+  cancellationPolicy?: T;
+  paymentRefundPolicy?: T;
+  approvalDisclaimer?: T;
+  policyVersion?: T;
+  policyDate?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
