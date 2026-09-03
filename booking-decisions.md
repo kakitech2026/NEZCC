@@ -93,3 +93,29 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 3: booking reference service.
+
+### 2026-09-03: Ticket 3 Booking Reference Service
+
+Decision:
+
+- Add hidden `booking-reference-counters` collection for per-year sequence state.
+- Generate booking references with `generateBookingReference` using Mongo `findOneAndUpdate`, `$inc`, `upsert: true`, and `returnDocument: 'after'`.
+- Use `NEZCC-BKG-YYYY-000001` reference format.
+- Populate `bookingReference` in a `booking-requests` create hook and preserve it on update.
+
+Reason:
+
+- This satisfies the plan's requirement for unique, server-generated references without unsafe `count + 1` logic.
+
+Impact:
+
+- Later booking creation code can rely on Payload create operations to receive a reference automatically.
+- The counter collection is internal infrastructure and hidden from normal admin navigation.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 4: booking validation service.

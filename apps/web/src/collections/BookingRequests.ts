@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { generateBookingReference } from '@/lib/bookings/bookingReferenceService'
 
 const isAuthenticated = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
 
@@ -19,6 +20,32 @@ export const BookingRequests: CollectionConfig = {
     read: isAuthenticated,
     update: isAuthenticated,
     delete: isAuthenticated,
+  },
+  hooks: {
+    beforeValidate: [
+      async ({ data, operation, req }) => {
+        if (operation !== 'create' || !data) {
+          return data
+        }
+
+        return {
+          ...data,
+          bookingReference: await generateBookingReference(req),
+        }
+      },
+    ],
+    beforeChange: [
+      ({ data, operation, originalDoc }) => {
+        if (operation === 'update' && originalDoc?.bookingReference) {
+          return {
+            ...data,
+            bookingReference: originalDoc.bookingReference,
+          }
+        }
+
+        return data
+      },
+    ],
   },
   fields: [
     {

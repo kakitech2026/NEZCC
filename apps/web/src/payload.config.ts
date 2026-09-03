@@ -28,6 +28,7 @@ import { VenueCategories } from './collections/VenueCategories'
 import { Venues } from './collections/Venues'
 import { BookingRequests } from './collections/BookingRequests'
 import { AvailabilityBlocks } from './collections/AvailabilityBlocks'
+import { BookingReferenceCounters } from './collections/BookingReferenceCounters'
 
 import { HomePage } from './globals/HomePage'
 import { EventsPage } from './globals/EventsPage'
@@ -102,6 +103,7 @@ export default buildConfig({
     Venues,
     BookingRequests,
     AvailabilityBlocks,
+    BookingReferenceCounters,
   ],
   globals: [
     HomePage,

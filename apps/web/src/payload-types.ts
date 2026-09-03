@@ -90,6 +90,7 @@ export interface Config {
     venues: Venue;
     'booking-requests': BookingRequest;
     'availability-blocks': AvailabilityBlock;
+    'booking-reference-counters': BookingReferenceCounter;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -120,6 +121,7 @@ export interface Config {
     venues: VenuesSelect<false> | VenuesSelect<true>;
     'booking-requests': BookingRequestsSelect<false> | BookingRequestsSelect<true>;
     'availability-blocks': AvailabilityBlocksSelect<false> | AvailabilityBlocksSelect<true>;
+    'booking-reference-counters': BookingReferenceCountersSelect<false> | BookingReferenceCountersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -997,6 +999,20 @@ export interface AvailabilityBlock {
   createdAt: string;
 }
 /**
+ * Internal atomic counters for booking reference generation.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-reference-counters".
+ */
+export interface BookingReferenceCounter {
+  id: string;
+  key: string;
+  year: number;
+  sequence: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -1111,6 +1127,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'availability-blocks';
         value: string | AvailabilityBlock;
+      } | null)
+    | ({
+        relationTo: 'booking-reference-counters';
+        value: string | BookingReferenceCounter;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1746,6 +1766,17 @@ export interface AvailabilityBlocksSelect<T extends boolean = true> {
   reason?: T;
   notes?: T;
   isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-reference-counters_select".
+ */
+export interface BookingReferenceCountersSelect<T extends boolean = true> {
+  key?: T;
+  year?: T;
+  sequence?: T;
   updatedAt?: T;
   createdAt?: T;
 }
