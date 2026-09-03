@@ -65,7 +65,7 @@ Implemented field groups:
 - Requester: `requesterName`, `organizationName`, `email`, `phone`.
 - Event: `eventName`, `eventType`, `eventLocation`, `eventLocationNotes`, `startDateTime`, `endDateTime`, `timeType`, `expectedAudienceSize`, `budgetAmount`, `budgetNotes`, `specialRequirements`, `message`.
 - Consent: `termsAccepted`, `termsAcceptedAt`, `privacyAccepted`, `privacyAcceptedAt`, `acceptedPolicyVersion`, `acceptedPolicyDate`, `acceptedTermsSnapshot`, `acceptedPrivacySnapshot`.
-- Workflow: `bookingStatus`, `paymentStatus`, `adminNotes`.
+- Workflow: `bookingStatus`, `paymentStatus`, `adminNotes`, `transitionOverride`, `transitionOverrideReason`.
 - Quote/payment: `baseQuoteAmount`, `additionalCharges`, `discount`, `taxAmount`, `finalPayableAmount`, `quoteNotes`, `quoteValidUntil`, `quoteCreatedAt`, `quotedBy`, `paymentGateway`, `paymentLinkReference`, `paymentAmountReceived`, `paymentReceivedAt`, `manualPaymentConfirmationNote`.
 - Warnings: `hasConflict`, `conflictType`, `conflictingBookings`, `capacityWarning`, `availabilityBlockWarning`, `availabilityBlocks`, `warningNotes`, `warningOverride`, `warningOverrideReason`, `warningOverriddenBy`, `warningOverriddenAt`.
 - Integrity: `sourcePage`, `idempotencyToken`, `rateLimitKey`, `auditHistory`.

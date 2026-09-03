@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { generateBookingReference } from '@/lib/bookings/bookingReferenceService'
+import { normalizeBookingWorkflow } from '@/lib/bookings/bookingStatusService'
 
 const isAuthenticated = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
 
@@ -36,14 +37,32 @@ export const BookingRequests: CollectionConfig = {
     ],
     beforeChange: [
       ({ data, operation, originalDoc }) => {
+        const workflow = normalizeBookingWorkflow({
+          additionalCharges: data.additionalCharges,
+          baseQuoteAmount: data.baseQuoteAmount,
+          bookingStatus: data.bookingStatus,
+          discount: data.discount,
+          originalBookingStatus: originalDoc?.bookingStatus,
+          originalPaymentLinkReference: originalDoc?.paymentLinkReference,
+          paymentLinkReference: data.paymentLinkReference,
+          paymentStatus: data.paymentStatus,
+          taxAmount: data.taxAmount,
+          transitionOverride: data.transitionOverride,
+          transitionOverrideReason: data.transitionOverrideReason,
+        })
+        const nextData = {
+          ...data,
+          ...workflow,
+        }
+
         if (operation === 'update' && originalDoc?.bookingReference) {
           return {
-            ...data,
+            ...nextData,
             bookingReference: originalDoc.bookingReference,
           }
         }
 
-        return data
+        return nextData
       },
     ],
   },
@@ -207,6 +226,21 @@ export const BookingRequests: CollectionConfig = {
               ],
             },
             { name: 'adminNotes', type: 'textarea' },
+            {
+              name: 'transitionOverride',
+              type: 'checkbox',
+              defaultValue: false,
+              admin: {
+                description: 'Deliberately allow an unusual status transition. Must include a reason.',
+              },
+            },
+            {
+              name: 'transitionOverrideReason',
+              type: 'textarea',
+              admin: {
+                condition: (_, siblingData) => Boolean(siblingData?.transitionOverride),
+              },
+            },
           ],
         },
         {

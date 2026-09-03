@@ -145,3 +145,30 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 5: quote and status services.
+
+### 2026-09-03: Ticket 5 Quote and Status Services
+
+Decision:
+
+- Quote totals are calculated server-side from `baseQuoteAmount`, `additionalCharges`, `taxAmount`, and `discount`.
+- `finalPayableAmount` is not independently editable.
+- The status service enforces documented booking transitions, automatic approval behavior, manual payment-link behavior, and the confirmed-booking payment invariant.
+- Status transition overrides use dedicated fields: `transitionOverride` and `transitionOverrideReason`.
+
+Reason:
+
+- Financial totals and workflow state must remain consistent even when records are edited directly in the admin panel.
+- Transition overrides are intentionally separate from conflict warning overrides because they represent different admin decisions and will be audited separately in Ticket 6.
+
+Impact:
+
+- Admins can only perform unusual workflow transitions through an explicit transition override field.
+- Ticket 6 can audit transition overrides separately from conflict/capacity/availability warning overrides.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 6: audit history hooks.

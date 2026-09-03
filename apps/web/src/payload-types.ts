@@ -934,6 +934,11 @@ export interface BookingRequest {
     | 'cancelled';
   paymentStatus: 'not-required' | 'pending' | 'link-sent' | 'paid' | 'failed' | 'refunded' | 'cancelled';
   adminNotes?: string | null;
+  /**
+   * Deliberately allow an unusual status transition. Must include a reason.
+   */
+  transitionOverride?: boolean | null;
+  transitionOverrideReason?: string | null;
   baseQuoteAmount?: number | null;
   additionalCharges?: number | null;
   discount?: number | null;
@@ -1711,6 +1716,8 @@ export interface BookingRequestsSelect<T extends boolean = true> {
   bookingStatus?: T;
   paymentStatus?: T;
   adminNotes?: T;
+  transitionOverride?: T;
+  transitionOverrideReason?: T;
   baseQuoteAmount?: T;
   additionalCharges?: T;
   discount?: T;

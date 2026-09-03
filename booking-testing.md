@@ -22,6 +22,7 @@ Cover:
 - Booking validation.
 - Quote calculation.
 - Booking/payment transition rules.
+- Deliberate transition override behavior.
 - Confirmation invariant.
 - Audit history append behavior.
 - Conflict overlap rules.

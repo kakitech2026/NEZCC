@@ -42,6 +42,8 @@ Side transitions:
 - `New / Under Review / Approved -> Rejected`
 - `Approved / Pending Payment / Confirmed -> Cancelled`
 
+Unusual status transitions require `transitionOverride = true` and a `transitionOverrideReason`. This is separate from warning overrides, which only apply to conflict, capacity, or availability warnings.
+
 ## Payment Statuses
 
 - `Not Required`
@@ -104,6 +106,7 @@ Track:
 - Booking status changes.
 - Payment status changes.
 - Quote changes.
+- Transition overrides.
 - Warning overrides.
 - Admin note/reason where relevant.
 - Changed by and changed at.
