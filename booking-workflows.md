@@ -103,6 +103,7 @@ Audit history must be:
 
 Track:
 
+- Booking creation.
 - Booking status changes.
 - Payment status changes.
 - Quote changes.
@@ -110,6 +111,8 @@ Track:
 - Warning overrides.
 - Admin note/reason where relevant.
 - Changed by and changed at.
+
+Directly submitted `auditHistory` data is ignored. On update, the server preserves existing audit entries from the stored booking and appends new entries for tracked changes.
 
 ## Global Booking Disabled
 

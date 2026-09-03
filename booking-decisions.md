@@ -172,3 +172,30 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 6: audit history hooks.
+
+### 2026-09-03: Ticket 6 Audit History Hooks
+
+Decision:
+
+- Add `bookingAuditService` as the canonical audit-entry builder for booking requests.
+- Booking create operations append a server-generated `booking-created` entry.
+- Booking update operations preserve stored audit history and append entries for booking status, payment status, quote, transition override, and warning override changes.
+- Submitted `auditHistory` values are ignored on update, preventing manual replacement or truncation.
+
+Reason:
+
+- Audit history must be append-only and server-generated while still living inside the embedded `booking-requests.auditHistory` array selected in Ticket 1.
+- Keeping comparison logic in a service makes the Payload hook small and testable.
+
+Impact:
+
+- Important admin actions are traceable with previous value, new value, optional note/reason, user id where available, and timestamp.
+- Ticket 14 can rely on this foundation when refining the admin workflow.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 7: conflict and availability service.

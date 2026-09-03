@@ -25,6 +25,7 @@ Cover:
 - Deliberate transition override behavior.
 - Confirmation invariant.
 - Audit history append behavior.
+- Manual audit-history mutation prevention.
 - Conflict overlap rules.
 - Availability-block checks.
 - Venue capacity warning.

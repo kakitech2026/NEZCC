@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { buildBookingAuditHistory } from '@/lib/bookings/bookingAuditService'
 import { generateBookingReference } from '@/lib/bookings/bookingReferenceService'
 import { normalizeBookingWorkflow } from '@/lib/bookings/bookingStatusService'
 
@@ -36,7 +37,7 @@ export const BookingRequests: CollectionConfig = {
       },
     ],
     beforeChange: [
-      ({ data, operation, originalDoc }) => {
+      ({ data, operation, originalDoc, req }) => {
         const workflow = normalizeBookingWorkflow({
           additionalCharges: data.additionalCharges,
           baseQuoteAmount: data.baseQuoteAmount,
@@ -50,10 +51,16 @@ export const BookingRequests: CollectionConfig = {
           transitionOverride: data.transitionOverride,
           transitionOverrideReason: data.transitionOverrideReason,
         })
-        const nextData = {
+        const nextData: Record<string, unknown> = {
           ...data,
           ...workflow,
         }
+        nextData.auditHistory = buildBookingAuditHistory({
+          data: nextData,
+          operation,
+          originalDoc,
+          user: req.user,
+        })
 
         if (operation === 'update' && originalDoc?.bookingReference) {
           return {
