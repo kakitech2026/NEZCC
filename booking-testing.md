@@ -63,6 +63,8 @@ Cover:
 
 - `/artists` loads.
 - `/artists/[slug]` loads.
+- Artist search, category, location, and individual/group filters preserve URL query state.
+- Booking-disabled artist profiles remain visible with the booking CTA disabled or removed.
 - `/venues` loads.
 - `/venues/[slug]` loads.
 - Search/filter controls work.

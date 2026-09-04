@@ -285,3 +285,31 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 10: public artist catalogue.
+
+### 2026-09-04: Ticket 10 Public Artist Catalogue
+
+Decision:
+
+- Add `/artists` as a dynamic public artist catalogue with search, category, location, and artist-type filters.
+- Add `/artists/[slug]` as a dynamic public artist detail page.
+- Public pages query only published and active artists and active artist categories.
+- Published, active, booking-disabled artists remain visible, but the booking CTA is replaced with a non-actionable unavailable state.
+- Public detail pages display profile, cultural highlights, gallery, public links, indicative fee text, and performance details. Private contact/admin fields are not rendered.
+
+Reason:
+
+- The frozen plan requires public browsing before public booking forms.
+- URL-based filters keep the catalogue shareable and accessible without client-only state.
+
+Impact:
+
+- Ticket 13 can attach real artist booking forms to the existing detail-page CTA area.
+- Admin-managed artist records now have a public catalogue surface.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 11: public venue catalogue.

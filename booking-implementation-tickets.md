@@ -202,6 +202,10 @@ Scope:
 - Implement V1 filters and rich profile display.
 - Keep private fields hidden.
 
+Status:
+
+- Completed on 2026-09-04.
+
 Acceptance criteria:
 
 - Published/active artists display.
