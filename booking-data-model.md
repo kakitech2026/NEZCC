@@ -67,7 +67,7 @@ Implemented field groups:
 - Consent: `termsAccepted`, `termsAcceptedAt`, `privacyAccepted`, `privacyAcceptedAt`, `acceptedPolicyVersion`, `acceptedPolicyDate`, `acceptedTermsSnapshot`, `acceptedPrivacySnapshot`.
 - Workflow: `bookingStatus`, `paymentStatus`, `adminNotes`, `transitionOverride`, `transitionOverrideReason`.
 - Quote/payment: `baseQuoteAmount`, `additionalCharges`, `discount`, `taxAmount`, `finalPayableAmount`, `quoteNotes`, `quoteValidUntil`, `quoteCreatedAt`, `quotedBy`, `paymentGateway`, `paymentLinkReference`, `paymentAmountReceived`, `paymentReceivedAt`, `manualPaymentConfirmationNote`.
-- Warnings: `hasConflict`, `conflictType`, `conflictingBookings`, `capacityWarning`, `availabilityBlockWarning`, `availabilityBlocks`, `warningNotes`, `warningOverride`, `warningOverrideReason`, `warningOverriddenBy`, `warningOverriddenAt`.
+- Warnings: `hasConflict`, `conflictType`, `conflictingBookings`, `conflictingBookingReferences`, `capacityWarning`, `availabilityBlockWarning`, `availabilityBlocks`, `availabilityBlockReasons`, `warningNotes`, `warningOverride`, `warningOverrideReason`, `warningOverriddenBy`, `warningOverriddenAt`.
 - Integrity: `sourcePage`, `idempotencyToken`, `rateLimitKey`, `auditHistory`.
 
 Implemented booking status values:
@@ -119,6 +119,11 @@ Validation:
 - Resource type must match relationship.
 - `endDateTime > startDateTime`.
 - Overlapping blocks are allowed.
+
+Ticket 7 implementation:
+
+- `bookingConflictService` validates these rules before availability blocks are saved.
+- Overlapping blocks remain allowed.
 
 ## Globals
 

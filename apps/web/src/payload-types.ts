@@ -959,9 +959,21 @@ export interface BookingRequest {
   hasConflict?: boolean | null;
   conflictType?: string | null;
   conflictingBookings?: (string | BookingRequest)[] | null;
+  conflictingBookingReferences?:
+    | {
+        reference: string;
+        id?: string | null;
+      }[]
+    | null;
   capacityWarning?: boolean | null;
   availabilityBlockWarning?: boolean | null;
   availabilityBlocks?: (string | AvailabilityBlock)[] | null;
+  availabilityBlockReasons?:
+    | {
+        reason: string;
+        id?: string | null;
+      }[]
+    | null;
   warningNotes?: string | null;
   warningOverride?: boolean | null;
   warningOverrideReason?: string | null;
@@ -1735,9 +1747,21 @@ export interface BookingRequestsSelect<T extends boolean = true> {
   hasConflict?: T;
   conflictType?: T;
   conflictingBookings?: T;
+  conflictingBookingReferences?:
+    | T
+    | {
+        reference?: T;
+        id?: T;
+      };
   capacityWarning?: T;
   availabilityBlockWarning?: T;
   availabilityBlocks?: T;
+  availabilityBlockReasons?:
+    | T
+    | {
+        reason?: T;
+        id?: T;
+      };
   warningNotes?: T;
   warningOverride?: T;
   warningOverrideReason?: T;

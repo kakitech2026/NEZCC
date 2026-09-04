@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { buildBookingAuditHistory } from '@/lib/bookings/bookingAuditService'
+import { analyzeBookingWarnings, validateWarningOverride } from '@/lib/bookings/bookingConflictService'
 import { generateBookingReference } from '@/lib/bookings/bookingReferenceService'
 import { normalizeBookingWorkflow } from '@/lib/bookings/bookingStatusService'
 
@@ -37,7 +38,7 @@ export const BookingRequests: CollectionConfig = {
       },
     ],
     beforeChange: [
-      ({ data, operation, originalDoc, req }) => {
+      async ({ data, operation, originalDoc, req }) => {
         const workflow = normalizeBookingWorkflow({
           additionalCharges: data.additionalCharges,
           baseQuoteAmount: data.baseQuoteAmount,
@@ -51,12 +52,38 @@ export const BookingRequests: CollectionConfig = {
           transitionOverride: data.transitionOverride,
           transitionOverrideReason: data.transitionOverrideReason,
         })
+        const bookingForAnalysis: Record<string, unknown> = {
+          ...originalDoc,
+          ...data,
+          ...workflow,
+        }
         const nextData: Record<string, unknown> = {
           ...data,
           ...workflow,
         }
+        const warnings = await analyzeBookingWarnings({
+          booking: bookingForAnalysis,
+          payload: req.payload,
+        })
+        const isNewWarningOverride = validateWarningOverride({
+          originalWarningOverride: originalDoc?.warningOverride,
+          warningOverride: Boolean(bookingForAnalysis.warningOverride),
+          warningOverrideReason:
+            typeof bookingForAnalysis.warningOverrideReason === 'string' ? bookingForAnalysis.warningOverrideReason : null,
+        })
+
+        Object.assign(nextData, warnings)
+
+        if (isNewWarningOverride) {
+          nextData.warningOverriddenBy = req.user?.id ?? null
+          nextData.warningOverriddenAt = new Date().toISOString()
+        }
+
         nextData.auditHistory = buildBookingAuditHistory({
-          data: nextData,
+          data: {
+            ...bookingForAnalysis,
+            ...warnings,
+          },
           operation,
           originalDoc,
           user: req.user,
@@ -290,6 +317,12 @@ export const BookingRequests: CollectionConfig = {
               hasMany: true,
               admin: { readOnly: true },
             },
+            {
+              name: 'conflictingBookingReferences',
+              type: 'array',
+              admin: { readOnly: true },
+              fields: [{ name: 'reference', type: 'text', required: true }],
+            },
             { name: 'capacityWarning', type: 'checkbox', defaultValue: false, admin: { readOnly: true } },
             { name: 'availabilityBlockWarning', type: 'checkbox', defaultValue: false, admin: { readOnly: true } },
             {
@@ -298,6 +331,12 @@ export const BookingRequests: CollectionConfig = {
               relationTo: 'availability-blocks',
               hasMany: true,
               admin: { readOnly: true },
+            },
+            {
+              name: 'availabilityBlockReasons',
+              type: 'array',
+              admin: { readOnly: true },
+              fields: [{ name: 'reason', type: 'text', required: true }],
             },
             { name: 'warningNotes', type: 'textarea', admin: { readOnly: true } },
             { name: 'warningOverride', type: 'checkbox', defaultValue: false },

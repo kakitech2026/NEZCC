@@ -93,6 +93,18 @@ Override data should include:
 
 Overrides must be appended to audit history.
 
+## Conflict and Availability Warnings
+
+Warning checks use strict overlap semantics:
+
+```text
+newStart < existingEnd AND newEnd > existingStart
+```
+
+Back-to-back bookings are allowed. `New`, `Under Review`, `Need More Information`, `Approved`, `Pending Payment`, and `Confirmed` bookings are conflict-relevant. `Rejected`, `Cancelled`, and `Completed` bookings are ignored for conflict warnings.
+
+Public submission is warned, not blocked. Venue capacity warnings are also warnings, not automatic rejections.
+
 ## Audit History
 
 Audit history must be:

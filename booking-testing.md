@@ -29,6 +29,8 @@ Cover:
 - Conflict overlap rules.
 - Availability-block checks.
 - Venue capacity warning.
+- Back-to-back booking boundary behavior.
+- `New` status conflict relevance.
 - Idempotency token behavior.
 - Rate limiting and honeypot behavior.
 - Email success/failure behavior with mocks.

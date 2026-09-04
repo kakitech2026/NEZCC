@@ -3,6 +3,7 @@ type AuditUser = {
 } | null
 
 type AuditRecord = {
+  [key: string]: unknown
   auditHistory?: AuditEntry[] | null
   bookingStatus?: unknown
   paymentStatus?: unknown

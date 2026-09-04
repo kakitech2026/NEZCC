@@ -199,3 +199,32 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 7: conflict and availability service.
+
+### 2026-09-04: Ticket 7 Conflict and Availability Service
+
+Decision:
+
+- Add `bookingConflictService` for overlap warnings, availability-block warnings, venue capacity warnings, warning override validation, and availability-block validation.
+- Booking conflict checks use the frozen formula: `newStart < existingEnd AND newEnd > existingStart`.
+- `New` bookings are conflict-relevant.
+- Back-to-back bookings are allowed.
+- Warning details store related booking IDs, booking references, availability block IDs, availability block reasons, and a summary note.
+
+Reason:
+
+- Conflict and capacity scenarios should warn admins/requesters without blocking public submissions.
+- Persisting both IDs and human-readable references/reasons makes the admin inbox easier to review.
+
+Impact:
+
+- Booking create/update hooks now refresh warning fields server-side.
+- Warning overrides require `warningOverrideReason` and populate override user/time metadata when first applied.
+- Availability blocks enforce exactly one resource and `endDateTime > startDateTime`.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 8: idempotency and anti-spam.

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { validateAvailabilityBlock } from '@/lib/bookings/bookingConflictService'
 
 const isAuthenticated = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
 
@@ -19,6 +20,14 @@ export const AvailabilityBlocks: CollectionConfig = {
     read: isAuthenticated,
     update: isAuthenticated,
     delete: isAuthenticated,
+  },
+  hooks: {
+    beforeChange: [
+      ({ data }) => {
+        validateAvailabilityBlock(data)
+        return data
+      },
+    ],
   },
   fields: [
     {
