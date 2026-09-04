@@ -341,3 +341,32 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 12: policy and consent display.
+
+### 2026-09-04: Ticket 12 Policy and Consent Display
+
+Decision:
+
+- Add `bookingSettingsService` to normalize public booking settings for frontend display.
+- Add `BookingPolicySummary` for reusable public display of booking notice, terms, privacy notice, cancellation policy, payment/refund policy, support contacts, and policy version/date.
+- Add `BookingConsentFields` for Ticket 13 forms to collect required terms/privacy acknowledgement while carrying the active policy version/date.
+- Wire policy summaries into artist and venue detail booking panels.
+- Make artist and venue detail booking CTAs respect both the resource-level `bookingEnabled` flag and global `booking-settings.bookingEnabled`.
+
+Reason:
+
+- Public users must see booking policy context before submitting requests.
+- Ticket 13 should reuse one consent component rather than duplicating checkbox names and policy metadata.
+- The API already remains authoritative for consent validation and snapshots.
+
+Impact:
+
+- Public booking forms can render consistent consent UI in Ticket 13.
+- When global booking is disabled, public detail pages remain visible while booking CTAs become unavailable.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 13: public booking forms.

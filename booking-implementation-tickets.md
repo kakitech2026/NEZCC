@@ -250,6 +250,10 @@ Scope:
 - Require terms/privacy acknowledgement.
 - Store accepted policy version/text snapshot or immutable version reference.
 
+Status:
+
+- Completed on 2026-09-04.
+
 Acceptance criteria:
 
 - Public booking forms cannot submit without consent.

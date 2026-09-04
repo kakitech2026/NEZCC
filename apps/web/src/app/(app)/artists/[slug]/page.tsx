@@ -2,6 +2,8 @@ import type { Artist, ArtistCategory, Media } from '@/payload-types'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { BookingPolicySummary } from '@/components/bookings/BookingPolicySummary'
+import { getPublicBookingSettings } from '@/lib/bookings/bookingSettingsService'
 import { getPayloadClient } from '@/lib/payload'
 
 export const dynamic = 'force-dynamic'
@@ -56,6 +58,30 @@ async function getArtist(slug: string) {
   return (result.docs[0] as Artist | undefined) || null
 }
 
+async function getArtistPageData(slug: string) {
+  const payload = await getPayloadClient()
+  const [artistResult, bookingSettings] = await Promise.all([
+    payload.find({
+      collection: 'artists',
+      depth: 2,
+      limit: 1,
+      where: {
+        and: [
+          { slug: { equals: slug } },
+          { isPublished: { equals: true } },
+          { isActive: { equals: true } },
+        ],
+      },
+    }),
+    getPublicBookingSettings(payload),
+  ])
+
+  return {
+    artist: (artistResult.docs[0] as Artist | undefined) || null,
+    bookingSettings,
+  }
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const artist = await getArtist(slug)
@@ -74,7 +100,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ArtistDetailPage({ params }: PageProps) {
   const { slug } = await params
-  const artist = await getArtist(slug)
+  const { artist, bookingSettings } = await getArtistPageData(slug)
 
   if (!artist) notFound()
 
@@ -90,6 +116,7 @@ export default async function ArtistDetailPage({ params }: PageProps) {
     artist.yearsOfExperience ||
     artist.travelAvailability,
   )
+  const canRequestBooking = artist.bookingEnabled && bookingSettings.bookingEnabled
 
   return (
     <main className="flex-grow min-h-screen pb-20">
@@ -205,9 +232,11 @@ export default async function ArtistDetailPage({ params }: PageProps) {
               <section className="bg-surface-container-lowest border border-outline-variant rounded-lg p-stack-md shadow-sm">
                 <h2 className="font-serif font-medium text-headline-md text-on-surface">Booking</h2>
                 <p className="mt-2 font-body-md text-body-md text-on-surface-variant">
-                  {artist.bookingEnabled
+                  {canRequestBooking
                     ? 'Booking requests are subject to NEZCC review, availability, final quote, and payment verification.'
-                    : 'This artist profile is visible, but bookings are currently not available.'}
+                    : bookingSettings.bookingEnabled
+                      ? 'This artist profile is visible, but bookings are currently not available.'
+                      : 'NEZCC bookings are temporarily suspended. This artist profile remains available for reference.'}
                 </p>
                 {artist.indicativeFeeText && (
                   <div className="mt-stack-md rounded bg-surface-container-low p-stack-sm">
@@ -215,7 +244,7 @@ export default async function ArtistDetailPage({ params }: PageProps) {
                     <p className="font-body-md text-body-md text-on-surface-variant">{artist.indicativeFeeText}</p>
                   </div>
                 )}
-                {artist.bookingEnabled ? (
+                {canRequestBooking ? (
                   <Link className="mt-stack-md inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded bg-primary px-5 py-3 font-label-md text-label-md text-white hover:bg-[#147fba]" href={`/artists/${artist.slug}#booking`}>
                     <span className="material-symbols-outlined text-[18px]" aria-hidden="true">event_available</span>
                     Request Booking
@@ -226,6 +255,8 @@ export default async function ArtistDetailPage({ params }: PageProps) {
                   </div>
                 )}
               </section>
+
+              <BookingPolicySummary settings={bookingSettings} />
 
               {hasPerformanceDetails && (
                 <section className="bg-surface-container-lowest border border-outline-variant rounded-lg p-stack-md shadow-sm">

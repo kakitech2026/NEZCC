@@ -24,6 +24,7 @@ Cover:
 - Booking/payment transition rules.
 - Deliberate transition override behavior.
 - Confirmation invariant.
+- Public booking settings normalization.
 - Audit history append behavior.
 - Manual audit-history mutation prevention.
 - Conflict overlap rules.
@@ -69,6 +70,8 @@ Cover:
 - `/venues/[slug]` loads.
 - Venue search, category, location, indoor/outdoor, and minimum-capacity filters preserve URL query state.
 - Venue detail pages display embedded maps with an accessible external directions link when map data exists.
+- Public artist/venue booking panels display current booking policy context.
+- Global booking-disabled state removes or disables public booking CTAs while leaving public resources visible.
 - Search/filter controls work.
 - Booking-disabled public resource remains visible with booking CTA disabled or removed.
 - Artist booking form happy path.
