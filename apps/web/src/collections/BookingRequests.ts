@@ -1,5 +1,10 @@
 import type { CollectionConfig } from 'payload'
 import { buildBookingAuditHistory } from '@/lib/bookings/bookingAuditService'
+import {
+  assertNoDuplicateIdempotencyToken,
+  enforceBookingRateLimit,
+  normalizeIdempotencyToken,
+} from '@/lib/bookings/bookingAntiSpamService'
 import { analyzeBookingWarnings, validateWarningOverride } from '@/lib/bookings/bookingConflictService'
 import { generateBookingReference } from '@/lib/bookings/bookingReferenceService'
 import { normalizeBookingWorkflow } from '@/lib/bookings/bookingStatusService'
@@ -31,8 +36,23 @@ export const BookingRequests: CollectionConfig = {
           return data
         }
 
+        const idempotencyToken =
+          typeof data.idempotencyToken === 'string' && data.idempotencyToken.trim()
+            ? normalizeIdempotencyToken(data.idempotencyToken)
+            : null
+
+        await assertNoDuplicateIdempotencyToken({
+          idempotencyToken,
+          payload: req.payload,
+        })
+        await enforceBookingRateLimit({
+          payload: req.payload,
+          rateLimitKey: typeof data.rateLimitKey === 'string' ? data.rateLimitKey : null,
+        })
+
         return {
           ...data,
+          idempotencyToken,
           bookingReference: await generateBookingReference(req),
         }
       },

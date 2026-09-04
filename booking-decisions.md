@@ -228,3 +228,31 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 8: idempotency and anti-spam.
+
+### 2026-09-04: Ticket 8 Idempotency and Anti-Spam
+
+Decision:
+
+- Add `bookingAntiSpamService` for idempotency token normalization, duplicate token lookup, rate-limit key generation, rolling rate-limit checks, client address extraction, and honeypot validation.
+- Booking create hooks reject duplicate idempotency tokens before generating a booking reference.
+- Booking create hooks enforce rate limits when trusted server code supplies a `rateLimitKey`.
+- Duplicate protection remains token-based only; no fuzzy matching of requester/content/date data is used.
+- Context7 was requested for this ticket, but no callable Context7 tool was exposed in this Codex session.
+
+Reason:
+
+- The plan requires double-click/retry protection without blocking legitimate second requests.
+- Reusing the existing contact/feedback pattern keeps anti-spam behavior consistent across the app.
+
+Impact:
+
+- Ticket 9 can call the same anti-spam service from the public booking API.
+- Public booking forms in Ticket 13 should generate/send an idempotency token and include a hidden honeypot field.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 9: booking API endpoint.

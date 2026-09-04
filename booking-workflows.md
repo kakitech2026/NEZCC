@@ -135,3 +135,15 @@ When global booking is disabled:
 - Booking API rejects new submissions.
 - Existing booking records remain manageable by admins.
 - Public catalogue pages may still display artists and venues.
+
+## Idempotency and Anti-Spam
+
+Idempotency protects technical duplicates such as double-clicks, browser retries, and network retries. Duplicate checks use `idempotencyToken` only; similar-looking booking details are not blocked because a requester may legitimately submit another request.
+
+Trusted server code should:
+
+- Generate or require an idempotency token for public booking submissions.
+- Reject reused tokens without creating a second booking.
+- Store a hashed `rateLimitKey`.
+- Enforce a short rolling rate limit before creating the booking.
+- Include a hidden honeypot field in public forms and reject requests where it is filled.

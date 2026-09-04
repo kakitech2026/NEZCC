@@ -33,6 +33,7 @@ Cover:
 - `New` status conflict relevance.
 - Idempotency token behavior.
 - Rate limiting and honeypot behavior.
+- No fuzzy content-based duplicate blocking.
 - Email success/failure behavior with mocks.
 
 ## API Tests
