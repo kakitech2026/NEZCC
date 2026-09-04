@@ -226,6 +226,10 @@ Scope:
 - Implement V1 filters, venue details, facilities, capacity, maps, and rules.
 - Keep private fields hidden.
 
+Status:
+
+- Completed on 2026-09-04.
+
 Acceptance criteria:
 
 - Published/active venues display.

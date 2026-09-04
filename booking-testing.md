@@ -67,6 +67,8 @@ Cover:
 - Booking-disabled artist profiles remain visible with the booking CTA disabled or removed.
 - `/venues` loads.
 - `/venues/[slug]` loads.
+- Venue search, category, location, indoor/outdoor, and minimum-capacity filters preserve URL query state.
+- Venue detail pages display embedded maps with an accessible external directions link when map data exists.
 - Search/filter controls work.
 - Booking-disabled public resource remains visible with booking CTA disabled or removed.
 - Artist booking form happy path.

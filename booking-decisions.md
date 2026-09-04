@@ -313,3 +313,31 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 11: public venue catalogue.
+
+### 2026-09-04: Ticket 11 Public Venue Catalogue
+
+Decision:
+
+- Add `/venues` as a dynamic public venue catalogue with search, category, location, indoor/outdoor, and minimum-capacity filters.
+- Add `/venues/[slug]` as a dynamic public venue detail page.
+- Public pages query only published and active venues and active venue categories.
+- Published, active, booking-disabled venues remain visible, but the booking CTA is replaced with a non-actionable unavailable state.
+- Public detail pages display description, facilities, capacity, address, embedded Google Map when provided, accessible map directions link, rules, gallery, indicative rent text, and booking availability wording. Private contact/admin fields are not rendered.
+
+Reason:
+
+- The frozen plan requires venue browsing before public venue booking forms.
+- Venue capacity and map information are core public decision points for event organizers.
+
+Impact:
+
+- Ticket 13 can attach real venue booking forms to the existing detail-page CTA area.
+- Admin-managed venue records now have a public catalogue surface.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 12: policy and consent display.
