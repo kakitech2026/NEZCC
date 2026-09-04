@@ -147,3 +147,5 @@ Trusted server code should:
 - Store a hashed `rateLimitKey`.
 - Enforce a short rolling rate limit before creating the booking.
 - Include a hidden honeypot field in public forms and reject requests where it is filled.
+
+The public booking endpoint returns only a safe response: booking reference, received status, duplicate flag, and public message. It must not return private artist/venue fields, requester internals, audit history, or payment/admin fields.

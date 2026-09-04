@@ -256,3 +256,32 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 9: booking API endpoint.
+
+### 2026-09-04: Ticket 9 Booking API Endpoint
+
+Decision:
+
+- Add `POST /api/bookings` as the single public booking endpoint.
+- Add `bookingCreationService` as the trusted creation path used by the endpoint.
+- The creation service validates input, checks global booking settings, handles honeypot/idempotency, snapshots policy text/version/date, sets consent timestamps, stores a hashed rate-limit key, and creates `booking-requests` with `overrideAccess: true`.
+- The endpoint returns only safe public response data: `bookingReference`, `duplicate`, `message`, and `status`.
+- Ticket 9 does not implement email sending; Ticket 15 remains responsible for transactional email. With no email side effect in this ticket, booking creation cannot be rolled back by email failure.
+- Next.js DevTools was used to locate the bundled Next.js 16.3.0 route-handler docs before implementing the route.
+
+Reason:
+
+- The plan requires one controlled public creation path for artist and venue bookings.
+- Keeping creation logic in a service makes Ticket 13 forms and future tests reuse the same behavior.
+
+Impact:
+
+- Public forms can submit through `/api/bookings` once Ticket 13 is implemented.
+- Duplicate idempotency retries return the existing booking reference instead of creating another booking.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 10: public artist catalogue.

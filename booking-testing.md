@@ -42,6 +42,7 @@ Cover:
 
 - Valid artist booking.
 - Valid venue booking.
+- Safe public response with booking reference.
 - Disabled booking globally.
 - Disabled/unpublished/inactive artist or venue.
 - Both artist and venue submitted.
