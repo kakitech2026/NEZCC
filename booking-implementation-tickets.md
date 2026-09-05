@@ -340,6 +340,11 @@ Scope:
 - Run the full V1 release gate from `booking-testing.md`.
 - Verify environment, schema, content, regression, and rollback readiness.
 
+Status:
+
+- QA run completed on 2026-09-05.
+- V1 is not production-ready until the production deployment serves the new routes and production environment/manual QA checks are completed.
+
 Acceptance criteria:
 
 - V1 is launch-ready only after this ticket passes.

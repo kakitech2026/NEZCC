@@ -153,3 +153,15 @@ V1 is not launch-ready until:
 - Initial CMS data/content is verified.
 - Existing NEZCC routes are smoke-tested.
 - Rollback/recovery notes are documented.
+
+## Ticket 16 Run: 2026-09-05
+
+Evidence is recorded in `booking-v1-readiness.md`.
+
+Summary:
+
+- Local TypeScript passed.
+- Local production build passed.
+- Local built-server Playwright run passed with `146 passed`.
+- Production URL checks failed for the new booking routes because `https://nezcc.vercel.app/artists`, `/venues`, and `/api/bookings` returned 404.
+- Launch remains blocked until latest code is deployed, production environment variables are verified, and manual admin QA is completed.

@@ -456,3 +456,29 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 16: V1 integration QA and deployment readiness.
+
+### 2026-09-05: Ticket 16 Readiness Gate
+
+Decision:
+
+- Treat the 2026-09-05 Ticket 16 run as a readiness gate with documented blockers instead of marking V1 production-ready.
+- Add `booking-v1-readiness.md` as the durable QA evidence and launch-blocker record.
+
+Reason:
+
+- Local TypeScript, production build, and local built-server Playwright checks pass.
+- The deployed production URL currently returns 404 for `/artists`, `/venues`, and `/api/bookings`, which means production is not serving the latest booking implementation.
+- Official SMTP and production media environment readiness still require verification outside this local run.
+
+Impact:
+
+- V1 code is locally verified, but launch remains blocked until latest code is deployed and production environment/manual QA checks pass.
+- Ticket 16 can proceed as a release-readiness workflow without silently changing the frozen plan's launch criteria.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Push/redeploy latest commits, configure/verify production environment variables, then rerun production smoke and manual admin QA.
