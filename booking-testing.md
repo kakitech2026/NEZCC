@@ -25,6 +25,7 @@ Cover:
 - Deliberate transition override behavior.
 - Confirmation invariant.
 - Public booking settings normalization.
+- Public booking form payload mapping for artist and venue submissions.
 - Audit history append behavior.
 - Manual audit-history mutation prevention.
 - Conflict overlap rules.

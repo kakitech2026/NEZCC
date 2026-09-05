@@ -272,6 +272,10 @@ Scope:
 - Add artist and venue booking forms.
 - Include idempotency token, validation UI, consent, and success reference message.
 
+Status:
+
+- Completed on 2026-09-05.
+
 Acceptance criteria:
 
 - Public users can submit artist or venue bookings without accounts.

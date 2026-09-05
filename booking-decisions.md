@@ -370,3 +370,32 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 13: public booking forms.
+
+### 2026-09-05: Ticket 13 Public Booking Forms
+
+Decision:
+
+- Add `BookingRequestForm` as the reusable public artist/venue booking form.
+- Add `bookingFormService` to build safe API payloads from browser form data, including resource identity, source page, idempotency token, consent booleans, honeypot field, and ISO date/time conversion.
+- Render the form on artist and venue detail pages only when both the resource and global booking settings are enabled.
+- Artist forms submit the selected artist and require event location.
+- Venue forms submit the selected venue and use optional event location notes instead of accepting an alternate venue.
+- Reuse `BookingConsentFields` from Ticket 12.
+
+Reason:
+
+- The plan requires artist and venue submissions to use the same controlled API creation path while keeping form behavior resource-specific.
+- Keeping payload mapping outside the component makes date/idempotency/consent behavior testable.
+
+Impact:
+
+- Public users can submit booking requests without accounts from artist and venue detail pages.
+- Successful submissions display the returned booking reference and public message.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 14: admin booking workflow.
