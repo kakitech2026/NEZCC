@@ -7,7 +7,7 @@ import {
 } from '@/lib/bookings/bookingAntiSpamService'
 import { analyzeBookingWarnings, validateWarningOverride } from '@/lib/bookings/bookingConflictService'
 import { generateBookingReference } from '@/lib/bookings/bookingReferenceService'
-import { normalizeBookingWorkflow } from '@/lib/bookings/bookingStatusService'
+import { buildQuoteMetadata, normalizeBookingWorkflow } from '@/lib/bookings/bookingStatusService'
 
 const isAuthenticated = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
 
@@ -19,7 +19,16 @@ export const BookingRequests: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'bookingReference',
-    defaultColumns: ['bookingReference', 'bookingType', 'requesterName', 'eventName', 'bookingStatus', 'paymentStatus'],
+    defaultColumns: [
+      'bookingReference',
+      'bookingType',
+      'requesterName',
+      'eventName',
+      'startDateTime',
+      'bookingStatus',
+      'paymentStatus',
+      'hasConflict',
+    ],
     group: 'Bookings',
     description: 'Unified admin inbox for artist and venue booking requests.',
   },
@@ -93,6 +102,25 @@ export const BookingRequests: CollectionConfig = {
         })
 
         Object.assign(nextData, warnings)
+
+        Object.assign(
+          nextData,
+          buildQuoteMetadata({
+            additionalCharges: data.additionalCharges,
+            baseQuoteAmount: data.baseQuoteAmount,
+            discount: data.discount,
+            originalAdditionalCharges: originalDoc?.additionalCharges,
+            originalBaseQuoteAmount: originalDoc?.baseQuoteAmount,
+            originalDiscount: originalDoc?.discount,
+            originalQuoteCreatedAt: originalDoc?.quoteCreatedAt,
+            originalQuotedBy: originalDoc?.quotedBy,
+            originalTaxAmount: originalDoc?.taxAmount,
+            quoteCreatedAt: data.quoteCreatedAt,
+            quotedBy: data.quotedBy,
+            taxAmount: data.taxAmount,
+            userId: req.user?.id,
+          }),
+        )
 
         if (isNewWarningOverride) {
           nextData.warningOverriddenBy = req.user?.id ?? null

@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test'
 
 import {
   assertBookingTransitionAllowed,
+  buildQuoteMetadata,
   calculateFinalPayableAmount,
   normalizeBookingWorkflow,
 } from '../src/lib/bookings/bookingStatusService'
@@ -152,5 +153,42 @@ test.describe('booking status service', () => {
         to: 'confirmed',
       }),
     ).not.toThrow()
+  })
+
+  test('records quote metadata when an admin changes quote fields', () => {
+    expect(
+      buildQuoteMetadata(
+        {
+          baseQuoteAmount: 10_000,
+          originalBaseQuoteAmount: 0,
+          userId: 'admin-1',
+        },
+        new Date('2026-09-05T08:00:00.000Z'),
+      ),
+    ).toEqual({
+      quoteCreatedAt: '2026-09-05T08:00:00.000Z',
+      quotedBy: 'admin-1',
+    })
+  })
+
+  test('preserves existing quote metadata when workflow changes without quote changes', () => {
+    expect(
+      buildQuoteMetadata({
+        additionalCharges: 500,
+        baseQuoteAmount: 10_000,
+        discount: 0,
+        originalAdditionalCharges: 500,
+        originalBaseQuoteAmount: 10_000,
+        originalDiscount: 0,
+        originalQuoteCreatedAt: '2026-09-04T08:00:00.000Z',
+        originalQuotedBy: 'admin-1',
+        originalTaxAmount: 1800,
+        taxAmount: 1800,
+        userId: 'admin-2',
+      }),
+    ).toEqual({
+      quoteCreatedAt: '2026-09-04T08:00:00.000Z',
+      quotedBy: 'admin-1',
+    })
   })
 })

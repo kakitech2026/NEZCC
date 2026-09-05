@@ -34,6 +34,23 @@ export type BookingWorkflowResult = Required<QuoteInput> & {
   paymentStatus: PaymentStatus
 }
 
+export type QuoteMetadataInput = QuoteInput & {
+  originalAdditionalCharges?: number | null
+  originalBaseQuoteAmount?: number | null
+  originalDiscount?: number | null
+  originalQuoteCreatedAt?: string | null
+  originalQuotedBy?: number | string | null
+  originalTaxAmount?: number | null
+  quoteCreatedAt?: string | null
+  quotedBy?: number | string | null
+  userId?: number | string | null
+}
+
+export type QuoteMetadataResult = {
+  quoteCreatedAt?: string | null
+  quotedBy?: number | string | null
+}
+
 const allowedTransitions: Record<BookingStatus, BookingStatus[]> = {
   approved: ['pending-payment', 'rejected', 'cancelled'],
   cancelled: [],
@@ -143,5 +160,25 @@ export const normalizeBookingWorkflow = (input: BookingWorkflowInput): BookingWo
     ...quote,
     bookingStatus,
     paymentStatus,
+  }
+}
+
+export const buildQuoteMetadata = (input: QuoteMetadataInput, now = new Date()): QuoteMetadataResult => {
+  const quoteChanged =
+    input.baseQuoteAmount !== input.originalBaseQuoteAmount ||
+    input.additionalCharges !== input.originalAdditionalCharges ||
+    input.discount !== input.originalDiscount ||
+    input.taxAmount !== input.originalTaxAmount
+
+  if (!quoteChanged) {
+    return {
+      quoteCreatedAt: input.quoteCreatedAt ?? input.originalQuoteCreatedAt ?? null,
+      quotedBy: input.quotedBy ?? input.originalQuotedBy ?? null,
+    }
+  }
+
+  return {
+    quoteCreatedAt: input.quoteCreatedAt || input.originalQuoteCreatedAt || now.toISOString(),
+    quotedBy: input.quotedBy || input.originalQuotedBy || input.userId || null,
   }
 }

@@ -21,6 +21,7 @@ Cover:
 - Booking reference generation and uniqueness.
 - Booking validation.
 - Quote calculation.
+- Quote metadata assignment and preservation.
 - Booking/payment transition rules.
 - Deliberate transition override behavior.
 - Confirmation invariant.

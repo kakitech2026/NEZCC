@@ -295,6 +295,10 @@ Scope:
 - Configure useful admin columns and fields.
 - Support review, quote, status/payment updates, warnings, and deliberate overrides.
 
+Status:
+
+- Completed on 2026-09-05.
+
 Acceptance criteria:
 
 - Admin can process bookings according to the state machine.

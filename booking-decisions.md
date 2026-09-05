@@ -399,3 +399,30 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 14: admin booking workflow.
+
+### 2026-09-05: Ticket 14 Admin Booking Workflow
+
+Decision:
+
+- Improve the booking request admin inbox columns to show reference, type, requester, event, start date, booking status, payment status, and conflict flag.
+- Keep admin workflow edits inside the existing Payload `booking-requests` hook so quote totals, status/payment invariants, warnings, warning overrides, and audit history remain server-controlled.
+- Add quote metadata handling so the first quote change records `quoteCreatedAt` and `quotedBy`, while later non-quote workflow edits preserve the original quote metadata.
+- Continue using explicit `transitionOverride`/`transitionOverrideReason` and `warningOverride`/`warningOverrideReason` fields rather than bypassing service rules.
+
+Reason:
+
+- Admins need a practical unified inbox without weakening the backend workflow constraints already implemented.
+- Quote metadata fields existed in the schema and should be populated by trusted server-side logic rather than manually maintained.
+
+Impact:
+
+- Booking managers can triage requests from the list view more easily.
+- Quote/status/payment changes remain auditable and consistent.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 15: transactional email.
