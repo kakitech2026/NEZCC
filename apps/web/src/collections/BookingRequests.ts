@@ -6,6 +6,7 @@ import {
   normalizeIdempotencyToken,
 } from '@/lib/bookings/bookingAntiSpamService'
 import { analyzeBookingWarnings, validateWarningOverride } from '@/lib/bookings/bookingConflictService'
+import { sendBookingStatusChangeEmail } from '@/lib/bookings/bookingEmailService'
 import { generateBookingReference } from '@/lib/bookings/bookingReferenceService'
 import { buildQuoteMetadata, normalizeBookingWorkflow } from '@/lib/bookings/bookingStatusService'
 
@@ -145,6 +146,35 @@ export const BookingRequests: CollectionConfig = {
         }
 
         return nextData
+      },
+    ],
+    afterChange: [
+      async ({ doc, operation, previousDoc, req }) => {
+        if (operation !== 'update') {
+          return doc
+        }
+
+        const bookingStatusChanged = doc.bookingStatus !== previousDoc?.bookingStatus
+        const paymentStatusChanged = doc.paymentStatus !== previousDoc?.paymentStatus
+
+        if (!bookingStatusChanged && !paymentStatusChanged) {
+          return doc
+        }
+
+        const settings = await req.payload.findGlobal({
+          slug: 'booking-settings',
+          overrideAccess: true,
+        })
+
+        await sendBookingStatusChangeEmail({
+          booking: doc,
+          payload: req.payload,
+          previousBookingStatus: previousDoc?.bookingStatus,
+          previousPaymentStatus: previousDoc?.paymentStatus,
+          settings,
+        })
+
+        return doc
       },
     ],
   },

@@ -318,6 +318,10 @@ Scope:
 - Add requester acknowledgement, admin notification, status-change, and Need More Information emails.
 - Ensure email failures do not fail booking creation.
 
+Status:
+
+- Completed on 2026-09-05.
+
 Acceptance criteria:
 
 - Required emails send in normal flow.

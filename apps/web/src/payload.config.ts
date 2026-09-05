@@ -1,5 +1,6 @@
 import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import sharp from 'sharp'
@@ -46,6 +47,27 @@ const dirname = path.dirname(filename)
 const databaseURL = process.env.MONGODB_URI
 const payloadSecret = process.env.PAYLOAD_SECRET
 const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+const smtpHost = process.env.SMTP_HOST
+const smtpPort = Number(process.env.SMTP_PORT || 587)
+const smtpUser = process.env.SMTP_USER
+const smtpPass = process.env.SMTP_PASS
+const emailFrom = process.env.EMAIL_FROM || smtpUser || 'bookings@nezcc.gov.in'
+const emailAdapter =
+  smtpHost && smtpUser && smtpPass
+    ? nodemailerAdapter({
+        defaultFromAddress: emailFrom,
+        defaultFromName: 'NEZCC Bookings',
+        transportOptions: {
+          auth: {
+            pass: smtpPass,
+            user: smtpUser,
+          },
+          host: smtpHost,
+          port: smtpPort,
+          secure: smtpPort === 465,
+        } as never,
+      })
+    : undefined
 
 if (!databaseURL) {
   throw new Error('MONGODB_URI is required to start Payload')
@@ -118,6 +140,7 @@ export default buildConfig({
     BookingSettings,
   ],
   editor: lexicalEditor(),
+  ...(emailAdapter ? { email: emailAdapter } : {}),
   sharp,
   secret: payloadSecret,
   typescript: {

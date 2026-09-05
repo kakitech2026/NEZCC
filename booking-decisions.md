@@ -426,3 +426,33 @@ Plan deviation:
 Follow-up:
 
 - Begin Ticket 15: transactional email.
+
+### 2026-09-05: Ticket 15 Transactional Email
+
+Decision:
+
+- Add `bookingEmailService` for requester acknowledgement, admin new-booking notification, requester status-change notification, and Need More Information email.
+- Send creation emails only after a booking request has been saved and a reference exists.
+- Send requester status emails from the `booking-requests` `afterChange` hook when booking or payment status changes.
+- Catch and log email failures so booking creation and admin updates are not rolled back.
+- Add optional Payload Nodemailer SMTP adapter wiring when `SMTP_HOST`, `SMTP_USER`, and `SMTP_PASS` are configured.
+- Add `EMAIL_FROM`, `EMAIL_TO_ADMIN`, and `SMTP_*` placeholders to `.env.example`.
+
+Reason:
+
+- V1 requires basic transactional email, while the frozen plan explicitly says email delivery failure must not force users to resubmit valid bookings.
+- Using Payload's email surface keeps the booking logic independent of the final official SMTP provider details.
+
+Impact:
+
+- Local/test environments can mock or skip email without breaking booking flows.
+- Production can send real email once official NEZCC SMTP credentials are added to Vercel.
+- Admin notification defaults to `EMAIL_TO_ADMIN`, then `booking-settings.adminNotificationEmail`, then `booking-settings.bookingSupportEmail`.
+
+Plan deviation:
+
+- None.
+
+Follow-up:
+
+- Begin Ticket 16: V1 integration QA and deployment readiness.

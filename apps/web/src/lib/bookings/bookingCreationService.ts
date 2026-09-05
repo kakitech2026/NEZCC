@@ -4,11 +4,14 @@ import {
   findExistingBookingByIdempotencyToken,
   normalizeIdempotencyToken,
 } from './bookingAntiSpamService'
+import { sendBookingCreationEmails } from './bookingEmailService'
 import { validateBookingInput, type BookingValidationInput } from './bookingValidationService'
 
 type BookingSettings = {
+  adminNotificationEmail?: string | null
   approvalDisclaimer?: string | null
   bookingEnabled?: boolean | null
+  bookingSupportEmail?: string | null
   policyDate?: string | null
   policyVersion?: string | null
   privacyNotice?: string | null
@@ -29,6 +32,13 @@ type PayloadLike = {
   findGlobal: (args: Record<string, unknown> & {
     slug: 'booking-settings'
     overrideAccess?: boolean
+  }) => Promise<unknown>
+  sendEmail?: (args: {
+    from?: string
+    html?: string
+    subject: string
+    text?: string
+    to: string | string[]
   }) => Promise<unknown>
 }
 
@@ -126,6 +136,18 @@ export const createBookingRequest = async ({
   if (!bookingReference) {
     throw new Error('Booking request was created without a booking reference.')
   }
+
+  await sendBookingCreationEmails({
+    booking: {
+      ...validated,
+      ...asRecord(created),
+      bookingReference,
+      bookingStatus: 'new',
+      paymentStatus: 'not-required',
+    },
+    payload,
+    settings,
+  })
 
   return {
     bookingReference,

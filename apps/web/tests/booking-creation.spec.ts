@@ -22,9 +22,11 @@ const validInput = {
 const createPayload = ({
   bookingEnabled = true,
   existingDocs = [],
+  sendEmail = async () => undefined,
 }: {
   bookingEnabled?: boolean
   existingDocs?: unknown[]
+  sendEmail?: (args: { subject: string; to: string | string[] }) => Promise<unknown>
 } = {}) => ({
   create: async () => ({
     bookingReference: 'NEZCC-BKG-2026-000123',
@@ -38,13 +40,16 @@ const createPayload = ({
     isPublished: true,
   }),
   findGlobal: async () => ({
+    adminNotificationEmail: 'admin@example.com',
     bookingEnabled,
+    bookingSupportEmail: 'support@example.com',
     policyDate: '2026-09-04T00:00:00.000Z',
     policyVersion: '1.0',
     privacyNotice: 'Privacy snapshot',
     publicBookingNotice: 'Custom public notice',
     termsAndConditions: 'Terms snapshot',
   }),
+  sendEmail,
 })
 
 test.describe('booking creation service', () => {
@@ -85,6 +90,54 @@ test.describe('booking creation service', () => {
       }),
     )
     expect(createdData.rateLimitKey).toEqual(expect.any(String))
+  })
+
+  test('sends requester and admin creation emails after the booking is saved', async () => {
+    const sentSubjects: string[] = []
+    const payload = createPayload({
+      sendEmail: async ({ subject }: { subject: string }) => {
+        sentSubjects.push(subject)
+      },
+    })
+
+    await createBookingRequest({
+      input: validInput,
+      payload,
+      secret: 'secret',
+    })
+
+    expect(sentSubjects).toEqual([
+      'NEZCC booking request received: NEZCC-BKG-2026-000123',
+      'New NEZCC booking request: NEZCC-BKG-2026-000123',
+    ])
+  })
+
+  test('does not roll back booking creation when email delivery fails', async () => {
+    let createCalled = false
+    const payload = {
+      ...createPayload({
+        sendEmail: async () => {
+          throw new Error('SMTP unavailable')
+        },
+      }),
+      create: async () => {
+        createCalled = true
+        return { bookingReference: 'NEZCC-BKG-2026-000123' }
+      },
+    }
+
+    await expect(
+      createBookingRequest({
+        input: validInput,
+        payload,
+        secret: 'secret',
+      }),
+    ).resolves.toEqual(
+      expect.objectContaining({
+        bookingReference: 'NEZCC-BKG-2026-000123',
+      }),
+    )
+    expect(createCalled).toBe(true)
   })
 
   test('returns the original reference for duplicate idempotency retries', async () => {

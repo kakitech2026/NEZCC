@@ -114,7 +114,23 @@ Cover:
 - Confirm requester acknowledgement email.
 - Confirm admin notification email.
 - Confirm status-change email.
+- Confirm Need More Information email.
 - Confirm booking still succeeds if email fails.
+
+## Email Environment Checks
+
+Production email requires official NEZCC SMTP variables in Vercel:
+
+```dotenv
+EMAIL_FROM=
+EMAIL_TO_ADMIN=
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USER=
+SMTP_PASS=
+```
+
+If SMTP variables are not configured, booking flows should still save successfully, but real outbound email should be treated as not production-ready.
 
 ## Ticket 16 Release Gate
 
