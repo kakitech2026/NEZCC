@@ -6,7 +6,7 @@ import {
   timeRangesOverlap,
   validateAvailabilityBlock,
   validateWarningOverride,
-} from '../src/lib/bookings/bookingConflictService'
+} from '@nezcc/cms/bookings/bookingConflictService'
 
 test.describe('booking conflict service', () => {
   test('uses strict overlap formula and allows back-to-back bookings', () => {

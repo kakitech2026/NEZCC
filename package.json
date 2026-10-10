@@ -1,0 +1,33 @@
+{
+  "name": "nezcc",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "npm run dev --workspace=web",
+    "dev:admin": "npm run dev --workspace=@nezcc/admin",
+    "build": "npm run build --workspace=web && npm run build --workspace=@nezcc/admin",
+    "typecheck": "npm run typecheck --workspaces --if-present && tsc --project tsconfig.tests.json",
+    "lint": "npm run lint --workspaces --if-present",
+    "generate:types": "npm run generate:types --workspace=@nezcc/admin",
+    "generate:importmap": "npm run generate:importmap --workspace=@nezcc/admin",
+    "test:unit": "npm run test:unit --workspace=web",
+    "test:e2e": "npm run test:e2e --workspace=web",
+    "test:integration": "node --import tsx scripts/test-monorepo.mjs",
+    "test:integration:production": "node --import tsx scripts/test-monorepo.mjs --production"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "dotenv": "^17.4.2",
+    "mongodb-memory-server": "^10.4.3",
+    "tsx": "^4.22.4"
+  }
+}

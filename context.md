@@ -2,7 +2,14 @@
 
 ## Current State
 
-NEZCC is a Next.js 16 application with Payload CMS 3 embedded in the same app. The deployable project lives in `apps/web`.
+NEZCC is an npm workspace monorepo with two Next.js 16 applications and shared Payload CMS 3 code:
+
+- `apps/web`: public website, submission endpoints, public settings and media delivery
+- `apps/admin`: Payload admin UI and CMS REST API
+- `packages/cms`: shared collections, globals, hooks, booking services, generated types
+
+Run development, builds, and installs from the repository root. See `README.md` and `deployment.md`.
+The local code split does not change live hosting; the second Vercel project and admin subdomain must be configured during release.
 
 Production is deployed from GitHub `main` to Vercel:
 
@@ -89,11 +96,13 @@ These inbox collections disable manual public creation and require authenticated
 
 ## Verification
 
-Run from `apps/web`:
+Run from the repository root:
 
 ```bash
-npx tsc --noEmit
+npm run typecheck
 npm run build
+npm run test:unit
+npm run test:integration
 ```
 
 The production build is the main release check.
@@ -115,4 +124,4 @@ Other static institutional pages can remain code-managed unless NEZCC editors ne
 - Prefer CMS fallbacks when converting static pages so production does not go blank before editors add records.
 - Keep admin-facing collections grouped by actual editorial workflow.
 - For submission inboxes, keep anonymous REST access closed and write through protected same-origin API routes.
-- Regenerate `apps/web/src/payload-types.ts` after Payload config changes.
+- Run `npm run generate:types` after Payload config changes. Canonical types live in `packages/cms/src/payload-types.ts`.

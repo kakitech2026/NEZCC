@@ -5,7 +5,7 @@ import {
   buildQuoteMetadata,
   calculateFinalPayableAmount,
   normalizeBookingWorkflow,
-} from '../src/lib/bookings/bookingStatusService'
+} from '@nezcc/cms/bookings/bookingStatusService'
 
 test.describe('booking status service', () => {
   test('calculates final payable amount from quote components', () => {

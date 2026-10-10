@@ -1,0 +1,35 @@
+{
+  "name": "@nezcc/cms",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit --incremental false",
+    "lint": "eslint"
+  },
+  "exports": {
+    "./config": "./src/config.ts",
+    "./types": "./src/payload-types.ts",
+    "./bookings/*": "./src/bookings/*.ts"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "@payloadcms/db-mongodb": "3.88.0",
+    "@payloadcms/email-nodemailer": "3.88.0",
+    "@payloadcms/richtext-lexical": "3.88.0",
+    "@payloadcms/storage-vercel-blob": "3.88.0",
+    "nodemailer": "^10.0.0",
+    "sharp": "^0.35.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.0",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "payload": "3.88.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  }
+}

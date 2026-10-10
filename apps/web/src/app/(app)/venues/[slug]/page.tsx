@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { BookingPolicySummary } from '@/components/bookings/BookingPolicySummary'
 import { BookingRequestForm } from '@/components/bookings/BookingRequestForm'
-import { getPublicBookingSettings } from '@/lib/bookings/bookingSettingsService'
+import { getPublicBookingSettings } from '@nezcc/cms/bookings/bookingSettingsService'
 import { getPayloadClient } from '@/lib/payload'
 
 export const dynamic = 'force-dynamic'

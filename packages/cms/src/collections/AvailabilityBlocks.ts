@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { validateAvailabilityBlock } from '@/lib/bookings/bookingConflictService'
+import { validateAvailabilityBlock } from '../bookings/bookingConflictService'
 
 const isAuthenticated = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
 

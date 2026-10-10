@@ -1,4 +1,4 @@
-import type { BookingSetting } from '@/payload-types'
+import type { BookingSetting } from '../payload-types'
 
 export type PublicBookingSettings = {
   approvalDisclaimer: string

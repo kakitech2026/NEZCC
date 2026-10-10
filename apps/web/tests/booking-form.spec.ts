@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-import { buildBookingSubmission } from '../src/lib/bookings/bookingFormService'
+import { buildBookingSubmission } from '@nezcc/cms/bookings/bookingFormService'
 
 const buildFormData = (entries: Record<string, string>) => {
   const formData = new FormData()

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-import { createBookingRequest } from '../src/lib/bookings/bookingCreationService'
+import { createBookingRequest } from '@nezcc/cms/bookings/bookingCreationService'
 
 const validInput = {
   artist: 'artist-1',

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-import { buildBookingAuditHistory } from '../src/lib/bookings/bookingAuditService'
+import { buildBookingAuditHistory } from '@nezcc/cms/bookings/bookingAuditService'
 
 const now = new Date('2026-09-03T10:00:00.000Z')
 

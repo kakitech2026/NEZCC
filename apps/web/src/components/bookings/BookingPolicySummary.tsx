@@ -1,5 +1,5 @@
-import type { PublicBookingSettings } from '@/lib/bookings/bookingSettingsService'
-import { formatPolicyDate } from '@/lib/bookings/bookingSettingsService'
+import type { PublicBookingSettings } from '@nezcc/cms/bookings/bookingSettingsService'
+import { formatPolicyDate } from '@nezcc/cms/bookings/bookingSettingsService'
 
 type BookingPolicySummaryProps = {
   settings: PublicBookingSettings

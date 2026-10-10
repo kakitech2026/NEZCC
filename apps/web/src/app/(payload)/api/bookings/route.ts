@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
-import { createBookingRequest } from '@/lib/bookings/bookingCreationService'
-import { getClientAddressFromHeaders } from '@/lib/bookings/bookingAntiSpamService'
+import { createBookingRequest } from '@nezcc/cms/bookings/bookingCreationService'
+import { getClientAddressFromHeaders } from '@nezcc/cms/bookings/bookingAntiSpamService'
 
 const MAX_BODY_BYTES = 30_000
 

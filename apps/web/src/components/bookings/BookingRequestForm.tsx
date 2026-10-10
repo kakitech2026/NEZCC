@@ -1,8 +1,8 @@
 'use client'
 
 import { FormEvent, useRef, useState } from 'react'
-import type { PublicBookingSettings } from '@/lib/bookings/bookingSettingsService'
-import { buildBookingSubmission, createBookingIdempotencyToken, type BookingFormResource } from '@/lib/bookings/bookingFormService'
+import type { PublicBookingSettings } from '@nezcc/cms/bookings/bookingSettingsService'
+import { buildBookingSubmission, createBookingIdempotencyToken, type BookingFormResource } from '@nezcc/cms/bookings/bookingFormService'
 import { BookingConsentFields } from './BookingConsentFields'
 
 type FormStatus = {

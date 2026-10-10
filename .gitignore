@@ -13,3 +13,17 @@ transcript_msg.json
 update_components.ps1
 update_fonts.ps1
 user_code.tsx
+
+# Workspace dependencies, generated output, and local runtime files
+node_modules/
+.next/
+.next-test/
+*.tsbuildinfo
+next-env.d.ts
+.env
+.env.*
+!.env.example
+.vercel/
+playwright-report/
+test-results/
+.local/

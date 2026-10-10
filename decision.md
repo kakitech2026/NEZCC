@@ -5,9 +5,9 @@ This document records decisions that affect the long-term implementation and ope
 ## D-001: Payload CMS for Content Administration
 
 - **Status:** Accepted
-- **Decision:** Use Payload CMS embedded in the Next.js application.
+- **Decision:** Use Payload CMS embedded in the two Next.js apps through the shared `@nezcc/cms` workspace package.
 - **Reasoning:** Payload provides a typed content model, authentication, media management, globals, and an admin UI without requiring a separate CMS deployment.
-- **Consequences:** Public pages and `/admin` share one application and deployment. Payload configuration changes must be tested with both the public site and admin workflows.
+- **Consequences:** Public pages and admin have separate apps and deployment targets, with one schema, database, and media store. Public pages retain Payload Local API access. Shared configuration changes must be tested with both apps. The former combined deployment remains the rollback target during the hosting transition.
 
 ## D-002: MongoDB Atlas as the Primary Database
 

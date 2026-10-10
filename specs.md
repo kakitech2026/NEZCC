@@ -13,7 +13,7 @@ NEZCC is a public cultural heritage website with an authenticated administration
 - Vercel hosting and Vercel Blob media storage
 - Tailwind CSS utilities and project-level CSS tokens
 
-The deployable application is located in `apps/web`.
+The npm monorepo contains deployable apps in `apps/web` and `apps/admin`, with shared CMS models and booking services in `packages/cms`.
 
 ## 3. Application Surfaces
 
@@ -29,7 +29,7 @@ The deployable application is located in `apps/web`.
 
 ### Admin Workspace
 
-- Available at `/admin`
+- Available at `/` on the separate admin origin; `/login` handles authentication. Public `/admin` returns 404.
 - Authenticated through the Payload `users` collection
 - Dashboard-oriented navigation and content shortcuts
 - Create, read, update, and delete workflows for managed content
@@ -71,7 +71,7 @@ The deployable application is located in `apps/web`.
 
 Header and footer social icons read their URLs from `site-settings`. Configured external links open in a new tab; empty or invalid URLs remain disabled.
 
-Payload-generated TypeScript definitions are stored in `apps/web/src/payload-types.ts`.
+Payload-generated TypeScript definitions are stored in `packages/cms/src/payload-types.ts`; the public app keeps a type-only compatibility re-export.
 
 ## 5. Media Behavior
 

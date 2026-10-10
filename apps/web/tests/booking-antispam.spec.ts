@@ -8,7 +8,7 @@ import {
   findExistingBookingByIdempotencyToken,
   getClientAddressFromHeaders,
   normalizeIdempotencyToken,
-} from '../src/lib/bookings/bookingAntiSpamService'
+} from '@nezcc/cms/bookings/bookingAntiSpamService'
 
 test.describe('booking anti-spam service', () => {
   test('normalizes and validates idempotency tokens', () => {

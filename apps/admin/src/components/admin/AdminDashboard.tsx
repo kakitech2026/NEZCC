@@ -91,6 +91,8 @@ const overview = [
 ]
 
 export const AdminDashboard: React.FC = () => {
+  const siteURL = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || 'https://nezcc.in').trim().replace(/\/+$/, '')
+  const siteOrigin = /^https?:\/\//i.test(siteURL) ? siteURL : `https://${siteURL}`
   return (
     <main className="nezcc-dashboard">
       <section className="nezcc-dashboard__hero">
@@ -106,7 +108,7 @@ export const AdminDashboard: React.FC = () => {
           <a className="nezcc-button nezcc-button--primary" href="/admin/collections/news/create">
             New update
           </a>
-          <a className="nezcc-button nezcc-button--secondary" href="/">
+          <a className="nezcc-button nezcc-button--secondary" href={siteOrigin}>
             View site
           </a>
         </div>

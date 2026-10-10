@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import type { Payload } from 'payload'
 
-import { validateBookingInput, type BookingValidationInput } from '../src/lib/bookings/bookingValidationService'
+import { validateBookingInput, type BookingValidationInput } from '@nezcc/cms/bookings/bookingValidationService'
 
 const futureStart = '2026-10-10T10:00:00.000Z'
 const futureEnd = '2026-10-10T12:00:00.000Z'

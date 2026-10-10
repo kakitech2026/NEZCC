@@ -1,14 +1,14 @@
 import type { CollectionConfig } from 'payload'
-import { buildBookingAuditHistory } from '@/lib/bookings/bookingAuditService'
+import { buildBookingAuditHistory } from '../bookings/bookingAuditService'
 import {
   assertNoDuplicateIdempotencyToken,
   enforceBookingRateLimit,
   normalizeIdempotencyToken,
-} from '@/lib/bookings/bookingAntiSpamService'
-import { analyzeBookingWarnings, validateWarningOverride } from '@/lib/bookings/bookingConflictService'
-import { sendBookingStatusChangeEmail } from '@/lib/bookings/bookingEmailService'
-import { generateBookingReference } from '@/lib/bookings/bookingReferenceService'
-import { buildQuoteMetadata, normalizeBookingWorkflow } from '@/lib/bookings/bookingStatusService'
+} from '../bookings/bookingAntiSpamService'
+import { analyzeBookingWarnings, validateWarningOverride } from '../bookings/bookingConflictService'
+import { sendBookingStatusChangeEmail } from '../bookings/bookingEmailService'
+import { generateBookingReference } from '../bookings/bookingReferenceService'
+import { buildQuoteMetadata, normalizeBookingWorkflow } from '../bookings/bookingStatusService'
 
 const isAuthenticated = ({ req }: { req: { user?: unknown } }) => Boolean(req.user)
 

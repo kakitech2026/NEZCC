@@ -1,4 +1,6 @@
 import type { CollectionConfig } from 'payload'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -10,7 +12,7 @@ export const Media: CollectionConfig = {
     read: () => true, // Media should be readable by public
   },
   upload: {
-    staticDir: 'public/media',
+    staticDir: process.env.PAYLOAD_MEDIA_DIR || path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../../apps/web/public/media'),
     adminThumbnail: 'thumbnail',
     imageSizes: [
       {

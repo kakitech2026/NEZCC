@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-import { getPublicBookingSettings } from '../src/lib/bookings/bookingSettingsService'
+import { getPublicBookingSettings } from '@nezcc/cms/bookings/bookingSettingsService'
 
 test.describe('booking policy settings', () => {
   test('normalizes public booking settings for policy display and consent forms', async () => {

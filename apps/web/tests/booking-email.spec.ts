@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-import { sendBookingCreationEmails, sendBookingStatusChangeEmail } from '../src/lib/bookings/bookingEmailService'
+import { sendBookingCreationEmails, sendBookingStatusChangeEmail } from '@nezcc/cms/bookings/bookingEmailService'
 
 const booking = {
   bookingReference: 'NEZCC-BKG-2026-000321',

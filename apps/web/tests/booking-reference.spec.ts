@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import type { PayloadRequest } from 'payload'
 
-import { formatBookingReference, generateBookingReference } from '../src/lib/bookings/bookingReferenceService'
+import { formatBookingReference, generateBookingReference } from '@nezcc/cms/bookings/bookingReferenceService'
 
 const createMockReq = () => {
   let sequence = 0

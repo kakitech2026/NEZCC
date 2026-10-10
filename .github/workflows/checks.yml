@@ -1,0 +1,36 @@
+name: Monorepo Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      MONGODB_URI: mongodb://127.0.0.1:27017/nezcc_build
+      PAYLOAD_SECRET: ci-build-only-placeholder-not-for-deployment
+      NEXT_PUBLIC_SITE_URL: https://nezcc.in
+      ADMIN_URL: https://admin.nezcc.in
+      # Generate the same storage-enabled admin map as production, without real credentials.
+      BLOB_READ_WRITE_TOKEN: vercel_blob_rw_nezccci_placeholder
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run generate:types && npm run generate:importmap
+      - run: git diff --exit-code -- packages/cms/src/payload-types.ts 'apps/admin/src/app/(payload)/admin/importMap.js'
+      - run: npm run test:unit
+      - run: npm run build
+      - run: npm run typecheck
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:integration:production
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: integration-results
+          path: .local/

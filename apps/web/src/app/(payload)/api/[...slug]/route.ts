@@ -1,9 +1,11 @@
-/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
 import configPromise from '@payload-config'
-import { REST_GET, REST_OPTIONS, REST_PATCH, REST_POST, REST_DELETE } from '@payloadcms/next/routes'
+import { REST_GET, REST_OPTIONS } from '@payloadcms/next/routes'
+import { isPublicRESTRequest } from '@/lib/public-routes'
 
-export const GET = REST_GET(configPromise)
-export const POST = REST_POST(configPromise)
-export const DELETE = REST_DELETE(configPromise)
-export const PATCH = REST_PATCH(configPromise)
-export const OPTIONS = REST_OPTIONS(configPromise)
+const publicHandler = (handler: ReturnType<typeof REST_GET>) =>
+  (...args: Parameters<typeof handler>) => isPublicRESTRequest(args[0])
+    ? handler(...args)
+    : new Response('Not Found', { status: 404 })
+
+export const GET = publicHandler(REST_GET(configPromise))
+export const OPTIONS = publicHandler(REST_OPTIONS(configPromise))
