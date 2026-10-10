@@ -102,6 +102,7 @@ test.describe('booking creation service', () => {
 
     await createBookingRequest({
       input: validInput,
+      now: new Date('2026-09-04T10:00:00.000Z'),
       payload,
       secret: 'secret',
     })
@@ -129,6 +130,7 @@ test.describe('booking creation service', () => {
     await expect(
       createBookingRequest({
         input: validInput,
+        now: new Date('2026-09-04T10:00:00.000Z'),
         payload,
         secret: 'secret',
       }),

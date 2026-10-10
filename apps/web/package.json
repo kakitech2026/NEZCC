@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit --incremental false",
     "generate:types": "npm run generate:types --workspace=@nezcc/admin",
     "test:e2e": "playwright test",
-    "test:unit": "playwright test --project=desktop-chromium booking-validation booking-status booking-reference booking-policy booking-email booking-creation booking-conflict booking-audit booking-antispam booking-form routing"
+    "test:unit": "playwright test --project=desktop-chromium booking-validation booking-status booking-reference booking-policy booking-email booking-creation booking-conflict booking-audit booking-antispam booking-form routing media-upload"
   },
   "dependencies": {
     "@nezcc/cms": "0.1.0",
