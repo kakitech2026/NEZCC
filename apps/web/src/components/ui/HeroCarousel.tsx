@@ -37,8 +37,18 @@ export default function HeroCarousel({ campaigns }: HeroCarouselProps) {
   }
 
   const getImageUrl = (image: any) => {
-    if (typeof image === 'string') return image;
-    return image?.url || '/images/hero/hero-landscape.png';
+    const url = typeof image === 'string' ? image : image?.url;
+    if (!url) return '/images/hero/hero-landscape.png';
+
+    if (/^https?:\/\//i.test(url)) {
+      const mediaURL = new URL(url);
+      // Payload media is served by this app, including during local development.
+      if (mediaURL.pathname.startsWith('/api/media/file/')) {
+        return `${mediaURL.pathname}${mediaURL.search}`;
+      }
+    }
+
+    return url;
   };
 
   return (
