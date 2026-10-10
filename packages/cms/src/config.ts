@@ -75,6 +75,7 @@ export const createCMSConfig = (options: { admin?: Config['admin']; target?: 'we
     normalizeURL(process.env.VERCEL_PROJECT_PRODUCTION_URL) ||
     (process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://nezcc.in')
   const adminURL = normalizeURL(process.env.ADMIN_URL || process.env.NEXT_PUBLIC_ADMIN_URL) ||
+    (options.target === 'admin' ? normalizeURL(process.env.VERCEL_PROJECT_PRODUCTION_URL) : undefined) ||
     (process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://admin.nezcc.in')
   const allowedOrigins = Array.from(
     new Set([publicSiteURL, adminURL, ...parseURLList(process.env.PAYLOAD_ALLOWED_ORIGINS)]),
