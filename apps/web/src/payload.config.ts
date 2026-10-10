@@ -52,6 +52,28 @@ const smtpPort = Number(process.env.SMTP_PORT || 587)
 const smtpUser = process.env.SMTP_USER
 const smtpPass = process.env.SMTP_PASS
 const emailFrom = process.env.EMAIL_FROM || smtpUser || 'bookings@nezcc.gov.in'
+const normalizeURL = (value?: string) => {
+  const trimmed = value?.trim().replace(/\/+$/, '')
+
+  if (!trimmed) {
+    return undefined
+  }
+
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`
+}
+const parseURLList = (value?: string) =>
+  (value || '')
+    .split(',')
+    .map((item) => normalizeURL(item))
+    .filter((item): item is string => Boolean(item))
+const publicSiteURL =
+  normalizeURL(process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL) ||
+  normalizeURL(process.env.VERCEL_PROJECT_PRODUCTION_URL) ||
+  'https://nezcc.in'
+const adminURL = normalizeURL(process.env.ADMIN_URL || process.env.NEXT_PUBLIC_ADMIN_URL) || 'https://admin.nezcc.in'
+const allowedOrigins = Array.from(
+  new Set([publicSiteURL, adminURL, ...parseURLList(process.env.PAYLOAD_ALLOWED_ORIGINS)]),
+)
 const emailAdapter =
   smtpHost && smtpUser && smtpPass
     ? nodemailerAdapter({
@@ -79,6 +101,7 @@ if (!payloadSecret) {
 
 export default buildConfig({
   admin: {
+    suppressHydrationWarning: true,
     theme: 'light',
     user: Users.slug,
     meta: {
@@ -143,6 +166,9 @@ export default buildConfig({
   ...(emailAdapter ? { email: emailAdapter } : {}),
   sharp,
   secret: payloadSecret,
+  serverURL: publicSiteURL,
+  cors: allowedOrigins,
+  csrf: allowedOrigins,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
