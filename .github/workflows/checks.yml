@@ -8,6 +8,10 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    container:
+      # Keep the browser and its system libraries aligned with @playwright/test.
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
+      options: --ipc=host --user 1001
     env:
       MONGODB_URI: mongodb://127.0.0.1:27017/nezcc_build
       PAYLOAD_SECRET: ci-build-only-placeholder-not-for-deployment
@@ -27,7 +31,6 @@ jobs:
       - run: npm run test:unit
       - run: npm run build
       - run: npm run typecheck
-      - run: npx playwright install --with-deps chromium
       - run: npm run test:integration:production
       - uses: actions/upload-artifact@v4
         if: failure()
