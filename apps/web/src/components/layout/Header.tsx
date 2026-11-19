@@ -114,17 +114,6 @@ export default function Header() {
               </a>
             </nav>
 
-            <button
-              aria-expanded={isMobileMenuOpen}
-              aria-label="Menu"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-slate-800 transition hover:bg-white/30 hover:text-[#df5f18] focus:outline-none focus:ring-2 focus:ring-white/70 md:hidden"
-              onClick={() => setIsMobileMenuOpen(true)}
-            >
-              <span className="material-symbols-outlined text-[22px]">
-                menu
-              </span>
-            </button>
-
             {/* Social icons */}
             <div className="hidden sm:flex items-center gap-4">
 
@@ -229,9 +218,17 @@ export default function Header() {
               href="/"
               className="block shrink-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#df5f18]/40"
             >
+              {/* Use the stacked logo on mobile and the horizontal wordmark on desktop. */}
+              <span className="block h-[72px] w-[72px] md:hidden">
+                <img
+                  alt="NEZCC Logo"
+                  className="h-full w-full object-contain"
+                  src="/images/logos/nezcc-logo.png"
+                />
+              </span>
               <img
                 alt="NEZCC Logo"
-                className="h-[38px] w-auto object-contain sm:h-[54px] md:h-[76px]"
+                className="hidden h-[76px] w-auto object-contain md:block"
                 src="/images/logos/nezcc.png"
               />
             </a>
@@ -637,7 +634,7 @@ export default function Header() {
                   >
                     <span className="hidden sm:block">More</span>
                     <span className="material-symbols-outlined text-[18px] sm:text-[16px]">
-                      menu
+                      more_horiz
                     </span>
                   </button>
 

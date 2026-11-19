@@ -27,9 +27,22 @@ export const Campaigns: CollectionConfig = {
     },
     {
       name: 'image',
+      label: 'Desktop / Default Image',
       type: 'upload',
       relationTo: 'media',
       required: true,
+      admin: {
+        description: 'Displayed on desktop and used as the fallback when no mobile image is set.',
+      },
+    },
+    {
+      name: 'mobileImage',
+      label: 'Mobile Hero Image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Optional image displayed on mobile screens. Leave empty to use the desktop / default image.',
+      },
     },
     {
       name: 'link',

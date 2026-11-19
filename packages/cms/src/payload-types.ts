@@ -363,7 +363,14 @@ export interface Campaign {
   id: string;
   title: string;
   description: string;
+  /**
+   * Displayed on desktop and used as the fallback when no mobile image is set.
+   */
   image: string | Media;
+  /**
+   * Optional image displayed on mobile screens. Leave empty to use the desktop / default image.
+   */
+  mobileImage?: (string | null) | Media;
   link?: string | null;
   linkText?: string | null;
   isActive?: boolean | null;
@@ -1316,6 +1323,7 @@ export interface CampaignsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   image?: T;
+  mobileImage?: T;
   link?: T;
   linkText?: T;
   isActive?: T;

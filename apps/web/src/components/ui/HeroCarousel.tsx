@@ -8,6 +8,7 @@ type Campaign = {
   title: string;
   description: string;
   image: any;
+  mobileImage?: any | null;
   link?: string | null;
   linkText?: string | null;
 };
@@ -36,6 +37,14 @@ export default function HeroCarousel({ campaigns }: HeroCarouselProps) {
     return null;
   }
 
+  const activeCampaign = campaigns[currentIndex] ?? campaigns[0];
+  const desktopImage = typeof activeCampaign.image === 'object' ? activeCampaign.image : null;
+  const desktopImageWidth = desktopImage?.width ?? desktopImage?.sizes?.tablet?.width;
+  const desktopImageHeight = desktopImage?.height ?? desktopImage?.sizes?.tablet?.height;
+  const desktopAspectRatio = desktopImageWidth && desktopImageHeight
+    ? `${desktopImageWidth} / ${desktopImageHeight}`
+    : '16 / 9';
+
   const getImageUrl = (image: any) => {
     const url = typeof image === 'string' ? image : image?.url;
     if (!url) return '/images/hero/hero-landscape.png';
@@ -53,7 +62,8 @@ export default function HeroCarousel({ campaigns }: HeroCarouselProps) {
 
   return (
     <section
-      className="relative w-full aspect-[4/5] sm:aspect-square md:aspect-video min-h-[500px] overflow-hidden bg-[#16253a]"
+      style={{ '--hero-desktop-aspect': desktopAspectRatio } as React.CSSProperties}
+      className="relative w-full aspect-[4/5] sm:aspect-square md:aspect-[var(--hero-desktop-aspect)] min-h-[500px] md:min-h-0 overflow-hidden bg-[#16253a]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -66,23 +76,32 @@ export default function HeroCarousel({ campaigns }: HeroCarouselProps) {
         >
           {/* Background Image */}
           <div className="absolute inset-0 w-full h-full">
-            <Image
-              src={getImageUrl(campaign.image)}
-              alt={campaign.title}
-              fill
-              className="object-cover"
-              priority={index === 0}
-            />
+            <picture className="absolute inset-0 block">
+              {campaign.mobileImage && (
+                <source
+                  media="(max-width: 767px)"
+                  srcSet={getImageUrl(campaign.mobileImage)}
+                />
+              )}
+              <Image
+                src={getImageUrl(campaign.image)}
+                alt={campaign.title}
+                fill
+                sizes="100vw"
+                className="object-cover md:object-contain"
+                priority={index === 0}
+              />
+            </picture>
             {/* Gradient Overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#16253a]/90 via-[#16253a]/40 to-transparent"></div>
           </div>
 
           {/* Content */}
-          <div className="relative z-20 h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-24 md:pb-32">
+          <div className="relative z-20 h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-14 md:pb-32">
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-4 max-w-3xl leading-tight drop-shadow-lg">
               {campaign.title}
             </h1>
-            <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl drop-shadow-md">
+            <p className="text-lg md:text-xl text-white/90 mb-5 md:mb-8 max-w-2xl drop-shadow-md">
               {campaign.description}
             </p>
             {campaign.link && (
