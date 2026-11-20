@@ -35,7 +35,7 @@ export default function UrgentNotice({
   announcements = [],
 }: UrgentNoticeProps) {
   const [isPaused, setIsPaused] = useState(false);
-  const activeAnnouncements = announcements.filter(
+  const activeAnnouncements = (announcements ?? []).filter(
     (item) => item.isActive !== false && Boolean(item.text?.trim()),
   ).map((item) => ({
     ...item,

@@ -128,7 +128,7 @@ export const HomePage: GlobalConfig = {
                   admin: {
                     description: 'Use a site path such as /schemes or a full http(s) URL.',
                   },
-                  validate: (value) => {
+                  validate: (value: string | null | undefined) => {
                     if (typeof value !== 'string' || value.trim() === '') return true
                     if (value.startsWith('/') && !value.startsWith('//')) return true
 
