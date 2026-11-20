@@ -108,6 +108,8 @@ export default function HeroCarousel({ campaigns }: HeroCarouselProps) {
               <div>
                 <a
                   href={campaign.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex h-[46px] md:h-[52px] items-center justify-center gap-2.5 rounded-full bg-[#df5f18] px-6 md:px-8 text-white shadow-sm hover:bg-[#c65d19] transition-colors focus:outline-none focus:ring-2 focus:ring-[#df5f18] focus:ring-offset-2 focus:ring-offset-[#16253a]"
                 >
                   <span className="text-[14px] md:text-[15px] font-bold tracking-wide">
