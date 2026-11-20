@@ -223,13 +223,13 @@ export default function Header() {
                 <img
                   alt="NEZCC Logo"
                   className="h-full w-full object-contain"
-                  src="/images/logos/nezcc-logo.png"
+                  src="/images/logos/nezcc-logo.webp"
                 />
               </span>
               <img
                 alt="NEZCC Logo"
                 className="hidden h-[76px] w-auto object-contain md:block"
-                src="/images/logos/nezcc.png"
+                src="/images/logos/nezcc.webp"
               />
             </a>
 
@@ -250,7 +250,7 @@ export default function Header() {
               <img
                 alt="Ministry of Culture Logo"
                 className="hidden h-[28px] w-auto max-w-[140px] object-contain sm:block sm:h-[40px] md:h-[62px] shrink"
-                src="/images/logos/ministry_of_culture_india.png"
+                src="/images/logos/ministry_of_culture_india.webp"
               />
 
               {/* Ministry emblem / portraits can remain part of existing ministry image */}
@@ -260,7 +260,7 @@ export default function Header() {
                   <img
                     alt="Ministry of Culture Logo"
                     className="h-full w-full object-cover"
-                    src="/images/logos/ministry-of-culture.jpeg"
+                    src="/images/logos/ministry-of-culture.webp"
                   />
                 </div>
 
@@ -271,7 +271,7 @@ export default function Header() {
                       <img
                         alt="Shri Gajendra Singh Shekhawat"
                         className="h-full w-full object-cover object-top"
-                        src="/images/logos/Shri-Gajendra-Singh-Shekhawat.jpg"
+                        src="/images/logos/Shri-Gajendra-Singh-Shekhawat.webp"
                       />
                     </div>
                     <div className="mt-1.5 w-[80px] md:w-[90px]">
@@ -287,7 +287,7 @@ export default function Header() {
                       <img
                         alt="Shri Rao Inderjit Singh"
                         className="h-full w-full object-cover object-top"
-                        src="/images/logos/shri-rao-inderjit-singh.jpeg"
+                        src="/images/logos/shri-rao-inderjit-singh.webp"
                       />
                     </div>
                     <div className="mt-1.5 w-[80px] md:w-[90px]">
