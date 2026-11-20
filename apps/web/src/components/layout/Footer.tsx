@@ -37,7 +37,7 @@ export default function Footer() {
                 <img
                   alt="NEZCC Logo"
                   className="h-20 w-auto object-contain opacity-70"
-                  src="/images/logos/nezcc-white.png"
+                  src="/images/logos/nezcc-white.webp"
                 />
               </div>
             </Link>
@@ -131,35 +131,35 @@ export default function Footer() {
             <div className="flex flex-col">
               <h4 className="font-serif italic text-white/90 text-xl mb-6">Important Links</h4>
               <nav className="flex flex-col gap-4">
-                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="#">
+                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="https://wzccindia.com/" target="_blank" rel="noopener noreferrer">
                   <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 ease-out text-[#df5f18] font-bold">—</span>
                   <span className="group-hover:translate-x-1 transition-transform duration-300">WZCC</span>
                 </Link>
-                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="#">
+                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="https://szccindia.org/" target="_blank" rel="noopener noreferrer">
                   <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 ease-out text-[#df5f18] font-bold">—</span>
                   <span className="group-hover:translate-x-1 transition-transform duration-300">SZCC</span>
                 </Link>
-                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="#">
+                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="https://ezccindia.org/" target="_blank" rel="noopener noreferrer  ">
                   <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 ease-out text-[#df5f18] font-bold">—</span>
                   <span className="group-hover:translate-x-1 transition-transform duration-300">EZCC</span>
                 </Link>
-                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="#">
+                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="https://www.sczcc.gov.in/" target="_blank" rel="noopener noreferrer">
                   <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 ease-out text-[#df5f18] font-bold">—</span>
                   <span className="group-hover:translate-x-1 transition-transform duration-300">SCZCC</span>
                 </Link>
-                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="#">
+                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="https://www.nczccindia.in/" target="_blank" rel="noopener noreferrer">
                   <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 ease-out text-[#df5f18] font-bold">—</span>
                   <span className="group-hover:translate-x-1 transition-transform duration-300">NCZCC</span>
                 </Link>
-                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="#">
+                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="https://www.culturenorthindia.com/" target="_blank" rel="noopener noreferrer">
                   <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 ease-out text-[#df5f18] font-bold">—</span>
                   <span className="group-hover:translate-x-1 transition-transform duration-300">Culture North India</span>
                 </Link>
-                <a className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="https://indiaculture.gov.in" target="_blank" rel="noopener noreferrer">
+                <a className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="https://culture.gov.in/" target="_blank" rel="noopener noreferrer">
                   <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 ease-out text-[#df5f18] font-bold">—</span>
                   <span className="group-hover:translate-x-1 transition-transform duration-300">Ministry of Culture</span>
                 </a>
-                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="#">
+                <Link className="group flex items-center text-white/60 hover:text-white transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#df5f18] rounded w-max" href="https://www.mygov.in/campaigns/azadi-ka-amrit-mahotsav" target="_blank" rel="noopener noreferrer">
                   <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 ease-out text-[#df5f18] font-bold">—</span>
                   <span className="group-hover:translate-x-1 transition-transform duration-300">Azadi Ka Amrit Mahotsav</span>
                 </Link>
