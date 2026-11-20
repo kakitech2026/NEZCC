@@ -1,6 +1,6 @@
 import HeroSection from '@/components/ui/HeroSection';
 import MobileHeroSection from '@/components/ui/MobileHeroSection';
-import UrgentNotice from '@/components/ui/UrgentNotice';
+import UrgentNotice, { type UrgentNoticeProps } from '@/components/ui/UrgentNotice';
 import NewsCard from '@/components/content/NewsCard';
 import EventCard from '@/components/content/EventCard';
 import HeroCarousel from '@/components/ui/HeroCarousel';
@@ -12,32 +12,42 @@ export const dynamic = 'force-dynamic';
 export default async function Home() {
   const payload = await getPayload({ config: configPromise });
   
-  const campaignsResult = await payload.find({
-    collection: 'campaigns',
-    where: {
-      isActive: {
-        equals: true,
+  const [campaignsResult, newsResult, eventsResult, homePageSettings] = await Promise.all([
+    payload.find({
+      collection: 'campaigns',
+      where: {
+        isActive: {
+          equals: true,
+        },
       },
-    },
-  });
+    }),
+    payload.find({
+      collection: 'news',
+      sort: '-publishedDate',
+      limit: 5,
+    }),
+    payload.find({
+      collection: 'events',
+      sort: '-startDate',
+      limit: 4,
+    }),
+    payload.findGlobal({ slug: 'home-page' }),
+  ]);
   const campaigns = campaignsResult.docs;
-
-  const newsResult = await payload.find({
-    collection: 'news',
-    sort: '-publishedDate',
-    limit: 5,
-  });
   const newsItems = newsResult.docs;
-  
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  
-  const eventsResult = await payload.find({
-    collection: 'events',
-    sort: '-startDate',
-    limit: 4,
-  });
   const upcomingEvents = eventsResult.docs;
+  const defaultAnnouncements: NonNullable<UrgentNoticeProps['announcements']> = [
+    {
+      text: 'Applications for the Annual Cultural Grant are now open.',
+      isActive: true,
+      linkLabel: 'Read More',
+    },
+  ];
+  const announcementProps: UrgentNoticeProps = {
+    enabled: homePageSettings.showAnnouncementMarquee ?? true,
+    label: homePageSettings.announcementLabel ?? 'Notice:',
+    announcements: homePageSettings.announcementItems ?? defaultAnnouncements,
+  };
 
   const featuredArticle = newsItems.find((n) => n.isFeatured) || newsItems[0];
   const listArticles = newsItems.filter((n) => n.id !== featuredArticle?.id).slice(0, 2);
@@ -53,16 +63,16 @@ export default async function Home() {
       {campaigns && campaigns.length > 0 ? (
         <>
           <HeroCarousel campaigns={campaigns as any[]} />
-          <UrgentNotice />
+          <UrgentNotice {...announcementProps} />
         </>
       ) : (
         <>
           <div className="block md:hidden">
-            <MobileHeroSection />
+            <MobileHeroSection announcementProps={announcementProps} />
           </div>
           <div className="hidden md:block">
             <HeroSection />
-            <UrgentNotice />
+            <UrgentNotice {...announcementProps} />
           </div>
         </>
       )}

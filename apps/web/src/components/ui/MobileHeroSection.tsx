@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import UrgentNotice from "./UrgentNotice";
+import UrgentNotice, { type UrgentNoticeProps } from "./UrgentNotice";
 
 const quickLinks = [
   {
@@ -66,7 +66,11 @@ const quickLinks = [
   },
 ];
 
-export default function MobileHeroSection() {
+export default function MobileHeroSection({
+  announcementProps,
+}: {
+  announcementProps: UrgentNoticeProps;
+}) {
   return (
     <section className="relative w-full overflow-hidden bg-[#f8f1e6]">
 
@@ -379,7 +383,7 @@ export default function MobileHeroSection() {
         ====================================================== */}
 
         <div className="relative z-40 mt-8 w-full pb-6">
-          <UrgentNotice />
+          <UrgentNotice {...announcementProps} />
         </div>
 
       </div>

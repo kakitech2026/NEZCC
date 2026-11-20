@@ -1,24 +1,117 @@
-import React from 'react';
+'use client';
 
-export default function UrgentNotice() {
-  return (
-    <section aria-label="Urgent Notice" className="w-full relative z-20 bg-[#df5f18]">
-      <div className="max-w-container-max-width mx-auto px-4 md:px-8 py-2 md:py-2.5 flex flex-row items-center justify-between gap-3">
-        <div className="flex flex-row items-start sm:items-center gap-2 md:gap-3 text-left w-full">
-          <div aria-hidden="true" className="flex-shrink-0 text-white flex items-center justify-center mt-0.5 sm:mt-0">
-            <span className="material-symbols-outlined text-[18px] sm:text-[22px]" style={{ fontVariationSettings: '"FILL" 1' }}>campaign</span>
+import React, { useState, type CSSProperties } from 'react';
+
+export type AnnouncementMarqueeItem = {
+  id?: string | null;
+  text?: string | null;
+  isActive?: boolean | null;
+  linkLabel?: string | null;
+  linkUrl?: string | null;
+};
+
+export type UrgentNoticeProps = {
+  enabled?: boolean | null;
+  label?: string | null;
+  announcements?: AnnouncementMarqueeItem[] | null;
+};
+
+function getSafeHref(value?: string | null) {
+  const href = value?.trim();
+  if (!href) return null;
+  if (href.startsWith('/') && !href.startsWith('//')) return href;
+
+  try {
+    const url = new URL(href);
+    return url.protocol === 'http:' || url.protocol === 'https:' ? href : null;
+  } catch {
+    return null;
+  }
+}
+
+export default function UrgentNotice({
+  enabled = true,
+  label = 'Notice:',
+  announcements = [],
+}: UrgentNoticeProps) {
+  const [isPaused, setIsPaused] = useState(false);
+  const activeAnnouncements = announcements.filter(
+    (item) => item.isActive !== false && Boolean(item.text?.trim()),
+  ).map((item) => ({
+    ...item,
+    text: item.text?.trim() ?? '',
+  }));
+
+  if (!enabled || activeAnnouncements.length === 0) return null;
+
+  const announcementLength = activeAnnouncements.reduce(
+    (total, item) => total + item.text.length + (item.linkUrl ? (item.linkLabel?.length ?? 8) : 0),
+    0,
+  );
+  const duration = Math.min(90, Math.max(22, Math.round(announcementLength * 0.45)));
+  const trackStyle = {
+    '--urgent-notice-duration': duration + 's',
+  } as CSSProperties;
+  const visibleLabel = label?.trim();
+
+  const renderCopy = (isDuplicate: boolean) => (
+    <div
+      className={'urgent-notice__copy' + (isDuplicate ? ' urgent-notice__copy--duplicate' : '')}
+      aria-hidden={isDuplicate ? true : undefined}
+    >
+      {activeAnnouncements.map((item, index) => {
+        const href = getSafeHref(item.linkUrl);
+        const linkLabel = item.linkLabel?.trim() || 'Read More';
+
+        return (
+          <div
+            className="urgent-notice__item"
+            key={(isDuplicate ? 'duplicate-' : 'primary-') + (item.id ?? index)}
+          >
+            <span className="urgent-notice__message">{item.text}</span>
+            {href && (
+              isDuplicate ? (
+                <span className="urgent-notice__link">{linkLabel}</span>
+              ) : (
+                <a className="urgent-notice__link" href={href}>
+                  {linkLabel}
+                </a>
+              )
+            )}
+            <span aria-hidden="true" className="urgent-notice__separator">•</span>
           </div>
-          <p className="text-white text-[12px] sm:text-[14px] md:text-[15px] flex-1 font-medium m-0 leading-snug">
-            <strong className="font-bold text-white">Notice:</strong>
-            <span className="ml-1">Applications for the Annual Cultural Grant are now open.</span>
-          </p>
+        );
+      })}
+    </div>
+  );
+
+  return (
+    <section aria-label="Announcements" aria-live="off" className="urgent-notice">
+      <div className="urgent-notice__content max-w-container-max-width mx-auto px-4 md:px-8 py-2 md:py-2.5">
+        <span aria-hidden="true" className="urgent-notice__icon material-symbols-outlined">
+          campaign
+        </span>
+        {visibleLabel && <strong className="urgent-notice__label">{visibleLabel}</strong>}
+        <div className="urgent-notice__viewport">
+          <div
+            className={'urgent-notice__track' + (isPaused ? ' urgent-notice__track--paused' : '')}
+            style={trackStyle}
+          >
+            {renderCopy(false)}
+            {renderCopy(true)}
+          </div>
         </div>
-        <a 
-          className="flex-shrink-0 inline-flex items-center justify-center bg-white hover:bg-gray-50 text-[#16a34a] text-[11px] sm:text-[13px] md:text-[14px] font-bold rounded px-3 py-1.5 shadow-sm transition-colors"
-          href="#" 
+        <button
+          aria-label={isPaused ? 'Resume announcement scrolling' : 'Pause announcement scrolling'}
+          aria-pressed={isPaused}
+          className="urgent-notice__pause"
+          onClick={() => setIsPaused((paused) => !paused)}
+          type="button"
         >
-          <span className="underline decoration-2 underline-offset-[2px] md:underline-offset-[3px]">Read More</span>
-        </a>
+          <span aria-hidden="true" className="material-symbols-outlined">
+            {isPaused ? 'play_arrow' : 'pause'}
+          </span>
+        </button>
       </div>
     </section>
   );

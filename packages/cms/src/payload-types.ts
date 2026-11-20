@@ -1873,6 +1873,29 @@ export interface HomePage {
   aboutDescription?: string | null;
   showSchemes?: boolean | null;
   showInformationCategories?: boolean | null;
+  showAnnouncementMarquee?: boolean | null;
+  /**
+   * Short label shown before the moving announcements. Leave blank to hide it.
+   */
+  announcementLabel?: string | null;
+  /**
+   * Add, edit, reorder, or temporarily hide announcement items in the scrolling banner.
+   */
+  announcementItems?:
+    | {
+        text: string;
+        isActive?: boolean | null;
+        /**
+         * Shown beside the announcement when a destination URL is set.
+         */
+        linkLabel?: string | null;
+        /**
+         * Use a site path such as /schemes or a full http(s) URL.
+         */
+        linkUrl?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2190,6 +2213,17 @@ export interface HomePageSelect<T extends boolean = true> {
   aboutDescription?: T;
   showSchemes?: T;
   showInformationCategories?: T;
+  showAnnouncementMarquee?: T;
+  announcementLabel?: T;
+  announcementItems?:
+    | T
+    | {
+        text?: T;
+        isActive?: T;
+        linkLabel?: T;
+        linkUrl?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
