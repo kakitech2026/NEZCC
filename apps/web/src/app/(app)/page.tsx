@@ -419,27 +419,27 @@ export default async function Home() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap md:justify-center items-center gap-4 md:gap-6 lg:gap-8">
             
             {/* Ministry of Culture */}
-            <a href="#" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
+            <a href="https://culture.gov.in/" target="_blank" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
               <img 
-                src="/images/logos/ministry_of_culture_india.png" 
+                src="/images/logos/ministry_of_culture_india.webp" 
                 alt="Ministry of Culture" 
                 className="max-h-12 md:max-h-16 max-w-full object-contain" 
               />
             </a>
 
             {/* India.gov.in */}
-            <a href="#" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
+            <a href="https://www.india.gov.in/" target="_blank" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
               <img 
-                src="/images/logos/India_gov_in.png" 
+                src="/images/logos/India_gov_in.webp" 
                 alt="India.gov.in" 
                 className="max-h-12 md:max-h-16 max-w-full object-contain" 
               />
             </a>
 
             {/* Digital India */}
-            <a href="#" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
+            <a href="https://www.digitalindia.gov.in/" target="_blank" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
               <img 
-                src="/images/logos/digital_india.png" 
+                src="/images/logos/digital_india.webp" 
                 alt="Digital India" 
                 className="max-h-12 md:max-h-16 max-w-full object-contain" 
               />
@@ -448,43 +448,43 @@ export default async function Home() {
             {/* NEZCC Allahabad */}
             <a href="#" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
               <img 
-                src="/images/logos/nezcc_allahabad.jpeg" 
+                src="/images/logos/nezcc_allahabad.webp" 
                 alt="NCZCC Allahabad" 
                 className="max-h-12 md:max-h-16 max-w-full object-contain" 
               />
             </a>
 
             {/* Museums of India */}
-            <a href="#" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
+            <a href="https://museumsofindia.gov.in/repository/" target="_blank" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
               <img 
-                src="/images/logos/museums_of_india.jpg" 
+                src="/images/logos/museums_of_india.webp" 
                 alt="Museums of India" 
                 className="max-h-12 md:max-h-16 max-w-full object-contain" 
               />
             </a>
 
             {/* 75 Years */}
-            <a href="#" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
+            <a href="https://www.mygov.in/campaigns/azadi-ka-amrit-mahotsav" target="_blank" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
               <img 
-                src="/images/logos/seventy_five.png" 
+                src="/images/logos/seventy_five.webp" 
                 alt="Azadi Ka Amrit Mahotsav" 
                 className="max-h-12 md:max-h-16 max-w-full object-contain" 
               />
             </a>
 
             {/* Mahatma */}
-            <a href="#" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
+            <a href="https://www.mygov.in/campaigns/mahatma-gandhi-150" target="_blank" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
               <img 
-                src="/images/logos/mahatma.png" 
+                src="/images/logos/mahatma.webp" 
                 alt="Mahatma Gandhi 150" 
                 className="max-h-12 md:max-h-16 max-w-full object-contain" 
               />
             </a>
 
             {/* MyGov */}
-            <a href="#" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
+            <a href="https://www.mygov.in/" target="_blank" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
               <img 
-                src="/images/logos/mygov.png" 
+                src="/images/logos/mygov.webp" 
                 alt="MyGov" 
                 className="max-h-12 md:max-h-16 max-w-full object-contain" 
               />
