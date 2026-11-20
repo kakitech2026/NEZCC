@@ -9,6 +9,16 @@ import configPromise from '@/payload.config';
 
 export const dynamic = 'force-dynamic';
 
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': 'https://www.nezccindia.org.in/#organization',
+  name: 'North East Zone Cultural Centre',
+  alternateName: 'NEZCC',
+  url: 'https://www.nezccindia.org.in/',
+  logo: 'https://www.nezccindia.org.in/images/logos/nezcc-logo.webp',
+};
+
 export default async function Home() {
   const payload = await getPayload({ config: configPromise });
   
@@ -60,6 +70,10 @@ export default async function Home() {
 
   return (
     <main id="main-content" className="flex-grow w-full flex flex-col ">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
       {campaigns && campaigns.length > 0 ? (
         <>
           <HeroCarousel campaigns={campaigns as any[]} />
@@ -417,6 +431,15 @@ export default async function Home() {
             Important Links & Initiatives
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap md:justify-center items-center gap-4 md:gap-6 lg:gap-8">
+
+            {/* NEZCC */}
+            <div className="flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl">
+              <img
+                src="/images/logos/nezcc-logo.webp"
+                alt="North East Zone Cultural Centre (NEZCC)"
+                className="max-h-12 md:max-h-16 max-w-full object-contain"
+              />
+            </div>
             
             {/* Ministry of Culture */}
             <a href="https://culture.gov.in/" target="_blank" className="group flex items-center justify-center h-20 md:h-24 w-full md:w-[200px] px-4 bg-white border border-outline-variant rounded-xl hover:shadow-md hover:border-primary transition-all duration-300 hover:-translate-y-1">
