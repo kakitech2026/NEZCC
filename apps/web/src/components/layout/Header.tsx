@@ -208,7 +208,7 @@ export default function Header() {
           <img
             alt="Header Background"
             className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-40"
-            src="/images/banner/header-banner.png"
+            src="/images/banner/header-banner.webp"
           />
 
           <div className="relative z-10 mx-auto flex min-h-[100px] w-full max-w-[1440px] items-center justify-between px-2 py-3 sm:px-6 lg:px-10">
